@@ -4,19 +4,6 @@
   
     
     <entry>
-      <title></title>
-      <link href="/2024/08/06/data/link/"/>
-      <url>/2024/08/06/data/link/</url>
-      
-        <content type="html"><![CDATA[[{"class_name":"1.技术支持","class_desc":"本网站的搭建由以下开源作者提供技术支持","link_list":[{"name":"Hexo","link":"https://hexo.io/zh-cn/","avatar":"https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg","descr":"快速、简单且强大的网志框架","siteshot":"https://source.fomal.cc/siteshot/hexo.io.jpg"}]},{"class_name":"2.友情链接","class_desc":"一些好朋友~~","link_list":[{"name":"Fomalhaut🥝","link":"https://fomal.cc/","avatar":"/assets/head.jpg","descr":"Future is now 🍭🍭🍭","siteshot":"https://source.fomal.cc/siteshot/www.fomal.cn.jpgh"}]}]]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>第一篇文章</title>
       <link href="/2024/08/06/2024-8-6(%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0)/"/>
       <url>/2024/08/06/2024-8-6(%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0)/</url>
@@ -30,11 +17,11 @@
     
     
     <entry>
-      <title>test_my_site</title>
-      <link href="/2024/08/06/test-my-site/"/>
-      <url>/2024/08/06/test-my-site/</url>
+      <title>Markdown语法自带格式(如何写博客)</title>
+      <link href="/2024/08/06/Markdown%E8%AF%AD%E6%B3%95%E8%87%AA%E5%B8%A6%E6%A0%BC%E5%BC%8F(%E5%A6%82%E4%BD%95%E5%86%99%E5%8D%9A%E5%AE%A2)/"/>
+      <url>/2024/08/06/Markdown%E8%AF%AD%E6%B3%95%E8%87%AA%E5%B8%A6%E6%A0%BC%E5%BC%8F(%E5%A6%82%E4%BD%95%E5%86%99%E5%8D%9A%E5%AE%A2)/</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<img src="/2024/08/06/Markdown%E8%AF%AD%E6%B3%95%E8%87%AA%E5%B8%A6%E6%A0%BC%E5%BC%8F(%E5%A6%82%E4%BD%95%E5%86%99%E5%8D%9A%E5%AE%A2)/H:/Hexo-Blog\blog-demo\source\images\P5SOv1EwsbDqz9D.jpeg" alt="123"><p>用Typora软件更简单</p><p><a href="https://www.bilibili.com/video/BV1iHaTe9EZ3/?spm_id_from=333.337.search-card.all.click&vd_source=390e7ea253547d9c75882d502ff42a1b">Typora安装激活流程_哔哩哔哩_bilibili</a></p><p>Typora安装文件及下载地址~<br>链接:<a href="https://pan.baidu.com/s/17CunIoob5JbtQZ1N5ZIyfg?pwd=zspz">https://pan.baidu.com/s/17CunIoob5JbtQZ1N5ZIyfg?pwd=zspz</a> 提取码:zspz</p>]]></content>
       
       
       
