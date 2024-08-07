@@ -1,0 +1,13 @@
+<hr>
+<h2 id="title-STUDY210-朱有鹏-date-2024-08-06-19-50-16updata-2024-08-06-19-55-16"><a href="#title-STUDY210-朱有鹏-date-2024-08-06-19-50-16updata-2024-08-06-19-55-16" class="headerlink" title="title: STUDY210(朱有鹏)date: 2024-08-06 19:50:16updata: 2024-08-06 19:55:16"></a>title: STUDY210(朱有鹏)<br>date: 2024-08-06 19:50:16<br>updata: 2024-08-06 19:55:16</h2><h1 id="隐藏文件与非隐藏文件"><a href="#隐藏文件与非隐藏文件" class="headerlink" title="隐藏文件与非隐藏文件"></a>隐藏文件与非隐藏文件</h1><p>Windows中：文件隐藏与不隐藏通过设置文件属性实现的，可以点击文件，右键属性，选择勾选隐藏选项来设置文件为隐藏文件。。在Windows中查看隐藏文件方法：菜单栏 工具-&gt;文件夹选项-&gt;查看-&gt;显示所有文件<br>和文件夹。<br>Linux中：linux中隐藏文件特点是文件名以.开头，跟文件属性无关。在linux中查看隐藏文件用ls -a命令（普通显示ls）</p>
+<h1 id="相对路径与绝对路径"><a href="#相对路径与绝对路径" class="headerlink" title="相对路径与绝对路径"></a>相对路径与绝对路径</h1><p>什么是路径：路径是用来标识一个文件在操作系统的文件系统中存储位置的。pathname<br>举例：<br>D:\winshare\enum.c 	全路径 	pathname<br>D:\winshare			路径 	path<br>enum.c				文件名	name</p>
+<p>绝对路径：路径是从绝对位置开始的。譬如Windows中从某一个盘符开始（C:\），linux中从根目录&#x2F;开始<br>相对路径：指明路径的时候，是从当前所在的位置开始的。</p>
+<p>举例：<br>D:\我的文档\123\123.txt<br>D:\我的文档\abc\abc.txt<br>当前在123.txt，但是要去abc.txt<br>方式1：采用绝对路径。D:\我的文档\abc\abc.txt<br>方式2：采用相对路径。..&#x2F;abc&#x2F;abc.txt (..表示上一层)<br>从当前路径开始，往上走一层，再往下走一层（abc）就到了</p>
+<p>测试：<br>&#x2F;abc&#x2F;123&#x2F;def.txt	是linux绝对路径	<br>abc&#x2F;123&#x2F;def.txt		不是linux绝对路径<br>F:\abc\123\def.txt	是windows绝对路径<br>abc\123\def.txt		不是windows绝对路径</p>
+<h1 id="linux内核、发行版"><a href="#linux内核、发行版" class="headerlink" title="linux内核、发行版"></a>linux内核、发行版</h1><p>linux本身指的是一个操作系统内核，只有内核是无法直接使用的。我们需要的，可以使用的操作系统是一个包含了内核和一批有用的应用程序的一个集合体，这个就叫linux发行版。<br>ubuntu、redhat就是linux的不同的发行版。</p>
+<h1 id="GUI（图形用户界面）和cmdline（命令行）"><a href="#GUI（图形用户界面）和cmdline（命令行）" class="headerlink" title="GUI（图形用户界面）和cmdline（命令行）"></a>GUI（图形用户界面）和cmdline（命令行）</h1><p>GUI：grahics user interface，图形用户界面。<br>cmdline：command line，命令行。<br>人机交互：人和机器（计算机）进行交互，常用的有命令行和GUI。<br>Windows下既有GUI，又有命令行。linux中也是既有GUI，又有命令行。<br>但是，在linux中我们常用命令行(生产用)，在Windows中常用GUI（娱乐用）</p>
+<h1 id="linux常用命令："><a href="#linux常用命令：" class="headerlink" title="linux常用命令："></a>linux常用命令：</h1><p>(1) ls（list，列表）<br>作用：使用列表把当前文件夹下所有文件显示出来<br>    ls -a	显示所有文件，包括隐藏文件<br>    ls -l	以详细信息显示<br>    ls -a -l<br>    ls -l -a<br>    ls -la<br>    ls -al	四种方式都是可以的</p>
+<p>man 作用：查询帮助信息</p>
+<p>man 1 查询linux命令 </p>
+<p>man2 查询api   </p>
+<p>man3查询C库函数</p>
