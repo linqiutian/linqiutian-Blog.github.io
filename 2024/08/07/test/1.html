@@ -1,0 +1,51 @@
+<hr>
+<h2 id="title-CRAIC-2024目标射击学习过程date-2024-08-06-19-50-16updata-2024-08-06-19-55-16"><a href="#title-CRAIC-2024目标射击学习过程date-2024-08-06-19-50-16updata-2024-08-06-19-55-16" class="headerlink" title="title: CRAIC-2024目标射击学习过程date: 2024-08-06 19:50:16updata: 2024-08-06 19:55:16"></a>title: CRAIC-2024目标射击学习过程<br>date: 2024-08-06 19:50:16<br>updata: 2024-08-06 19:55:16</h2><pre><code>  acc_lim_x: 1.5                #x方向的加速度极限，单位为 meters/sec^2 (double, default: 2.5)
+  acc_lim_y: 2.5                #                                  (double, default: 2.5)
+  acc_lim_th: 2.4               #角加速度极限，单位为 radians/sec^2 (double, default: 3.2)
+
+#The velocity when robot is moving in a straight line
+  max_vel_trans: 0.35           #机器人最大平移速度的绝对值 (double, default: 0.55)
+  min_vel_trans: 0.01           #                       (double, default: 0.1)
+  max_vel_theta: 0.8            #最大角速度的绝对值，单位为 rad/s (double, default: 1.0)
+  min_vel_theta: 0.15           #                             (double, default: 0.4)
+
+#Robot Configuration Parameters
+  max_vel_x: 0.35               #机器人在x方向的速度极限，单位为 meters/sec^2 (double, default: 0.55)
+  min_vel_x: -0.05               #                                        (double, default: 0.0)
+
+  max_vel_y: 0.1                #                                          (double, default: 0.1)
+  min_vel_y: -0.1               #                                          (double, default: -0.1)
+
+#Goal Tolerance Parametes 
+  yaw_goal_tolerance: 0.03      #(double, default: 0.05)
+  xy_goal_tolerance: 0.07       #(double, default: 0.10)
+  latch_xy_goal_tolerance: true #如果锁定目标公差且机器人到达目标xy位置，机器人将简单地旋转到位，即使它在目标公差的范围内结束。
+                                 #(bool, default: false)
+#Forward Simulation Parameters
+  sim_time: 1.7                 #给定轨迹上的点之间的间隔尺寸，单位为 meters (double, default: 1.7)
+  sim_granularity: 0.025        # (double, default: 0.025)
+  vx_samples: 3                 #样本数 (integer, default: 3)
+  vy_samples: 10                 #(integer, default: 10)
+  vth_samples: 20               #角速度的样本数 (integer, default: 20)
+  controller_frequency: 20.0    #调用该控制器的频率 (double, default: 20.0)
+
+#Trajectory Scoring Parameters
+  path_distance_bias: 32.0      #控制器靠近给定路径的权重 (double, default: 32.0)
+  goal_distance_bias: 24.0      # 控制器尝试达到其本地目标and控制着速度的权重。(double, default: 24.0)
+  occdist_scale: 0.01           #控制器尝试避免障碍物的权重 (double, default: 0.01)
+  forward_point_distance: 0.325 #从机器人中心点到另一个得分点的距离 (double, default: 0.325)
+  stop_time_buffer: 0.2         #机器人在碰撞前必须停止的时间 (double, default: 0.2)
+  scaling_speed: 0.25           #缩放机器人足迹的速度的绝对值，单位为m/s (double, default: 0.25)
+  max_scaling_factor: 0.2       #缩放机器人足迹的最大因子 (double, default: 0.2)
+  publish_cost_grid: false      # (bool, default: false)
+
+#Oscillation Prevention Parameters
+  oscillation_reset_dist: 0.05  #机器人必须运动多少米远后才能复位震荡标记 (double, default: 0.05)
+
+#Debugging
+  publish_traj_pc : true        #将规划的轨迹在RVIZ上进行可视化
+  publish_cost_grid_pc: true    #将代价值进行可视化显示 (bool, default: false)
+  #是否发布规划器在规划路径时的代价网格.如果设置为true,那么就会在~/cost_cloud话题上发布sensor_msgs/PointCloud2类型消息
+
+</code></pre>
+<p>这里给部分参数的功能解读：<br>max_vel_x表示机器人最大线速度，单位是m&#x2F;s。<br>min_vel_x表示机器人最小线速度。<br>max_vel_y和min_vel_y对于两轮差分驱动机器人是无效的。<br>max_vel_theta表示机器人最大转动速度，单位是rad&#x2F;s。<br>min_vel_theta表示机器人最小转动速度。<br>acc_lim_x表示在x方向上最大的线加速度，单位是m&#x2F;s^2。<br>acc_lim_theta表示最大角加速度，单位是rad&#x2F;s^2。<br>yaw_goal_tolerance表示接近目标方向（就弧度来说）允许的误差（rad），此值太小会造成机器人在目标附近震荡。<br>xy_goal_tolerance表示接近目标允许的误差（m），此值设置太小，机器人会没完没了在目标位置周围做小调整，而且此值不能小于地图的分辨率。<br>sim_time表示规划器能看到未来多少秒。<br>dwa表示当模拟轨迹走向未来，是否使用动态窗口法。</p>

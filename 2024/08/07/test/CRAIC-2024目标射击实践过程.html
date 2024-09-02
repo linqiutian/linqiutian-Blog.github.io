@@ -604,3 +604,125 @@ if __name__ == &#39;__main__&#39;:
 
 、
 </code></pre>
+<h1 id="射击实现"><a href="#射击实现" class="headerlink" title="射击实现"></a>射击实现</h1><p>单独的射击脚本，放在abot_ws&#x2F;src&#x2F;robot_slam&#x2F;scripts&#x2F;shoot_demo.py</p>
+<pre><code>a#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# 上面这行指定了Python解释器路径，使得脚本可以直接在命令行中执行
+import rospy
+import serial
+import time
+from std_msgs.msg import String
+
+# 设置串口和波特率
+serialPort = &quot;/dev/shoot&quot;
+baudRate = 9600
+
+# 打开串口
+ser = serial.Serial(port=serialPort, baudrate=baudRate, parity=&quot;N&quot;, bytesize=8, stopbits=1)
+
+if __name__ == &#39;__main__&#39;:
+    try:
+        # 发送射击指令
+        ser.write(b&#39;\x55\x01\x12\x00\x00\x00\x01\x69&#39;)
+        print (&#39;打印射击&#39;)
+        # 等待0.1秒
+        time.sleep(0.08)
+        # 发送停止射击指令
+        ser.write(b&#39;\x55\x01\x11\x00\x00\x00\x01\x68&#39;)
+        # 进入ROS的spin循环，保持节点持续运行
+        rospy.spin()
+    except:
+        pass
+
+</code></pre>
+<h1 id="导航文件"><a href="#导航文件" class="headerlink" title="导航文件"></a>导航文件</h1><p>有这么几个自主巡航赛道的导航文件，我们可以借鉴一下，放在abot_ws&#x2F;src&#x2F;robot_slam&#x2F;scripts&#x2F;</p>
+<pre><code>#!/usr/bin/env python
+
+&quot;&quot;&quot; A couple of handy conversion utilities taken from the turtlebot_node.py script found in the
+    turtlebot_node ROS package at:
+    
+    http://www.ros.org/wiki/turtlebot_node
+    
+&quot;&quot;&quot;
+
+import PyKDL
+from math import pi
+
+def quat_to_angle(quat):
+    rot = PyKDL.Rotation.Quaternion(quat.x, quat.y, quat.z, quat.w)
+    return rot.GetRPY()[2]
+        
+def normalize_angle(angle):
+    res = angle
+    while res &gt; pi:
+        res -= 2.0 * pi
+    while res &lt; -pi:
+        res += 2.0 * pi
+    return res
+</code></pre>
+<h1 id="导航点调节"><a href="#导航点调节" class="headerlink" title="导航点调节"></a>导航点调节</h1><p>结合逻辑文件，调节射击阈值和导航点，以下是导航点的调节方式<br>导航点文件在abot_ws\src\robot_slam\launch\multi_goal_shoot.launch，注意，这个launch文件是根据multi_goal.launch生成的，因此记得需要在启动脚本中引用。</p>
+<pre><code>&lt;launch&gt;
+  &lt;node name=&quot;multi_goal&quot; pkg=&quot;robot_slam&quot; type=&quot;你的逻辑文件&quot; output=&quot;screen&quot;&gt;
+      &lt;param name=&quot;goalListX&quot; value=&quot;  任务点1X,  任务点2X,以此类推&quot;/&gt;
+      &lt;param name=&quot;goalListY&quot; value=&quot; 任务点1Y, 任务点2Y,以此类推&quot;/&gt;
+      &lt;param name=&quot;goalListYaw&quot; value=&quot;任务点1旋转角度,  任务点2旋转角度, 以此类推&quot;/&gt;
+  &lt;/node&gt;
+&lt;/launch&gt;
+
+
+</code></pre>
+<h1 id="射击点调节"><a href="#射击点调节" class="headerlink" title="射击点调节"></a>射击点调节</h1><p>A点颜色靶子</p>
+<pre><code>if abs(flog1) &gt; 0.5:
+    # 创建一个Twist消息
+    msg = Twist()
+    # 设置消息的角速度为偏差乘以0.01
+    msg.angular.z = -0.01 * flog0
+    # 发布Twist消息
+    self.pub.publish(msg)
+# 如果偏差的绝对值小于等于0.5
+elif abs(flog1) &lt;= 0.5:
+    # 发送射击指令
+</code></pre>
+<p>B靶为环形旋转靶，需要调节部分为marker.id（射击哪个靶子）Max_y（靶子射击的最大高度）Min_y（靶子射击的最小高度）Yaw_th(B点射击精度)：</p>
+<pre><code>if marker.id == 1 and case == 1:
+    ar_x_0 = marker.pose.pose.position.x
+    ar_y_0 = marker.pose.pose.position.y
+    ar_x_0_abs = abs(ar_x_0)
+    ar_y_0_abs = abs(ar_y_0)
+    if ar_x_0_abs &gt;= Yaw_th:
+        msg = Twist()
+        msg.angular.z = -1.5 * ar_x_0
+        self.pub.publish(msg)
+    elif ar_y_0_abs &lt;= Max_y and ar_y_0_abs &gt;= Min_y and case ==1:
+        # 发送射击指令
+</code></pre>
+<p>C 靶为来回移动靶，需要调节部分为marker.id（射击哪个靶子），Yaw_th1(C点射击精度):</p>
+<pre><code>if marker.id == 0 and case == 2:
+    ar_x_0 = marker.pose.pose.position.x
+    ar_y_0 = marker.pose.pose.position.y
+    ar_x_0_abs = abs(ar_x_0)
+    if ar_x_0_abs &gt;= Yaw_th1:
+        msg = Twist()
+        msg.angular.z = -1.5 * ar_x_0
+        self.pub.publish(msg)
+    elif ar_x_0_abs &lt; Yaw_th1 and case == 2:
+        # 发送射击指令
+
+
+</code></pre>
+<h1 id="小车大小及膨胀系数调节"><a href="#小车大小及膨胀系数调节" class="headerlink" title="小车大小及膨胀系数调节"></a>小车大小及膨胀系数调节</h1><p>小车参数文件在”abot_ws\src\robot_slam\params\carto\costmap_common_params.yaml”</p>
+<pre><code>obstacle_range: 3.0
+raytrace_range: 3.5
+
+footprint: [[X1, Y1], [X2, Y2], [X3, Y3], [X4, Y4]]#小车参数（目前是正方形）
+#robot_radius: 0.17
+
+inflation_radius: 膨胀系数
+cost_scaling_factor: 3.0
+
+map_type: costmap
+observation_sources: scan
+scan: {sensor_frame: laser_link, data_type: LaserScan, topic: scan_filtered, marking: true, clearing: true}
+
+</code></pre>
+<h1 id="TF调节"><a href="#TF调节" class="headerlink" title="TF调节"></a>TF调节</h1><p>TF变换文件位置在:”abot_ws\src\abot_base\abot_bringup\launch\bringup_with_imu.launch”</p>
