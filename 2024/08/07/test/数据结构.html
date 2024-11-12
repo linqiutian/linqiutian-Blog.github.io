@@ -22,6 +22,8 @@
 <h1 id="一、数据结构与算法的层次要求："><a href="#一、数据结构与算法的层次要求：" class="headerlink" title="一、数据结构与算法的层次要求："></a>一、数据结构与算法的层次要求：</h1><p>层次1：熟悉各种不同的数据结构：顺序表（一维数组）、链表、栈、队列；森林、树、二叉树；图等<br>      了解不同的数据结构的特点、如何存储、优缺点等</p>
 <p>层次2：如何编写相关的代码，实现对应的数据结构。（需要考虑对应的增、删、改、查、长度、遍历等）</p>
 <p>层次3：算法层面的训练。 —&gt; leetcode （力扣app）、牛客网等。 300+道打底</p>
+<img src="https://s1.vika.cn/space/2024/11/12/bb5ee404f183423782032597b88580fc" alt="image-20241112200556715" />
+
 <h1 id="二、针对于层次1："><a href="#二、针对于层次1：" class="headerlink" title="二、针对于层次1："></a>二、针对于层次1：</h1><ol>
 <li><p>什么是数据结构？   datastructure   (D-&gt;S)</p>
 <blockquote>
@@ -840,6 +842,214 @@ int main()
         printf(&quot;找到了%d，对应的索引为%d\n&quot;,target,targetIndex);
     }
 
+
+    getchar();
+
+    return 0;
+}
+</code></pre>
+<p>sizeof是运算符，返回 unsigned int，其值在编译时即计算好了，参数可以是数组、指针、类型、对象、函数等。<br>它的功能是：获得保证能容纳实现所建立的最大对象的字节大小</p>
+<p>sizeof(ary) &#x2F; sizeof(int) &lt;&#x3D;&#x3D;&gt; sizeof(ary) &#x2F; sizeof(ary[0]) ; 得到 ary 内的元素的个数</p>
+<h1 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h1><p>二分查找（Binary Search）是一种高效的搜索算法，通常用于有序数据集中查找目标元素。其原理是通过将数据集划分为两半并与目标进行比较，以确定目标在哪一半中，从而逐步缩小搜索范围，直到找到目标元素或确定不存在。基本原理如下：</p>
+<p>（1）<strong>选择中间元素：</strong> 在有序数据集中，选择数组的中间元素。</p>
+<p>（1）<strong>比较目标：</strong> 将中间元素与目标元素进行比较。</p>
+<p>（2）<strong>查找成功：</strong> 如果中间元素等于目标元素，则查找成功，返回中间元素的索引。</p>
+<p>（3）<strong>缩小搜索范围：</strong> 对于一个升序的数据集，如果中间元素大于目标元素，说明目标可能在左半部分；如果中间元素小于目标元素，说明目标可能在右半部分。根据比较结果，将搜索范围缩小到一半，继续查找。</p>
+<p>（4）<strong>重复步骤：</strong> 重复上述步骤，不断将搜索范围缩小，直到找到目标元素或搜索范围为空。</p>
+<p>​                                   </p>
+<pre><code class="c">
+#include &lt;stdio.h&gt;
+
+/* 
+
+    使用二分查找法，查找数组中的元素
+ */
+
+
+int binarySearch(int arr[],int size,int target){
+
+    int low = 0;
+    int high = size - 1;
+
+
+    while(low &lt;= high){
+
+        int middle = (low + high) / 2;
+        if(arr[middle] == target){
+            return middle;
+        }else if(arr[middle] &gt; target){
+            high = middle - 1;
+        }else{
+            low = middle + 1;
+        }
+
+    }
+
+    //表示未找到
+    return -1;
+
+}
+
+
+int main()
+{
+
+    int arr[] = {4,7,9,12,16,19,22,28,34,57,69,78,90};
+    int target = 12;
+    target = 91;
+    int size = sizeof(arr) / sizeof(int);
+
+    int targetIndex = binarySearch(arr,size,target);
+    if(targetIndex == -1){
+        printf(&quot;未找到\n&quot;);
+    }else{
+        printf(&quot;找到了%d，对应的索引为%d\n&quot;,target,targetIndex);
+    }
+
+    getchar();
+
+    return 0;
+}
+</code></pre>
+<h1 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h1><pre><code class="c">
+#include &lt;stdio.h&gt;
+
+/* 
+
+    冒泡排序:实现从小到大排序
+ */
+
+void bubbleSort(int arr[],int size){
+
+    //外层循环：控制轮数
+    for(int i = 0;i &lt; size - 1;i++){
+
+        //内层循环：依次比较相邻的两个元素的大小
+        for(int j = 0;j &lt; size - 1 - i;j++){
+            
+            if(arr[j] &gt; arr[j + 1]){
+                //交互j 和 j+1索引位置的元素
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+
+            }
+
+        }
+
+    }
+
+
+}
+
+
+int main(){
+
+    int arr[] = {23,45,2,46,77,2,99,-9,-32,0,66};
+
+    int size = sizeof(arr) / sizeof(int);
+    //遍历
+    for(int i = 0;i &lt; size;i++){
+        printf(&quot;%d  &quot;,arr[i]);
+    }
+
+    printf(&quot;\n&quot;);
+
+    //排序
+    bubbleSort(arr,size);
+
+
+    //遍历
+    for(int i = 0;i &lt; size;i++){
+        printf(&quot;%d  &quot;,arr[i]);
+    }
+
+    printf(&quot;\n&quot;);
+
+    getchar();
+
+    return 0;
+}
+</code></pre>
+<h1 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h1><pre><code class="c">
+#include &lt;stdio.h&gt;
+
+/*
+
+    快速排序:实现从小到大排序
+ */
+
+void quickSort(int arr[], int size)
+{
+
+    subSort(arr, 0, size - 1);
+}
+
+void subSort(int arr[], int start, int end)
+{
+
+    if (start &lt; end)
+    {
+        int base = arr[start];
+        int low = start;
+        int high = end + 1;
+
+        while (1)
+        {
+
+            while (low &lt; end &amp;&amp; arr[++low] &lt;= base)
+                ; // 找到从前往后第1个比base大的元素
+            while (high &gt; start &amp;&amp; arr[--high] &gt;= base)
+                ; // 找到从后往前第1个比base小的元素
+
+            if (low &lt; high)
+            {
+                // 交换low和high位置的元素
+                int temp = arr[low];
+                arr[low] = arr[high];
+                arr[high] = temp;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        // 交换start和high索引位置上的元素
+        int temp1 = arr[start];
+        arr[start] = arr[high];
+        arr[high] = temp1;
+
+        // 递归调用
+        subSort(arr, start, high - 1); // 前半段继续排序
+        subSort(arr, high + 1, end);   // 后半段继续排序
+    }
+}
+
+int main()
+{
+
+    int arr[] = {23, 45, 2, 46, 77, 2, 99, -9, -32, 0, 66};
+
+    int size = sizeof(arr) / sizeof(int);
+    // 遍历
+    for (int i = 0; i &lt; size; i++)
+    {
+        printf(&quot;%d  &quot;, arr[i]);
+    }
+
+    printf(&quot;\n&quot;);
+
+    // 排序
+    quickSort(arr, size);
+
+    // 遍历
+    for (int i = 0; i &lt; size; i++)
+    {
+        printf(&quot;%d  &quot;, arr[i]);
+    }
+
+    printf(&quot;\n&quot;);
 
     getchar();
 
