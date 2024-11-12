@@ -11,3 +11,15 @@
 <p>man 1 查询linux命令 </p>
 <p>man2 查询api   </p>
 <p>man3查询C库函数</p>
+<p>(2)cd（change directory，更改目录）</p>
+<p>作用：用来切换目录<br>涉及到相对路径和绝对路径<br>cd ..		..代表上一层目录<br>cd.		   .代表当前目录</p>
+<p>(3) pwd（print work directory，打印工作目录）<br>作用：打印出当前的绝对路径</p>
+<p>(4) mkdir（make directory，创建文件夹）<br>作用：创建空文件夹<br>    mkdir -p 级联创建文件夹  </p>
+<pre><code>mkdir runoob        #在工作目录下，建立一个名为 runoob 的子目录 
+mkdir -p runoob2/test   #在工作目录下的 runoob2 目录中，建立一个名为 test 的子目录。
+若 runoob2 目录原本不存在，则建立一个。（注：本例若不加 -p 参数，且原本 runoob2 目录不存在，则产生错误。）
+</code></pre>
+<p>(5) mv（move，移动）<br>作用：在目录间移动文件，重命名文件<br>    mv 源文件pathname 目的文件pathname</p>
+<pre><code>mv source_file(文件) dest_file(文件) #将源文件名 source_file 改为目标文件名 dest_file
+mv source_file(文件) dest_directory(目录) #将文件 source_file 移动到目标目录 dest_directory 中
+</code></pre>

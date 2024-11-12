@@ -470,3 +470,43 @@ copy_from_user()/copy_to_user() //主要应用于设备驱动读写函数中，�
 <li>手动创建<br><code>mknod /dev/led c 250 0</code> ，其中<code>dev/led</code>为设备节点 ,<code>c</code> 代表字符设备, <code>250</code>代表主设备号, <code>0</code>代表次设备号。</li>
 <li>自动创建<br><code>UDEV/MDEV</code>是运行在用户态的程序，可以动态管理设备文件，包括创建和删除设备文件，运行在用户态意味着系统要运行之后，在 <code>/etc/init.d/rcS</code> 脚本文件中会执行 <code>mdev -s</code> 自动创建设备节点。</li>
 </ol>
+<h3 id="3-3-设备驱动程序中如何注册一个字符设备？分别解释一下它的几个参数的含义"><a href="#3-3-设备驱动程序中如何注册一个字符设备？分别解释一下它的几个参数的含义" class="headerlink" title="3.3 设备驱动程序中如何注册一个字符设备？分别解释一下它的几个参数的含义"></a>3.3 设备驱动程序中如何注册一个字符设备？分别解释一下它的几个参数的含义</h3><ul>
+<li><p>注册一个字符设备驱动有两种方法：</p>
+<ol>
+<li><code>void cdev_init(struct cdev *cdev, struct file_operations *fops)</code> 该注册函数可以将<code>cdev</code>结构嵌入到自己的设备特定的结构中。<code>cdev</code>是一个指向结构体<code>cdev</code>的指针，而<code>fops</code>是指向一个类似于 <code>file_operations</code>结构（可以是<code>file_operations</code>结构，但不限于该结构）的指针。</li>
+<li><code>int register_chrdev(unsigned int major, const char *name, struct file operations *fops)</code>；该注册函数是早期的注册函数，<code>major</code>是设备的主设备号，<code>name</code>是驱动程序的名称，而<code>fops</code>是默认的<code>file_operations</code>结构（这是只限于<code>file_operations</code>结构）。对于<code>register_chrdev</code>的调用将为给定的主设备号注册0－255作为次设备号，并为每个设备建立一个对应的默认<code>cdev</code>结构。</li>
+</ol>
+<h3 id="3-4-dev-下面的设备文件是怎么创建出来的？"><a href="#3-4-dev-下面的设备文件是怎么创建出来的？" class="headerlink" title="3.4 &#x2F;dev&#x2F;下面的设备文件是怎么创建出来的？"></a>3.4 &#x2F;dev&#x2F;下面的设备文件是怎么创建出来的？</h3></li>
+<li><p>普遍说法有三种方式，<strong>devfs机制</strong>，<strong>udev机制</strong>，再有一个就是<strong>手动创建</strong>设备节点。谈谈个人见解：</p>
+</li>
+</ul>
+<ol>
+<li><code>devfs</code>机制从来没用过，应该是2.6以前的内核使用的；</li>
+<li><code>udev</code>：其实就是现在常用的<code>device_create()</code>、<code>class_create()</code>这一套接口，所谓<code>udev</code>是上层用户空间程序，是基于驱动中创建使用了这两个接口而起作用的，但是<code>udev</code>在日常开发中几乎接触不到，我们只需在驱动中调用创建节点的这两个API就ok了，剩下的工作就交给<code>udev</code>去做了，有想深究它具体实现原理的那就自己去研究吧，我觉得会用就行了；</li>
+<li><code>mknod</code>：新手最常用的一种创建设备节点方法，但并非入门后就再没有用途，在某些情境下，或许有人不想使用<code>udev</code>机制，于是把节点创建工作写在脚本里，这样也是无可厚非的。</li>
+</ol>
+<h3 id="3-5-Linux设备中字符设备和块设备有什么主要区别？分别举例。"><a href="#3-5-Linux设备中字符设备和块设备有什么主要区别？分别举例。" class="headerlink" title="3.5 Linux设备中字符设备和块设备有什么主要区别？分别举例。"></a>3.5 Linux设备中字符设备和块设备有什么主要区别？分别举例。</h3><ul>
+<li>Linux中I&#x2F;O设备分为两类：块设备和字符设备。两种设备本身没有严格限制，但是，基于不同的功能进行了分类。</li>
+<li><strong>字符设备</strong>：提供<strong>连续</strong>的数据流，应用程序可以顺序读取，通常不支持随机存取。相反，此类设备支持<strong>按字节&#x2F;字符</strong>来读写数据。字符终端、串口、鼠标、键盘、摄像头、声卡和显卡等就是典型的字符设备。</li>
+<li><strong>块设备</strong>：应用程序可以<strong>随机访问</strong>设备数据，程序可自行确定读取数据的位置。硬盘是典型的块设备，应用程序可以寻址磁盘上的<strong>任何位置</strong>，并由此读取数据。此外，数据的读写只能以块(通常是512B)的倍数进行。与字符设备不同，块设备并不支持基于字符的寻址。如：u盘，SD卡，磁盘等。</li>
+</ul>
+<h3 id="3-6-驱动中操作物理绝对地址为什么要先ioremap？"><a href="#3-6-驱动中操作物理绝对地址为什么要先ioremap？" class="headerlink" title="3.6 驱动中操作物理绝对地址为什么要先ioremap？"></a>3.6 驱动中操作物理绝对地址为什么要先ioremap？</h3><ul>
+<li><code>ioremp</code>是内核中用来将外设寄存器物理地址映射到主存上去的接口，即将io地址空间映射到虚拟地址空间上去，便于操作。为什么非要映射呢，因为<strong>保护模式下的cpu只认虚拟地址，不认物理地址</strong>，给它物理地址它并不帮你做事，所以你要操作外设上的寄存器必须先映射到虚拟内存空间，拿着虚拟地址去跟cpu对接，从而操作寄存器。</li>
+</ul>
+<h3 id="3-7-insmod，rmmod一个驱动模块，会执行模块中的哪个函数？在设计上要注意哪些问题？"><a href="#3-7-insmod，rmmod一个驱动模块，会执行模块中的哪个函数？在设计上要注意哪些问题？" class="headerlink" title="3.7 insmod，rmmod一个驱动模块，会执行模块中的哪个函数？在设计上要注意哪些问题？"></a>3.7 insmod，rmmod一个驱动模块，会执行模块中的哪个函数？在设计上要注意哪些问题？</h3><ul>
+<li>分别会执行<code>module_init()</code>和<code>module_exit()</code>指定的<code>init</code>函数和<code>exit</code>函数。要注意的就是，尽量使在<code>init</code>函数中出现的资源申请及使用，都要有对应的释放操作在<code>exit</code>中，即<code>init</code>申请，<code>eixt</code>释放。</li>
+</ul>
+<h3 id="3-8-NAND驱动的probe流程"><a href="#3-8-NAND驱动的probe流程" class="headerlink" title="3.8 NAND驱动的probe流程"></a>3.8 NAND驱动的probe流程</h3><ul>
+<li><code>probe</code> 函数就会与NAND芯片进行，主要做的事情主要包括这几个方面：读取NAND芯片的ID ，然后查表得到这片NAND芯片的如厂商，page size，erase size以及chip size等信息，接着根据<code>struct nand_chip</code> 中<code>options</code>的值的不同，或者在NAND 芯片中的特定位置查找<code>bad block table</code>，或者scan整个NAND 芯片，并在内存中建立<code>bad block table</code>。说起来复杂，但其实所有的这些动作，都可以在MTD提供的一个叫做<code>nand_scan</code>的函数中完成。</li>
+</ul>
+<h3 id="3-9-Linux驱动开发中，常用的调试方法有哪些？"><a href="#3-9-Linux驱动开发中，常用的调试方法有哪些？" class="headerlink" title="3.9 Linux驱动开发中，常用的调试方法有哪些？"></a>3.9 Linux驱动开发中，常用的调试方法有哪些？</h3><ul>
+<li><p>利用<code>printk</code>，查看OOP消息，利用<code>strace</code>，利用内核内置的<code>hacking</code>选项，利用<code>ioctl</code>方法，利用<code>/proc</code> 文件系统，使用<code>kgdb</code>。</p>
+</li>
+<li><p><code>strace</code> 是一个可用于诊断、调试和教学的 Linux 用户空间跟踪器，监控用户空间进程和内核的交互，比如系统调用、信号传递、进程状态变更等。</p>
+</li>
+<li><p><code>ioctl</code> 是设备驱动程序中设备控制接口函数，一个字符设备驱动通常会实现设备打开、关闭、读、写等功能，在一些需要细分的情境下，如果需要扩展新的功能，通常以增设<code>ioctl()</code>命令的方式实现。</p>
+<blockquote>
+<p>建议大家，亲手动手调试下。面试中，很大可能会问你，在写驱动过程中遇到了什么问题的，如何解决的？如果你能讲出以上几种调试方法中的一两种，一定会让面试官刮目相看！</p>
+</blockquote>
+</li>
+</ul>

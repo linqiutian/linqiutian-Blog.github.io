@@ -1,2 +1,803 @@
 <hr>
 <h2 id="title-数据结构date-2024-06-06-19-50-16updata-2024-06-06-19-55-16"><a href="#title-数据结构date-2024-06-06-19-50-16updata-2024-06-06-19-55-16" class="headerlink" title="title: 数据结构date: 2024-06-06 19:50:16updata: 2024-06-06 19:55:16"></a>title: 数据结构<br>date: 2024-06-06 19:50:16<br>updata: 2024-06-06 19:55:16</h2><p><strong>让所有很久很久以前都走到幸福结局的时刻</strong></p>
+<h1 id="写嵌入式用的到数据结构吗？"><a href="#写嵌入式用的到数据结构吗？" class="headerlink" title="写嵌入式用的到数据结构吗？"></a>写嵌入式用的到数据结构吗？</h1><p>看下linux内核就知道了，一堆数据结构，不学习数据结构，linux内核就看不懂了</p>
+<p>使用数据结构是为了使代码结构更清晰，更容易把握代码结构、逻辑。</p>
+<p>几个应用场景</p>
+<ol>
+<li>“数组”。你肯定用过吧，属于数据结构“线性表”的一种形式。</li>
+<li>“结构体”。学习过lwip可以知道从以太网上接收一堆数据后，把数据头的地址幅值给以太网包的数据结构定义的指针，可以直接使用此指针-&gt;成员变量的方式，使用接收到的数据。比使用一堆变量来利用接收到的数据方便太多了。</li>
+<li>“队列”。热敏电阻测温，单片机用ADC测量电阻分压电压，然后对测量值用平滑均值滤波算法滤波，此时会用到“队列”，或用“环形队列”；</li>
+<li>“树”。项目中经常会使用液晶屏作为显示，其中文本菜单有时用的比较多的一种方式，其中文本菜单常用“树”结构来实现。</li>
+<li>“栈”。就不用说了，你已经用过了，不过不是你主动用的，它隐藏在你每次函数调用、中断调用中，可能你没有意识到。</li>
+</ol>
+<p>简单几个例子，说明了数据结构非常常见，这个是必须要学的，不过有些不常用，比如图。</p>
+<h3 id="1-【简答题】请写出至少两种野指针的成因"><a href="#1-【简答题】请写出至少两种野指针的成因" class="headerlink" title="1.   【简答题】请写出至少两种野指针的成因"></a>1.   【简答题】请写出至少两种野指针的成因</h3><p>【答案】</p>
+<p>（1）指针使用前未初始化</p>
+<p>（2）指针越界访问</p>
+<p>（3）指针指针已经释放的空间</p>
+<h3 id="2-【简答题】非静态局部变量、全局变量、malloc-动态分配的内存分别存储在内存的什么区域。"><a href="#2-【简答题】非静态局部变量、全局变量、malloc-动态分配的内存分别存储在内存的什么区域。" class="headerlink" title="2.   【简答题】非静态局部变量、全局变量、malloc()动态分配的内存分别存储在内存的什么区域。"></a>2.   【简答题】非静态局部变量、全局变量、malloc()动态分配的内存分别存储在内存的什么区域。</h3><p>【答案】</p>
+<p>（1）非静态局部变量存储在内存的栈区域。</p>
+<p>（1）全局变量存储在内存的全局静态区。</p>
+<p>（2）malloc()动态分配的内存存储在内存的堆区域。</p>
+<h1 id="一、数据结构与算法的层次要求："><a href="#一、数据结构与算法的层次要求：" class="headerlink" title="一、数据结构与算法的层次要求："></a>一、数据结构与算法的层次要求：</h1><p>层次1：熟悉各种不同的数据结构：顺序表（一维数组）、链表、栈、队列；森林、树、二叉树；图等<br>      了解不同的数据结构的特点、如何存储、优缺点等</p>
+<p>层次2：如何编写相关的代码，实现对应的数据结构。（需要考虑对应的增、删、改、查、长度、遍历等）</p>
+<p>层次3：算法层面的训练。 —&gt; leetcode （力扣app）、牛客网等。 300+道打底</p>
+<h1 id="二、针对于层次1："><a href="#二、针对于层次1：" class="headerlink" title="二、针对于层次1："></a>二、针对于层次1：</h1><ol>
+<li><p>什么是数据结构？   datastructure   (D-&gt;S)</p>
+<blockquote>
+<p>数据 +  结构<br>数据：多个相同类型的数据或变量<br>结构：即关系<br>目的：为了更高效的访问数据</p>
+</blockquote>
+</li>
+<li><p>数据结构中有哪些内容？即问研究方向？<br>研究方向1：数据之间的逻辑关系</p>
+<blockquote>
+<p>线性关系:（一对一的关系）。比如：顺序表、链表、栈、队列、数组、字符串、广义表等<br>非线性关系：集合关系、树形关系（一对多的关系）、图形关系（多对多的关系）</p>
+</blockquote>
+</li>
+</ol>
+<p>研究方向2：数据的存储结构（或物理结构）<br>    &gt; 基本的两种：顺序存储结构、链式存储结构<br>    &gt; 拓展的两种：索引存储结构、哈希存储结构(散列存储结构)<br>研究方向3：数据之间的运算：增、删、改、查(CRUD)</p>
+<h1 id="三、具体的不同的数据结构的实现（对应着层次2）"><a href="#三、具体的不同的数据结构的实现（对应着层次2）" class="headerlink" title="三、具体的不同的数据结构的实现（对应着层次2）"></a>三、具体的不同的数据结构的实现（对应着层次2）</h1><ol>
+<li><p>数组的实现和相关算法的封装。</p>
+</li>
+<li><p>链表的实现和相关算法的封装。</p>
+<p>   ​                 优点                                      							缺点</p>
+<blockquote>
+<p>数组 	通过索引查找、修改效率高：O(1)	  			插入、删除的效率差：O(n)</p>
+<p>​		同样大小的内存，数组可以存储更多的数据  		当数据存满时，需要考虑扩容</p>
+</blockquote>
+<blockquote>
+<p>链表 	  插入、删除效率高：O(1) 						通过索引查找、修改效率低：O(n)  </p>
+<p>​		 不需要考虑扩容问题   							同样大小的内存，链表存储的数据较数组少</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="如何理解数据结构"><a href="#如何理解数据结构" class="headerlink" title="如何理解数据结构"></a>如何理解数据结构</h2><h4 id="数据结构的基本概念"><a href="#数据结构的基本概念" class="headerlink" title="数据结构的基本概念"></a>数据结构的基本概念</h4><p>1.数据结构定义：研究多个变量之间的结构，即数据与数据之间的关系。</p>
+<p> 2.研究目的：高效地进行数据的操作，如增删改查。</p>
+<h4 id="数据结构的主要内容"><a href="#数据结构的主要内容" class="headerlink" title="数据结构的主要内容"></a>数据结构的主要内容</h4><p>1.逻辑结构：研究数据之间的逻辑关系，分为集合关系、线性关系、树形关系和网状关系。 </p>
+<p>2.存储结构：研究数据在实际编程语言中的存储方式，分为顺序存储和链式存储。 </p>
+<p>3.运算：基于存储结构，研究数据的增删改查等操作。</p>
+<h4 id="线性结构和非线性结构"><a href="#线性结构和非线性结构" class="headerlink" title="线性结构和非线性结构"></a>线性结构和非线性结构</h4><p>1.线性结构：如顺序表、链表、栈、队列、数组、广义表等。</p>
+<p> 2.非线性结构：如集合、树、图等。</p>
+<h4 id="存储结构的两种基本形式"><a href="#存储结构的两种基本形式" class="headerlink" title="存储结构的两种基本形式"></a>存储结构的两种基本形式</h4><p>1.顺序存储：将数据元素依次排列，通过数组等方式实现。 </p>
+<p>2.链式存储：通过链表方式，每个元素包含指向下一个元素的指针。</p>
+<p> 3.索引存储结构和哈希存储结构：基于顺序存储和链式存储的组合。</p>
+<h1 id="线性结构之数组"><a href="#线性结构之数组" class="headerlink" title="线性结构之数组"></a>线性结构之数组</h1><p><strong>优</strong> <strong>点</strong></p>
+<p>Ø 查找容易（通过下标），时间复杂度为O(1)。不需要额外申请或删除空间。</p>
+<p>Ø 使用下标位置索引(index)十分高效的访问任意元素，修改快</p>
+<p><img src="C:\Users\Administrator.OMEN\AppData\Roaming\Typora\typora-user-images\image-20241105203354020.png" alt="image-20241105203354020"></p>
+<p><strong>缺</strong> <strong>点</strong></p>
+<p>Ø 插入、删除元素难，效率低。（需要移动大量元素以使元素空间连续）。</p>
+<p>Ø 插入操作平均需要移动n&#x2F;2个元素。</p>
+<p>Ø 删除操作平均需要移动(n-1)&#x2F;2个元素。</p>
+<p>​                             <img src="C:\Users\Administrator.OMEN\AppData\Roaming\Typora\typora-user-images\image-20241105203403567.png" alt="image-20241105203403567">     </p>
+<p>Ø 扩展相对繁琐。一方面需要确保能提供更大区域的连续内存空间，另一方面需要将原有数据复制到新的顺序表中。</p>
+<p>1.1.1 功能定义</p>
+<p>前文提到过数组这一数据结构的一个局限性是长度固定，本节我们来实现一个增强版的数组——可变长的动态数组，需要实现以下函数：</p>
+<pre><code class="c">//初始化动态数组
+void initDynamicArray(DynamicArray *array, size_t initialCapacity)
+//释放动态数组内存
+void destroyDynamicArray(DynamicArray *array)
+//调整动态数组内存大小
+void resizeDynamicArray(DynamicArray *array, size_t newCapacity)
+//获取动态数组长度（元素个数）
+size_t getLength(const DynamicArray *array)
+//在指定位置插入新元素
+void insertAt(DynamicArray *array, size_t index, int element)
+//在末尾插入新元素
+void insertEnd(DynamicArray *array, int element)
+//删除指定位置的元素并返回被删除的元素
+int deleteAt(DynamicArray *array, size_t index)
+//删除末尾的元素并返回被删除的元素
+int deleteEnd(DynamicArray *array)
+//遍历所有的元素
+void print(DynamicArray *array)
+</code></pre>
+<h2 id="1-1-1-实现原理"><a href="#1-1-1-实现原理" class="headerlink" title="1.1.1 实现原理"></a>1.1.1 实现原理</h2><p>可变长的动态数组是一种数据结构，它允许在运行时根据需要动态地调整数组的大小，而不需要提前指定固定的大小。这种动态数组通常被称为动态数组、动态分配数组、动态增长数组或动态内存数组。int arr[10];  </p>
+<p>C语言中是通过使用指针和内存分配函数来实现动态数组，常见的内存分配函数是<code>malloc</code>、<code>realloc</code>和<code>free</code>。下面是一些相关的概念和操作：</p>
+<p>（1）<strong>分配内存（malloc）：</strong> 在C语言中，可以使用<code>malloc</code>函数来分配一块指定大小的内存。例如，<code>int *arr = (int *)malloc(n * sizeof(int));</code> 将分配能够存储<code>n</code>个整数的内存空间。</p>
+<p>（2）<strong>重新分配内存（realloc）：</strong> 如果需要改变动态数组的大小，可以使用<code>realloc</code>函数来重新分配内存。这允许你在保留原有数据的情况下扩展或缩小数组的大小。</p>
+<p>（3）<strong>释放内存（free</strong>）： 当不再需要动态数组时，应使用<code>free</code>函数释放之前分配的内存，以避免内存泄露。à 内存溢出</p>
+<p>代码实现</p>
+<pre><code class="c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+// 动态数组结构体
+typedef struct
+{
+    int *data;       // 指向动态数组的指针
+    size_t size;     // 当前数组中的元素个数
+    size_t capacity; // 当前数组的容量（可以容纳的最大元素个数）
+} DynamicArray;
+
+// 初始化动态数组
+void initDynamicArray(DynamicArray *array, size_t initialCapacity)
+{     //分配内存（malloc）
+    array-&gt;data = (int *)malloc(initialCapacity * sizeof(int)); // 分配初始内存
+    array-&gt;size = 0;       // 初始化元素个数为0
+    array-&gt;capacity = initialCapacity;     // 设置初始容量
+}
+
+// 释放动态数组内存
+void destroyDynamicArray(DynamicArray *array)
+{
+    
+    //释放内存（free）
+    free(array-&gt;data);   // 释放动态数组内存
+    array-&gt;size = 0;     // 重置元素个数为0
+    array-&gt;capacity = 0; // 重置容量为0
+}
+
+// 调整动态数组内存大小
+void resizeDynamicArray(DynamicArray *array, size_t newCapacity)
+{ 	//重新分配内存（realloc）
+    array-&gt;data = (int *)realloc(array-&gt;data, newCapacity * sizeof(int)); // 调整数组内存大小  
+    array-&gt;capacity = newCapacity;       // 更新容量
+}
+
+// 获取动态数组长度（元素个数）
+size_t getLength(const DynamicArray *array)
+{
+    return array-&gt;size; // 返回数组中的元素个数
+}
+
+// 在指定位置插入新元素
+void insertAt(DynamicArray *array, size_t index, int element)
+{
+    if (index &gt; array-&gt;size)
+    {
+        return; // 忽略无效的插入位置
+    }
+
+    if (array-&gt;size &gt;= array-&gt;capacity)
+    {
+        size_t newCapacity = array-&gt;capacity * 2; // 如果容量不足，扩大容量
+        resizeDynamicArray(array, newCapacity);
+    }
+
+    for (size_t i = array-&gt;size; i &gt; index; i--)
+    {
+        array-&gt;data[i] = array-&gt;data[i - 1]; // 后移元素以腾出插入位置
+    }
+
+    array-&gt;data[index] = element; // 在指定位置插入新元素
+    array-&gt;size++;                // 更新元素个数
+}
+
+// 在末尾插入新元素
+void insertEnd(DynamicArray *array, int element)
+{
+    insertAt(array, array-&gt;size, element); // 在末尾插入新元素
+}
+
+// 删除指定位置的元素并返回被删除的元素
+int deleteAt(DynamicArray *array, size_t index)
+{
+    if (index &gt;= array-&gt;size)
+    {
+        return -1; // 忽略无效的删除位置
+}
+
+    int deletedElement = array-&gt;data[index]; // 获取被删除的元素
+
+    for (size_t i = index; i &lt; array-&gt;size - 1; i++)
+    {
+        array-&gt;data[i] = array-&gt;data[i + 1]; // 前移元素以填补删除位置
+    }
+
+    array-&gt;size--; // 更新元素个数
+
+    return deletedElement; // 返回被删除的元素
+}
+
+// 删除末尾的元素并返回被删除的元素
+int deleteEnd(DynamicArray *array)
+{
+    return deleteAt(array, array-&gt;size - 1); // 删除末尾的元素
+}
+
+// 遍历所有的元素
+void print(DynamicArray *array)
+{
+    for (int i = 0; i &lt; array-&gt;size; i++)
+    {
+        printf(&quot;%d  &quot;, array-&gt;data[i]);
+    }
+    printf(&quot;\n&quot;);
+}
+
+int main()
+{
+    DynamicArray myArray; // 声明动态数组
+
+    // 初始化动态数组
+    initDynamicArray(&amp;myArray, 2);
+    printf(&quot;初始化动态数组,初始容量为2\n&quot;);
+
+    // 向动态数组尾部插入元素
+    insertEnd(&amp;myArray, 1);
+    insertEnd(&amp;myArray, 2);
+    printf(&quot;向动态数组尾部插入了2个元素\n&quot;);
+
+    // 打印动态数组当前长度
+ printf(&quot;动态数组当前长度:%zu\n&quot;, getLength(&amp;myArray));
+
+    // 在索引1的位置插入元素3
+    insertAt(&amp;myArray, 1, 3);
+    printf(&quot;在索引1的位置插入元素3\n&quot;);
+
+    // 再次打印动态数组当前长度
+    printf(&quot;动态数组当前长度:%zu\n&quot;, getLength(&amp;myArray));
+
+    // 删除索引1的元素
+    printf(&quot;删除索引1的元素,该元素是%d\n&quot;, deleteAt(&amp;myArray, 1));
+
+    // 删除动态数组末尾元素
+    printf(&quot;删除动态数组末尾元素,该元素是%d\n&quot;, deleteEnd(&amp;myArray));
+
+    // 释放动态数组内存
+    destroyDynamicArray(&amp;myArray);
+    printf(&quot;动态数组内存释放完成\n&quot;);
+
+    return 0;
+}
+</code></pre>
+<h1 id="1-1-线性结构之链表"><a href="#1-1-线性结构之链表" class="headerlink" title="1.1 线性结构之链表"></a>1.1 线性结构之链表</h1><p>1.1.1 链表是什么</p>
+<p>链表的主要特点包括：</p>
+<ol>
+<li><strong>动态大小</strong>：链表可以根据需要动态调整大小，不需要预先分配固定的内存空间。</li>
+<li><strong>插入和删除效率高</strong>：在已知位置插入或删除元素时，链表不需要移动其他元素，只需调整指针即可。</li>
+<li><strong>顺序访问</strong>：链表不支持随机访问，要访问链表中的某个元素，必须从头节点开始逐个遍历。</li>
+</ol>
+<p>链表有几种常见的类型：</p>
+<ul>
+<li><strong>单向链表</strong>：每个节点只指向下一个节点。</li>
+<li><strong>双向链表</strong>：每个节点有两个指针，分别指向前一个节点和后一个节点。</li>
+<li><strong>循环链表</strong>：链表的最后一个节点指向第一个节点，形成一个环。</li>
+</ul>
+<p><img src="C:\Users\Administrator.OMEN\AppData\Roaming\Typora\typora-user-images\image-20241108184735610.png" alt="image-20241108184735610"></p>
+<p><strong>相关概念</strong></p>
+<p>n个结点离散分配，彼此通过指针相连，每个结点只有一个前驱结点，每个结点只有一个后续结点，头结点没有前驱结点，尾结点没有后续结点。确定一个链表我们只需要头指针，通过头指针就可以把整个链表都能推出来。</p>
+<p>1）优点</p>
+<p>（1）插入和删除操作效率高。</p>
+<p>（2）动态扩展性能更好，链表不需要像数组那样预先指定固定的大小，而是可以随时动态的增长或缩小。链表是真正的动态数据结构，不需要处理固定容量的问题。</p>
+<p>2）缺点</p>
+<p>（1）查找慢。由于链表中的结点不是连续存储的，无法像数组一样根据索引直接计算出每个结点的地址。必须从头结点开始遍历链表，直到找到目标结点，这导致了链表的随机访问效率较低。</p>
+<p>（2）额外的存储空间。链表的每个结点都需要存储指向下一个结点的指针，这会占用额外的存储空间。所以，相比于数组，链表需要更多的内存空间来存储相同数量的数据元素。</p>
+<pre><code class="c">初始化链表
+void initLinkedList(LinkedList *list)
+返回链表的长度
+size_t getLength(const LinkedList *list)
+在指定位置插入元素
+void insertAt(LinkedList *list, size_t index, int element)
+在末尾插入元素
+void insertEnd(LinkedList *list, int element)
+删除指定位置的元素并返回被删除的元素
+int deleteAt(LinkedList *list, size_t index)
+删除末尾元素
+int deleteEnd(LinkedList *list)
+获取指定位置的元素
+int getElementAt(const LinkedList *list, size_t index)
+修改指定位置的元素
+void modifyAt(LinkedList *list, size_t index, int newValue)
+释放链表内存
+void destroyLinkedList(LinkedList *list)
+</code></pre>
+<pre><code class="c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+/*
+自定义链表结构
+
+ */
+
+// 定义存储数据的结构体
+typedef struct Node
+{
+
+    int data;          // 存储的数据
+    struct Node *next; // 指向下个元素的指针
+
+} Node;
+
+// 定义虚拟头结点的结构体
+typedef struct
+{
+    int size;   // 记录单链表中存储的数据的个数
+    Node *next; // 指向保存数据的首元素
+} LinkedList;
+
+// 明确：在包含虚拟头结点的情况下，首个保存数据的结点的索引为0！
+
+// 初始化链表
+void initLinkedList(LinkedList *list)
+{
+    // 初始化LinkedList内部的成员
+    list-&gt;size = 0;
+    list-&gt;next = NULL;
+}
+
+// 返回链表的长度
+size_t getLength(const LinkedList *list)
+{
+    return list-&gt;size;
+}
+
+// 在指定位置插入元素
+void insertAt(LinkedList *list, size_t index, int element)
+{
+
+    if (index &lt; 0 || index &gt; list-&gt;size)
+    {
+        printf(&quot;输入的index数据非法\n&quot;);
+        return;
+    }
+
+    // 插入数据的过程
+    // 1. 将数据封装到Node结构体的变量中
+    Node *node = (Node *)malloc(1 * sizeof(Node));
+    node-&gt;data = element;
+
+    // 2. 找到index的位置进行插入操作
+    if (index == 0)
+    {
+
+        node-&gt;next = list-&gt;next;
+        list-&gt;next = node;
+    }
+    else
+    {
+
+        Node *currentNode = list-&gt;next; // 指向有数据的首元素
+        for (int i = 0; i &lt; index - 1; i++)
+        {
+            currentNode = currentNode-&gt;next;
+        }
+
+        node-&gt;next = currentNode-&gt;next;
+        currentNode-&gt;next = node;
+    }
+    list-&gt;size++;
+}
+
+// 在末尾插入元素
+void insertEnd(LinkedList *list, int element)
+{
+    insertAt(list, list-&gt;size, element);
+}
+
+// 删除指定位置的元素并返回被删除的元素
+int deleteAt(LinkedList *list, size_t index)
+{
+
+    if (index &lt; 0 || index &gt;= list-&gt;size)
+    {
+        printf(&quot;输入的index不合法\n&quot;);
+        return -1;
+    }
+
+    int deleteElement;
+    Node *deleteNode;
+    if (index == 0)
+    {
+        deleteNode = list-&gt;next;
+
+        list-&gt;next = deleteNode-&gt;next;
+
+        // 获取要删除的node的数据
+        deleteElement = deleteNode-&gt;data;
+    }
+    else
+    {
+        Node *currentNode = list-&gt;next; // 指向有数据的首元素
+        for (int i = 0; i &lt; index - 1; i++)
+        {
+            currentNode = currentNode-&gt;next;
+        }
+
+        deleteNode = currentNode-&gt;next;
+        currentNode-&gt;next = deleteNode-&gt;next;
+
+        deleteElement = deleteNode-&gt;data;
+    }
+    free(deleteNode); // 释放node的内存空间
+
+    list-&gt;size--;
+
+    return deleteElement;
+}
+
+// 删除末尾元素
+int deleteEnd(LinkedList *list) {
+    deleteAt(list,list-&gt;size - 1);
+}
+
+// 获取指定位置的元素
+int getElementAt(const LinkedList *list, size_t index) {
+
+    if(index &lt; 0 || index &gt;= list-&gt;size){
+        printf(&quot;输入的index不合法\n&quot;);
+        return -1;
+    }
+
+    Node * currentNode = list-&gt;next;
+    for(int i = 0;i &lt; index ;i++){
+        currentNode = currentNode-&gt;next;
+    }
+
+    return currentNode-&gt;data;
+
+}
+
+// 修改指定位置的元素
+void modifyAt(LinkedList *list, size_t index, int newValue) {
+
+    if(index &lt; 0 || index &gt;= list-&gt;size){
+        printf(&quot;输入的index不合法\n&quot;);
+        return -1;
+    }
+
+    Node * currentNode = list-&gt;next;
+    for(int i = 0;i &lt; index ;i++){
+        currentNode = currentNode-&gt;next;
+    }
+
+    currentNode-&gt;data = newValue;
+
+}
+
+// 释放链表内存
+void destroyLinkedList(LinkedList *list) {
+
+    Node *currentNode = list-&gt;next;  //找到有数据的第1个结点
+
+    for(int i = 0;i &lt; list-&gt;size;i++){
+
+        Node *tempNode = currentNode;
+        currentNode = currentNode-&gt;next;
+
+        free(tempNode);
+
+        
+
+    }
+
+    //辅助操作
+    list-&gt;next = NULL;
+    list-&gt;size = 0;
+
+}
+
+int main()
+{
+
+    LinkedList list;
+    initLinkedList(&amp;list);
+
+    insertAt(&amp;list,0,10);
+    insertAt(&amp;list,0,20);
+    insertAt(&amp;list,0,30);
+
+    size_t count = getLength(&amp;list);
+    printf(&quot;%d\n&quot;,count);
+
+
+    getchar();  
+    return 0;
+}
+</code></pre>
+<h3 id="释放链表内存-有什么用"><a href="#释放链表内存-有什么用" class="headerlink" title="释放链表内存 有什么用"></a>释放链表内存 有什么用</h3><p>释放链表内存”的主要用途在于管理动态分配的内存，确保程序运行期间不会造成内存泄漏。下面是这一过程的重要性和作用：</p>
+<ol>
+<li><strong>防止内存泄漏</strong>：在程序中动态申请的内存（例如，通过 <code>malloc</code>）需要在不再使用时及时释放。如果在不再需要链表时不释放内存，程序会占用不必要的内存资源，从而导致内存泄漏。</li>
+<li><strong>优化内存使用</strong>：及时释放内存可以确保系统资源的有效使用，特别是在运行长时间的程序或需要频繁创建和销毁对象的情况下。</li>
+<li><strong>防止悬挂指针</strong>：在释放链表内存的同时，设置指向链表的指针（如头指针）为 <code>NULL</code> 坏境，可以避免访问已释放内存的风险。这有助于防止程序在试图访问无效内存时造成的未定义行为。</li>
+<li><strong>提高程序稳定性</strong>：良好的内存管理使得程序更加稳定和健壮，降低了崩溃的概率。</li>
+</ol>
+<h1 id="栈的定义"><a href="#栈的定义" class="headerlink" title="栈的定义"></a>栈的定义</h1><p>特点：<code>后进先出</code> (LIFO，Last In First Out)或<code>先进后出</code> (FILO，First In Last Out)的线性表。</p>
+<p> 栈顶(Top)：允许进行插入、删除操作的一端，又称为<code>表尾</code>。栈顶由一个称为栈顶指针的位置指示器（其实就是一个变量）来指示，它是动态变化的。</p>
+<p>- 栈底(Bottom)：是固定不变的，不允许进行插入和删除的一端，又称为<code>表头</code>。</p>
+<p>- 空栈：不含任何元素的空表。</p>
+<p>- 设栈S&#x3D;(a1,a2,…,an )，则a1称为栈底元素，an为栈顶元素，栈中元素按a1,a2,…,a_n的次序进栈(压栈、push)，出栈(弹栈，pop)的第一个元素应为栈顶元素，出栈顺序为：an,…,a2,a1。</p>
+<pre><code class="c">初始化栈
+void initStack(Stack *stack, size_t capacity)
+返回栈内元素个数
+size_t getSize(const Stack *stack)
+添加新元素
+void push(Stack *stack, int element)
+在末尾插入元素
+void insertEnd(LinkedList *list, int element)
+栈顶元素出栈并返回
+int pop(Stack *stack)
+释放栈内存
+void destroyStack(Stack *stack)
+</code></pre>
+<pre><code class="c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+/* 
+
+  自定义实现栈结构：使用顺序存储结构实现--&gt; 顺序栈
+
+ */
+
+typedef struct {
+
+    //存储数据的指针
+    int *data;
+    //指明存储容器的容量
+    size_t capacity;
+    //指明存储容器中实际存储的数据量
+    size_t size;
+
+}Stack;
+
+
+
+// 初始化栈
+void initStack(Stack *stack, size_t capacity)
+{
+    stack-&gt;data = (int *)malloc(capacity *sizeof(int));//动态内存分配
+    if(stack-&gt;data == NULL){
+        printf(&quot;内存分配失败\n&quot;);
+        exit(1);
+    }
+
+    stack-&gt;capacity = capacity;         
+    stack-&gt;size = 0;
+
+
+}
+
+// 返回栈内元素个数
+size_t getSize(const Stack *stack)
+{
+    
+    return stack-&gt;size;
+}
+
+// 添加新元素
+void push(Stack *stack, int element)
+{
+    //考虑是否存满了
+    if(stack-&gt;size == stack-&gt;capacity){
+        //扩容
+        resizeCapacity(stack,stack-&gt;capacity + stack-&gt;capacity &gt;&gt; 1); //扩容为原来的1.5倍
+        printf(&quot;容量已满，进行扩容操作\n&quot;);
+    }
+
+    stack-&gt;data[stack-&gt;size] = element;
+    stack-&gt;size++;
+
+}
+
+
+void resizeCapacity(Stack *stack,int newCapacity){
+
+    stack-&gt;data = (int *)realloc(stack-&gt;data,newCapacity * sizeof(int)); //扩容操作
+    stack-&gt;capacity = newCapacity; //指明新的容量值
+    
+}
+
+
+
+// 栈顶元素出栈并返回
+int pop(Stack *stack)
+{
+    //判断是否为空
+    if(stack-&gt;size == 0){
+        printf(&quot;当前栈为空,弹栈失败\n&quot;);
+        return -1;
+    }
+
+    // int popElement = stack-&gt;data[stack-&gt;size-1];
+    // stack-&gt;size--;
+
+    // return popElement;
+
+    return stack-&gt;data[--stack-&gt;size];//
+
+
+//这是一个前缀自减操作。它的作用是将 stack-&gt;size 的值减一，然后返回这个新的值。
+//例如，如果 stack-&gt;size 原本是 3，经过 --stack-&gt;size 处理后，
+//stack-&gt;size 会变为 2。这意味着我们将要弹出栈中索引为 2 的元素（即第三个元素，因为索引从 0 开始）。
+}
+
+// 释放栈内存
+void destroyStack(Stack *stack)
+{
+    free(stack-&gt;data);
+    stack-&gt;data = NULL;
+    stack-&gt;capacity = 0;
+    stack-&gt;size = 0;
+}
+
+//遍历栈中的元素
+void print(Stack *stack){
+    for(int i = 0;i &lt; stack-&gt;size;i++){
+        printf(&quot;%d  &quot;,stack-&gt;data[i]);
+    }
+    printf(&quot;\n&quot;);
+    
+}
+
+
+int main()
+{
+
+    //声明结构体变量
+    Stack myStack;
+
+    initStack(&amp;myStack,3);
+
+    push(&amp;myStack,1);
+    push(&amp;myStack,2);
+    push(&amp;myStack,3);
+    push(&amp;myStack,4);
+
+
+    printf(&quot;栈中元素的个数为：%d\n&quot;,getSize(&amp;myStack));
+
+    print(&amp;myStack);
+
+    printf(&quot;弹栈，弹出的数据是：%d\n&quot;,pop(&amp;myStack));
+    printf(&quot;弹栈，弹出的数据是：%d\n&quot;,pop(&amp;myStack));
+
+
+    print(&amp;myStack);
+
+    getchar();
+
+    return 0;
+}
+</code></pre>
+<h2 id="线性结构之队列"><a href="#线性结构之队列" class="headerlink" title="线性结构之队列"></a>线性结构之队列</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>队列(Queue)：也是操作受限的线性表，限制为仅允许在表的一端进行插入(入队或进队），在表的另一端进行删除(出队或离队)操作。</p>
+<p>- 队首(front) ：允许进行删除的一端称为队首。</p>
+<p>- 队尾(rear)： 允许进行插入的一端称为队尾。</p>
+<p>在空队列中依次加入元素a1,a2, …, an之后，a1是队首元素，an是队尾元素。显然退出队列的次序也只能是a1,a2, …, an。队列，是一种先进先出(First In First Out ，简称FIFO)的线性结构。类似于生活中的排队行为。</p>
+<p><img src="C:\Users\Administrator.OMEN\AppData\Roaming\Typora\typora-user-images\image-20241111205010221.png" alt="image-20241111205010221"></p>
+<p>队列中没有元素时，称为空队列。</p>
+<h3 id="队列的存储结构"><a href="#队列的存储结构" class="headerlink" title="队列的存储结构"></a>队列的存储结构</h3><p>可用顺序表(数组)和链表来存储队列，队列按存储结构可分为顺序队列和链式队列两种。</p>
+<h3 id="功能定义"><a href="#功能定义" class="headerlink" title="功能定义"></a>功能定义</h3><pre><code class="c">初始化队列
+void initQueue(Queue *queue, size_t capacity)
+返回队列内元素个数
+size_t getSize(const Queue *queue)
+添加新元素
+void enqueue(Queue *queue, int element)
+元素出队列
+int dequeue(Queue *queue)
+释放队列内存
+void destroyQueue(Queue *queue)
+遍历队列
+void printQueue(Queue *queue)
+</code></pre>
+<pre><code class="c">
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+/* 
+    自定义结构实现队列：使用循环队列
+
+ */
+
+
+//声明队列对应的结构体
+typedef struct{
+
+    int *data;
+    int capacity; //记录存储的最大容量
+    int size ; //记录存储的元素的个数
+    int front ;  //记录要出队的索引位置
+    int rear;  //记录入队后的索引位置
+
+
+}Queue;
+
+
+
+// 初始化队列
+void initQueue(Queue *queue, size_t capacity)
+{
+    queue-&gt;data = (int *)malloc(capacity * sizeof(int));
+    queue-&gt;capacity = capacity;
+    queue-&gt;size = 0;
+    queue-&gt;front = 0;
+    queue-&gt;rear = 0;
+}
+
+// 返回队列内元素个数
+size_t getSize(const Queue *queue)
+{
+    return queue-&gt;size;    
+}
+
+// 添加新元素
+void enqueue(Queue *queue, int element)
+{
+    if(queue-&gt;size == queue-&gt;capacity){
+        //容量已满
+        printf(&quot;队列已满，入队失败\n&quot;);
+        return;
+    }
+
+    queue-&gt;data[queue-&gt;rear] = element;
+    queue-&gt;size++;
+    //queue-&gt;rear++; //存在问题，需要使用下面的方式替换
+
+    queue-&gt;rear = (queue-&gt;rear + 1) % queue-&gt;capacity;
+}
+
+// 元素出队列
+int dequeue(Queue *queue)
+{
+    // if(queue-&gt;front == queue-&gt;rear);//此语句满足的情况：① 队列为空 ② 队列已满
+    if(queue-&gt;size == 0){
+        printf(&quot;队列为空，出队失败\n&quot;);
+        return -1;
+    }
+
+    int dequeueData = queue-&gt;data[queue-&gt;front];
+    queue-&gt;size--;
+
+    queue-&gt;front = (queue-&gt;front + 1) % queue-&gt;capacity;
+
+    return dequeueData;
+
+}
+
+// 释放队列内存
+void destroyQueue(Queue *queue)
+{
+    free(queue-&gt;data);
+    queue-&gt;data = NULL;
+    queue-&gt;capacity = 0;
+    queue-&gt;size = 0;
+    queue-&gt;front = 0;
+    queue-&gt;rear = 0;
+}
+
+
+//遍历队列
+void printQueue(Queue *queue){
+    
+    for(int i = queue-&gt;front,j = 0;j &lt; queue-&gt;size;i++,j++){
+
+
+        printf(&quot;%d  &quot;,queue-&gt;data[i % queue-&gt;capacity]);
+    }
+
+    printf(&quot;\n&quot;);
+
+
+}
+
+
+
+
+int main()
+{
+
+    Queue myQueue;
+
+    initQueue(&amp;myQueue,3);
+
+    enqueue(&amp;myQueue,1);
+    enqueue(&amp;myQueue,2);
+    enqueue(&amp;myQueue,3);
+    enqueue(&amp;myQueue,4); //已满，未入队
+
+    printQueue(&amp;myQueue);
+
+    printf(&quot;出队，元素是：%d\n&quot;,dequeue(&amp;myQueue));
+    printf(&quot;出队，元素是：%d\n&quot;,dequeue(&amp;myQueue));
+
+    printQueue(&amp;myQueue);
+
+    enqueue(&amp;myQueue,5);
+    enqueue(&amp;myQueue,6);
+
+    printQueue(&amp;myQueue);
+
+
+    getchar();
+
+
+    return 0;
+}
+</code></pre>
