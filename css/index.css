@@ -178,6 +178,10 @@ template {
 [hidden] {
   display: none
 }
+body {
+  background-color: #f8f5f0;
+  min-height: 100vh;
+}
 .limit-one-line,
 .container .flink .flink-item-name,
 .container .flink .flink-item-desc,
@@ -3482,10 +3486,7 @@ figure.highlight pre .javascript .function {
 #page-header {
   position: relative;
   width: 100%;
-  background-color: #6c7a89;
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
+  background-color: #f8f5f0;
   -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;
   -o-transition: all 0.5s;
