@@ -1,0 +1,623 @@
+<hr>
+<h2 id="title-Makefileѧϰdate-2024-08-06-19-50-16updata-2024-08-06-19-55-16"><a href="#title-Makefileѧϰdate-2024-08-06-19-50-16updata-2024-08-06-19-55-16" class="headerlink" title="title: Makefileѧϰdate: 2024-08-06 19:50:16updata: 2024-08-06 19:55:16"></a>title: Makefileѧϰ<br>date: 2024-08-06 19:50:16<br>updata: 2024-08-06 19:55:16</h2><p>以下是一些推荐的学习Makefile的网站和资源，可以帮助你快速掌握Makefile的常用规则、结构和示例：</p>
+<ol>
+<li><strong>廖雪峰的官方网站</strong><br>廖雪峰的Makefile教程从基础概念讲起，通过简单易懂的例子逐步深入，非常适合作为入门学习。<br>网址：<a href="https://liaoxuefeng.com/books/makefile/makefile-basic/">Makefile基础 - Makefile教程 - 廖雪峰的官方网站</a></li>
+<li><strong>腾讯云技术文档</strong><br>腾讯云上有一篇关于Makefile的详细解释和示例，涵盖了从基础到进阶的内容，包括如何编写Makefile以及一些高级用法。<br>网址：<a href="https://cloud.tencent.com/developer/article/1065286">超清晰的makefile解释、编写与示例 - 腾讯云</a></li>
+<li><strong>博客园 - Makefile语法总结</strong><br>这篇文章总结了Makefile的常用语法和规则，并通过具体示例进行解析，适合有一定基础的读者深入学习。<br>网址：<a href="https://www.cnblogs.com/zxdplay/p/17782281.html">Makefile语法详细总结及示例解析（快速掌握）</a></li>
+<li><strong>CSDN博客 - Makefile教程</strong><br>CSDN上有许多关于Makefile的教程和示例，其中一些文章提供了详细的规则和实际项目中的Makefile模板。<br>网址：<a href="https://blog.csdn.net/weixin_46097907/article/details/135816235">makefile常用的命令总结及简单示例 - CSDN博客</a></li>
+<li><strong>GitHub Pages - Makefile教程</strong><br>这是一个开源的Makefile教程，提供了从入门到高级的详细内容，并且包含了许多实用的示例。<br>网址：<a href="https://gavinliu6.github.io/Makefile-Tutorial-zh-CN/">Makefile 教程 - GitHub Pages</a></li>
+<li><strong>CSDN博客 - 通用Makefile模板</strong><br>这篇文章提供了一个通用的Makefile模板，适用于C++项目的编译和链接，是一个很好的参考。<br>网址：<a href="https://blog.csdn.net/wg_cheeky/article/details/108014390">makeFile基本介绍, 语法, 示例,通用makefile - CSDN博客</a></li>
+</ol>
+<h3 id="Makefile-的基本概念"><a href="#Makefile-的基本概念" class="headerlink" title="Makefile 的基本概念"></a>Makefile 的基本概念</h3><ul>
+<li><strong>定义</strong>：Makefile 是一个用于自动化编译和构建项目的文件，它描述了工程的编译、链接等规则，包括哪些源文件需要编译、如何编译、如何生成目标文件等。</li>
+<li><strong>作用</strong>：通过编写 Makefile，可以使用 <code>make</code> 命令工具来自动化编译过程，避免手动输入繁琐的编译命令，提高开发效率。</li>
+</ul>
+<h3 id="Makefile-的基本结构"><a href="#Makefile-的基本结构" class="headerlink" title="Makefile 的基本结构"></a>Makefile 的基本结构</h3><ul>
+<li><strong>变量定义</strong>：用于简化和统一文件名或命令的书写。例如：<ul>
+<li><code>CC = gcc</code>：定义编译器为 gcc。</li>
+<li><code>CFLAGS = -Wall -g</code>：定义编译选项，<code>-Wall</code> 显示所有警告，<code>-g</code> 启用调试信息。</li>
+<li><code>TARGET = my_program</code>：定义目标文件名为 <code>my_program</code>。</li>
+<li><code>OBJECTS = main.o utils.o</code>：定义目标文件列表。</li>
+</ul>
+</li>
+<li><strong>规则定义</strong>：指定目标文件、依赖文件和生成目标文件的命令。基本格式如下：<ul>
+<li><code>target: dependencies</code>：目标文件和依赖文件。</li>
+<li><code>command</code>：生成目标文件的命令，必须以 Tab 键开始。</li>
+</ul>
+</li>
+<li><strong>伪目标</strong>：用于执行一些特定的操作，如清理编译生成的文件。例如：<ul>
+<li><code>.PHONY: clean</code>：声明 <code>clean</code> 是一个伪目标。</li>
+<li><code>clean:</code>：定义清理操作的命令。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Makefile-的基本语法"><a href="#Makefile-的基本语法" class="headerlink" title="Makefile 的基本语法"></a>Makefile 的基本语法</h3><ul>
+<li><p><strong>目标和依赖</strong>：目标是要生成的文件，依赖是生成目标所需要的文件。基本格式如下：</p>
+<ul>
+<li><code>target: dependencies</code>：目标文件和依赖文件。</li>
+<li><code>command</code>：生成目标文件的命令，必须以 Tab 键开始。</li>
+</ul>
+</li>
+<li><p><strong>内置变量</strong>：Makefile 提供了一些内置变量，常用的包括：</p>
+<ul>
+<li><code>$@</code>：目标文件的名称。</li>
+<li><code>$^</code>：所有依赖文件的名称。</li>
+<li><code>$&lt;</code>：第一个依赖文件的名称。</li>
+</ul>
+<p>  <img src="C:\Users\Administrator.OMEN\AppData\Roaming\Typora\typora-user-images\image-20250423142456075.png" alt="image-20250423142456075"></p>
+</li>
+<li><p><strong>通配符</strong>：用于匹配文件名或文件路径中的多个字符，以便在规则中批量处理文件。常见的通配符有：</p>
+<ul>
+<li><code>*</code>：匹配零个或多个字符。</li>
+<li><code>?</code>：匹配一个任意字符。</li>
+<li><code>[...]</code>：匹配方括号内的任意一个字符。</li>
+<li><code>[!...]</code>：匹配除了方括号内的字符之外的任意一个字符。</li>
+</ul>
+</li>
+<li><p><strong>模式规则</strong>：用于定义一种模式，告诉 Make 工具如何将一类文件转换成另一类文件。例如：</p>
+<ul>
+<li><code>%.o: %.c</code>：表示所有以 <code>.c</code> 结尾的源文件都可以生成对应的 <code>.o</code> 目标文件。</li>
+</ul>
+</li>
+<li><p><strong>自动化变量</strong>：在规则的命令中使用，代表了与规则相关联的文件名。常用的自动化变量包括：</p>
+<ul>
+<li><code>$@</code>：表示规则中的目标文件名。</li>
+<li><code>$&lt;</code>：表示规则中的第一个依赖文件名。</li>
+<li><code>$^</code>：表示规则中的所有依赖文件名，以空格分隔。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Makefile-的实际应用"><a href="#Makefile-的实际应用" class="headerlink" title="Makefile 的实际应用"></a>Makefile 的实际应用</h3><ul>
+<li><strong>简单示例</strong>：<ul>
+<li>假设有一个简单的 C 项目，包含 <code>main.c</code> 和 <code>utils.c</code> 两个源文件 ，目标是生成可执行文件 <code>my_program</code>。Makefile 内容如下：<ul>
+<li><pre><code class="makefile">CC = gcc
+CFLAGS = -Wall -g
+TARGET = my_program
+OBJECTS = main.o utils.o
+all: $(TARGET)
+$(TARGET): $(OBJECTS)
+    $(CC) $(CFLAGS) -o $(TARGET) $(OBJECTS)
+main.o: main.c
+    $(CC) $(CFLAGS) -c main.c
+utils.o: utils.c
+    $(CC) $(CFLAGS) -c utils.c
+.PHONY: clean
+clean:
+    rm -f $(TARGET) $(OBJECTS)
+</code></pre>
+</li>
+</ul>
+</li>
+<li>在项目目录中执行 <code>make</code> 命令即可编译项目，执行 <code>make clean</code> 命令可以清理编译生成的文件。</li>
+</ul>
+</li>
+<li><strong>复杂项目</strong>：<ul>
+<li>对于复杂的嵌入式 Linux 项目，可能包含多个源文件、头文件、汇编文件等，需要更复杂的 Makefile 来管理。例如：<ul>
+<li><pre><code class="makefile">CROSS_COMPILE  ?= arm-linux-gnueabihf-
+TARGET		   ?= bsp
+CC 				:= $(CROSS_COMPILE)gcc
+LD				:= $(CROSS_COMPILE)ld
+OBJCOPY 		:= $(CROSS_COMPILE)objcopy
+OBJDUMP 		:= $(CROSS_COMPILE)objdump
+INCDIRS 		:= imx6ul \
+                   bsp/clk \
+                   bsp/led \
+                   bsp/delay
+SRCDIRS			:= project \
+                   bsp/clk \
+                   bsp/led \
+                   bsp/delay
+INCLUDE			:= $(patsubst %, -I %, $(INCDIRS))
+SFILES			:= $(foreach dir, $(SRCDIRS), $(wildcard $(dir)/*.S))
+CFILES			:= $(foreach dir, $(SRCDIRS), $(wildcard $(dir)/*.c))
+SFILENDIR		:= $(notdir  $(SFILES))
+CFILENDIR		:= $(notdir  $(CFILES))
+SOBJS			:= $(patsubst %, obj/%, $(SFILENDIR:.S=.o))
+COBJS			:= $(patsubst %, obj/%, $(CFILENDIR:.c=.o))
+OBJS			:= $(SOBJS) $(COBJS)
+VPATH			:= $(SRCDIRS)
+.PHONY: clean
+$(TARGET).bin : $(OBJS)
+    $(LD) -Timx6ul.lds -o $(TARGET).elf $^
+    $(OBJCOPY) -O binary -S $(TARGET).elf $@
+    $(OBJDUMP) -D -m arm $(TARGET).elf &gt; $(TARGET).dis
+$(SOBJS) : obj/%.o : %.S
+    $(CC) -Wall -nostdlib -c -O2  $(INCLUDE) -o $@ $&lt;
+$(COBJS) : obj/%.o : %.c
+    $(CC) -Wall -nostdlib -c -O2  $(INCLUDE) -o $@ $&lt;
+clean:
+    rm -rf $(TARGET).elf $(TARGET).dis $(TARGET).bin $(COBJS) $(SOBJS)
+</code></pre>
+</li>
+</ul>
+</li>
+<li>该 Makefile 使用了交叉编译工具链，支持多个源文件和汇编文件的编译，生成二进制可执行文件、ELF 格式文件和反汇编文件。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Makefile-的调试"><a href="#Makefile-的调试" class="headerlink" title="Makefile 的调试"></a>Makefile 的调试</h3><ul>
+<li><strong>查看 <code>make</code> 过程</strong>：使用 <code>make -n</code> 命令可以显示将会执行的命令，但不会实际执行。</li>
+<li><strong>增加详细输出</strong>：使用 <code>make --debug</code> 命令可以提供详细的调试信息，帮助排查问题。</li>
+</ul>
+<h3 id="Makefile-的高级功能"><a href="#Makefile-的高级功能" class="headerlink" title="Makefile 的高级功能"></a>Makefile 的高级功能</h3><ul>
+<li><p><strong>条件语句</strong>：可以根据不同的条件执行不同的规则或设置变量。常见的条件语句有 <code>ifeq</code>、<code>ifneq</code>、<code>ifdef</code>、<code>ifndef</code>。</p>
+<ul>
+<li>示例：根据操作系统设置不同的编译选项。<ul>
+<li><pre><code class="makefile">CC = gcc
+CFLAGS = -Wall -g
+ifeq ($(OS),Windows_NT)
+    CFLAGS += -DWIN32
+else
+    CFLAGS += -DUNIX
+endif
+TARGET = my_program
+SRCS = main.c utils.c
+all: $(TARGET)
+$(TARGET): $(SRCS)
+    $(CC) $(CFLAGS) -o $(TARGET) $(SRCS)
+clean:
+    rm -f $(TARGET)
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>使用函数</strong>：Makefile 提供了一些内建函数，帮助处理字符串和文件操作等任务。常用函数包括：</p>
+<ul>
+<li><code>$(wildcard pattern)</code>：返回匹配模式的所有文件。</li>
+<li><code>$(patsubst pattern,replacement,text)</code>：用指定的替换文本替换模式。</li>
+<li><code>$(basename names)</code>：去除文件名的扩展名部分。</li>
+<li><code>$(dir names)</code>：返回文件的目录路径。</li>
+<li>示例：使用 <code>wildcard</code> 和 <code>patsubst</code>。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="Makefile基础笔记"><a href="#Makefile基础笔记" class="headerlink" title="Makefile基础笔记"></a><strong>Makefile基础笔记</strong></h3><h4 id="1-Makefile概述"><a href="#1-Makefile概述" class="headerlink" title="1. Makefile概述"></a><strong>1. Makefile概述</strong></h4><ul>
+<li><p><strong>Makefile的作用</strong>：</p>
+<ul>
+<li>在Linux环境下，<code>make</code>命令会查找当前目录下的<code>Makefile</code>文件。</li>
+<li>根据Makefile中定义的规则，<code>make</code>可以自动化地执行命令，例如编译源代码、生成目标文件等。</li>
+<li>Makefile的核心思想是通过定义规则来描述如何生成目标文件。</li>
+</ul>
+</li>
+<li><p><strong>基本逻辑示例</strong>：</p>
+<ul>
+<li>假设有文件<code>a.txt</code>、<code>b.txt</code>和<code>c.txt</code>，需要先合并<code>a.txt</code>和<code>b.txt</code>生成中间文件<code>m.txt</code>，再将<code>m.txt</code>与<code>c.txt</code>合并生成最终文件<code>x.txt</code>。</li>
+<li>Makefile通过规则定义这种依赖关系和生成过程。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-Makefile规则的基本格式"><a href="#2-Makefile规则的基本格式" class="headerlink" title="2. Makefile规则的基本格式"></a><strong>2. Makefile规则的基本格式</strong></h4><ul>
+<li><p><strong>规则格式</strong>：</p>
+<pre><code>目标文件: 依赖文件1 依赖文件2 ...
+    命令1
+    命令2
+    ...
+</code></pre>
+<ul>
+<li><strong>目标文件</strong>：需要生成的文件。</li>
+<li><strong>依赖文件</strong>：生成目标文件所需的文件。</li>
+<li><strong>命令</strong>：用于生成目标文件的具体命令，必须以Tab键开头。</li>
+</ul>
+</li>
+<li><p><strong>示例</strong>：</p>
+<pre><code class="makefile">m.txt: a.txt b.txt
+    cat a.txt b.txt &gt; m.txt
+
+x.txt: m.txt c.txt
+    cat m.txt c.txt &gt; x.txt
+</code></pre>
+<ul>
+<li><code>m.txt</code>依赖于<code>a.txt</code>和<code>b.txt</code>，通过<code>cat</code>命令合并生成。</li>
+<li><code>x.txt</code>依赖于<code>m.txt</code>和<code>c.txt</code>，同样通过<code>cat</code>命令生成。</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-Makefile的执行逻辑"><a href="#3-Makefile的执行逻辑" class="headerlink" title="3. Makefile的执行逻辑"></a><strong>3. Makefile的执行逻辑</strong></h4><ul>
+<li><p><strong>增量编译</strong>：</p>
+<ul>
+<li><code>make</code>会检查目标文件和依赖文件的修改时间。</li>
+<li>如果目标文件的修改时间晚于所有依赖文件，则认为目标文件是最新的，不会重新生成。</li>
+<li>如果依赖文件中的任何一个被修改，则会重新执行规则生成目标文件。</li>
+</ul>
+</li>
+<li><p><strong>默认规则</strong>：</p>
+<ul>
+<li><code>make</code>默认执行Makefile中的第一条规则。</li>
+<li>例如，如果要生成<code>x.txt</code>，<code>make</code>会先检查<code>m.txt</code>是否存在，如果不存在则先生成<code>m.txt</code>，然后再生成<code>x.txt</code>。</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-伪目标（Phony-Target）"><a href="#4-伪目标（Phony-Target）" class="headerlink" title="4. 伪目标（Phony Target）"></a><strong>4. 伪目标（Phony Target）</strong></h4><ul>
+<li><p><strong>定义</strong>：</p>
+<ul>
+<li>伪目标不是实际的文件名，而是用于执行特定任务的规则。</li>
+<li>例如，<code>clean</code>规则通常用于删除生成的文件。</li>
+</ul>
+</li>
+<li><p><strong>示例</strong>：</p>
+<pre><code class="makefile">clean:
+    rm -f m.txt x.txt
+</code></pre>
+<ul>
+<li>执行<code>make clean</code>会删除<code>m.txt</code>和<code>x.txt</code>。</li>
+</ul>
+</li>
+<li><p><strong>避免冲突</strong>：</p>
+<ul>
+<li>如果存在名为<code>clean</code>的文件，<code>make clean</code>可能不会执行。</li>
+<li>可以使用<code>.PHONY</code>声明伪目标：<pre><code class="makefile">.PHONY: clean
+clean:
+    rm -f m.txt x.txt
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-执行多条命令"><a href="#5-执行多条命令" class="headerlink" title="5. 执行多条命令"></a><strong>5. 执行多条命令</strong></h4><ul>
+<li><p><strong>独立命令</strong>：</p>
+<ul>
+<li>每条命令默认在独立的Shell环境中执行。</li>
+<li>例如，<code>cd</code>命令不会影响后续命令的执行环境。</li>
+</ul>
+</li>
+<li><p><strong>多条命令的写法</strong>：</p>
+<ul>
+<li>使用<code>;</code>分隔命令：<pre><code class="makefile">cd_ok:
+    pwd; cd ..; pwd
+</code></pre>
+</li>
+<li>使用<code>\</code>换行：<pre><code class="makefile">cd_ok:
+    pwd; \
+    cd ..; \
+    pwd
+</code></pre>
+</li>
+<li>使用<code>&amp;&amp;</code>确保命令顺序执行：<pre><code class="makefile">cd_ok:
+    pwd &amp;&amp; cd .. &amp;&amp; pwd
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="6-控制命令输出"><a href="#6-控制命令输出" class="headerlink" title="6. 控制命令输出"></a><strong>6. 控制命令输出</strong></h4><ul>
+<li><strong>隐藏命令输出</strong>：<ul>
+<li>在命令前加<code>@</code>可以隐藏命令的打印输出，但命令仍然会执行。</li>
+<li>示例：<pre><code class="makefile">no_output:
+    @echo &#39;not display&#39;
+    echo &#39;will display&#39;
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="7-错误处理"><a href="#7-错误处理" class="headerlink" title="7. 错误处理"></a><strong>7. 错误处理</strong></h4><ul>
+<li><p><strong>默认行为</strong>：</p>
+<ul>
+<li>如果命令返回非0值，<code>make</code>会中断执行并报错。</li>
+</ul>
+</li>
+<li><p><strong>忽略错误</strong>：</p>
+<ul>
+<li>在命令前加<code>-</code>可以忽略错误，继续执行后续命令。</li>
+<li>示例：<pre><code class="makefile">ignore_error:
+    -rm zzz.txt
+    echo &#39;ok&#39;
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="8-总结"><a href="#8-总结" class="headerlink" title="8. 总结"></a>8. 总结</h4><p>Makefile通过定义规则来自动化生成目标文件，核心在于描述目标文件与依赖文件之间的关系以及生成目标文件的具体命令。掌握以下要点：</p>
+<ul>
+<li>规则的基本格式：目标文件、依赖文件和命令。</li>
+<li>增量编译的逻辑：基于文件的修改时间。</li>
+<li>伪目标的使用：如<code>clean</code>。</li>
+<li>多条命令的写法：使用<code>;</code>、<code>\</code>或<code>&amp;&amp;</code>。</li>
+<li>控制命令输出：使用<code>@</code>。</li>
+<li>错误处理：使用<code>-</code>忽略错误。</li>
+</ul>
+<hr>
+<hr>
+<h3 id="编译C程序-Makefile教程笔记"><a href="#编译C程序-Makefile教程笔记" class="headerlink" title="编译C程序 - Makefile教程笔记"></a><strong>编译C程序 - Makefile教程笔记</strong></h3><h4 id="1-C程序编译的基本步骤"><a href="#1-C程序编译的基本步骤" class="headerlink" title="1. C程序编译的基本步骤"></a><strong>1. C程序编译的基本步骤</strong></h4><p>编译C程序通常分为两步：</p>
+<ol>
+<li><strong>编译阶段</strong>：将每个<code>.c</code>文件编译为<code>.o</code>文件（目标文件）。</li>
+<li><strong>链接阶段</strong>：将所有<code>.o</code>文件链接为最终的可执行文件。</li>
+</ol>
+<h4 id="2-示例项目结构"><a href="#2-示例项目结构" class="headerlink" title="2. 示例项目结构"></a><strong>2. 示例项目结构</strong></h4><p>假设一个简单的C项目，包含以下文件：</p>
+<ul>
+<li><code>hello.c</code>：定义了一个<code>hello</code>函数。</li>
+<li><code>hello.h</code>：声明了<code>hello</code>函数。</li>
+<li><code>main.c</code>：主程序，调用了<code>hello</code>函数。</li>
+</ul>
+<p><strong>文件内容</strong>：</p>
+<ul>
+<li>**<code>hello.c</code>**：<pre><code class="c">#include &lt;stdio.h&gt;
+
+int hello() {
+    printf(&quot;hello, world!\n&quot;);
+    return 0;
+}
+</code></pre>
+</li>
+<li>**<code>hello.h</code>**：<pre><code class="c">int hello();
+</code></pre>
+</li>
+<li>**<code>main.c</code>**：<pre><code class="c">#include &lt;stdio.h&gt;
+#include &quot;hello.h&quot;
+
+int main() {
+    printf(&quot;start...\n&quot;);
+    hello();
+    printf(&quot;exit.\n&quot;);
+    return 0;
+}
+</code></pre>
+</li>
+</ul>
+<h4 id="3-Makefile编写"><a href="#3-Makefile编写" class="headerlink" title="3. Makefile编写"></a><strong>3. Makefile编写</strong></h4><p>根据上述项目结构，Makefile可以定义如下规则：</p>
+<pre><code class="makefile"># 生成可执行文件
+world.out: hello.o main.o
+    cc -o world.out hello.o main.o
+
+# 编译 hello.c
+hello.o: hello.c
+    cc -c hello.c
+
+# 编译 main.c
+main.o: main.c hello.h
+    cc -c main.c
+
+# 清理生成的文件
+clean:
+    rm -f *.o world.out
+</code></pre>
+<h4 id="4-Makefile执行逻辑"><a href="#4-Makefile执行逻辑" class="headerlink" title="4. Makefile执行逻辑"></a><strong>4. Makefile执行逻辑</strong></h4><ul>
+<li><p><strong>增量编译</strong>：</p>
+<ul>
+<li><code>make</code>会根据文件的修改时间来判断是否需要重新编译。</li>
+<li>如果<code>hello.c</code>被修改，<code>make</code>会重新编译<code>hello.c</code>生成<code>hello.o</code>，并重新链接生成<code>world.out</code>。</li>
+<li>如果<code>hello.h</code>被修改，<code>make</code>会重新编译所有依赖<code>hello.h</code>的文件（如<code>main.c</code>），并重新链接生成<code>world.out</code>。</li>
+</ul>
+</li>
+<li><p><strong>执行过程</strong>：</p>
+<ul>
+<li>初始运行<code>make</code>时，会依次执行以下步骤：<ol>
+<li>编译<code>hello.c</code>生成<code>hello.o</code>。</li>
+<li>编译<code>main.c</code>生成<code>main.o</code>。</li>
+<li>链接<code>hello.o</code>和<code>main.o</code>生成<code>world.out</code>。</li>
+</ol>
+</li>
+<li>如果修改了<code>hello.c</code>，再次运行<code>make</code>时，只会重新编译<code>hello.c</code>并重新链接<code>world.out</code>。</li>
+<li>如果修改了<code>hello.h</code>，<code>make</code>会重新编译<code>main.c</code>并重新链接<code>world.out</code>。</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-清理规则"><a href="#5-清理规则" class="headerlink" title="5. 清理规则"></a><strong>5. 清理规则</strong></h4><ul>
+<li><strong><code>clean</code>规则</strong>：<ul>
+<li>用于删除所有生成的文件，包括<code>.o</code>文件和可执行文件。</li>
+<li>执行命令：<code>make clean</code>。</li>
+<li>示例：<pre><code class="makefile">clean:
+    rm -f *.o world.out
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="6-规则优化"><a href="#6-规则优化" class="headerlink" title="6. 规则优化"></a><strong>6. 规则优化</strong></h4><p>随着项目规模的扩大，手动维护Makefile中的规则会变得繁琐。后续可以学习如何使用变量、模式规则等高级特性来简化Makefile的编写。</p>
+<h4 id="7-小结"><a href="#7-小结" class="headerlink" title="7. 小结"></a><strong>7. 小结</strong></h4><ul>
+<li><strong>Makefile的作用</strong>：通过定义规则，<code>make</code>可以自动化编译C程序。</li>
+<li><strong>规则的基本格式</strong>：<pre><code>目标文件: 依赖文件
+    命令
+</code></pre>
+</li>
+<li><strong>增量编译</strong>：<code>make</code>根据文件的修改时间来决定是否重新编译。</li>
+<li><strong>清理规则</strong>：使用<code>clean</code>规则删除生成的文件，方便重新编译。</li>
+</ul>
+<p>以下是根据廖雪峰的《使用隐式规则》教程整理的笔记，主要介绍了Makefile中隐式规则的概念、使用方法以及其潜在问题。</p>
+<hr>
+<h3 id="使用隐式规则-Makefile教程笔记"><a href="#使用隐式规则-Makefile教程笔记" class="headerlink" title="使用隐式规则 - Makefile教程笔记"></a><strong>使用隐式规则 - Makefile教程笔记</strong></h3><h4 id="1-隐式规则的概念"><a href="#1-隐式规则的概念" class="headerlink" title="1. 隐式规则的概念"></a><strong>1. 隐式规则的概念</strong></h4><ul>
+<li><p><strong>隐式规则（Implicit Rule）</strong>：</p>
+<ul>
+<li>Makefile中的一种特殊规则，用于自动推导目标文件的生成规则。</li>
+<li>当Makefile中没有明确定义某个目标文件的规则时，<code>make</code>会尝试使用内置的隐式规则来生成该目标文件。</li>
+</ul>
+</li>
+<li><p><strong>内置规则的作用</strong>：</p>
+<ul>
+<li>为了简化Makefile的编写，<code>make</code>为常见的编译任务（如C、C++、ASM等）提供了默认的隐式规则。</li>
+<li>例如，对于C程序，<code>make</code>会自动应用以下隐式规则：<pre><code>xyz.o: xyz.c
+    cc -c -o xyz.o xyz.c
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-示例：隐式规则的应用"><a href="#2-示例：隐式规则的应用" class="headerlink" title="2. 示例：隐式规则的应用"></a><strong>2. 示例：隐式规则的应用</strong></h4><p>假设有一个C项目，包含<code>hello.c</code>、<code>main.c</code>和<code>hello.h</code>，目标是生成可执行文件<code>world.out</code>。</p>
+<p><strong>项目结构</strong>：</p>
+<ul>
+<li><code>hello.c</code>：定义了一个<code>hello</code>函数。</li>
+<li><code>hello.h</code>：声明了<code>hello</code>函数。</li>
+<li><code>main.c</code>：主程序，调用了<code>hello</code>函数。</li>
+</ul>
+<p><strong>Makefile</strong>：</p>
+<pre><code class="makefile"># 只保留生成 world.out 的规则
+world.out: hello.o main.o
+    cc -o world.out hello.o main.o
+
+clean:
+    rm -f *.o world.out
+</code></pre>
+<p><strong>执行过程</strong>：</p>
+<ul>
+<li>执行<code>make</code>命令时，<code>make</code>会自动推导出<code>hello.o</code>和<code>main.o</code>的生成规则：<ul>
+<li><code>hello.o</code>依赖于<code>hello.c</code>，使用<code>cc -c -o hello.o hello.c</code>生成。</li>
+<li><code>main.o</code>依赖于<code>main.c</code>，使用<code>cc -c -o main.o main.c</code>生成。</li>
+</ul>
+</li>
+<li>最后，<code>make</code>会链接<code>hello.o</code>和<code>main.o</code>生成<code>world.out</code>。</li>
+</ul>
+<p><strong>输出</strong>：</p>
+<pre><code class="bash">$ make
+cc    -c -o hello.o hello.c
+cc    -c -o main.o main.c
+cc -o world.out hello.o main.o
+</code></pre>
+<h4 id="3-隐式规则的优势"><a href="#3-隐式规则的优势" class="headerlink" title="3. 隐式规则的优势"></a><strong>3. 隐式规则的优势</strong></h4><ul>
+<li><strong>减少重复规则</strong>：<ul>
+<li>隐式规则可以减少Makefile中大量重复的编译规则。</li>
+<li>例如，对于多个<code>.c</code>文件，无需为每个文件单独编写<code>.o</code>文件的生成规则。</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-隐式规则的潜在问题"><a href="#4-隐式规则的潜在问题" class="headerlink" title="4. 隐式规则的潜在问题"></a><strong>4. 隐式规则的潜在问题</strong></h4><ul>
+<li><strong>无法跟踪头文件的修改</strong>：<ul>
+<li>隐式规则的一个主要问题是无法自动跟踪头文件（如<code>.h</code>文件）的修改。</li>
+<li>例如，如果修改了<code>hello.h</code>，隐式规则<code>main.o: main.c</code>不会自动检测到<code>hello.h</code>的修改，导致<code>main.c</code>不会被重新编译。</li>
+<li>这可能导致生成的可执行文件中包含过时的代码。</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-解决隐式规则的潜在问题"><a href="#5-解决隐式规则的潜在问题" class="headerlink" title="5. 解决隐式规则的潜在问题"></a><strong>5. 解决隐式规则的潜在问题</strong></h4><ul>
+<li><p><strong>手动添加依赖</strong>：</p>
+<ul>
+<li>为了确保头文件的修改能够触发重新编译，需要手动在Makefile中添加头文件的依赖关系。</li>
+<li>例如：<pre><code class="makefile">main.o: main.c hello.h
+    cc -c main.c
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p><strong>自动生成依赖文件</strong>：</p>
+<ul>
+<li>在实际项目中，可以通过工具（如<code>gcc -M</code>）自动生成依赖文件，并将其包含在Makefile中。</li>
+<li>例如，使用<code>gcc -M</code>生成依赖文件：<pre><code class="bash">gcc -M main.c &gt; main.d
+</code></pre>
+</li>
+<li>然后在Makefile中包含这些依赖文件：<pre><code class="makefile">-include main.d
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="6-小结"><a href="#6-小结" class="headerlink" title="6. 小结"></a><strong>6. 小结</strong></h4><ul>
+<li><strong>隐式规则的作用</strong>：减少重复的编译规则，简化Makefile的编写。</li>
+<li><strong>隐式规则的潜在问题</strong>：无法自动跟踪头文件的修改，可能导致生成的可执行文件包含过时代码。</li>
+<li><strong>解决方法</strong>：手动添加头文件依赖或使用工具自动生成依赖文件。</li>
+</ul>
+<hr>
+<p>以下是根据廖雪峰的《使用变量》教程整理的笔记，主要介绍了Makefile中变量的使用方法、内置变量和自动变量的概念。</p>
+<hr>
+<h3 id="使用变量-Makefile教程笔记"><a href="#使用变量-Makefile教程笔记" class="headerlink" title="使用变量 - Makefile教程笔记"></a><strong>使用变量 - Makefile教程笔记</strong></h3><h4 id="1-变量的作用"><a href="#1-变量的作用" class="headerlink" title="1. 变量的作用"></a><strong>1. 变量的作用</strong></h4><ul>
+<li><strong>解决重复问题</strong>：<ul>
+<li>在Makefile中，文件名或命令可能会重复出现多次，手动修改容易出错。</li>
+<li>使用变量可以简化Makefile的编写，提高可维护性。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-定义和使用变量"><a href="#2-定义和使用变量" class="headerlink" title="2. 定义和使用变量"></a><strong>2. 定义和使用变量</strong></h4><ul>
+<li><p><strong>定义变量</strong>：</p>
+<ul>
+<li>使用<code>变量名 = 值</code>或<code>变量名 := 值</code>定义变量。</li>
+<li>通常变量名使用全大写，例如<code>TARGET</code>、<code>OBJS</code>等。</li>
+<li>示例：<pre><code class="makefile">TARGET = world.out
+OBJS = hello.o main.o
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p><strong>引用变量</strong>：</p>
+<ul>
+<li>使用<code>$(变量名)</code>引用变量。</li>
+<li>示例：<pre><code class="makefile">$(TARGET): $(OBJS)
+    cc -o $(TARGET) $(OBJS)
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-动态生成变量"><a href="#3-动态生成变量" class="headerlink" title="3. 动态生成变量"></a><strong>3. 动态生成变量</strong></h4><ul>
+<li><p><strong>使用<code>wildcard</code>函数</strong>：</p>
+<ul>
+<li><code>wildcard</code>函数可以匹配当前目录下的文件模式。</li>
+<li>示例：<code>$(wildcard *.c)</code>会列出当前目录下所有<code>.c</code>文件。</li>
+<li>示例：<pre><code class="makefile">OBJS = $(patsubst %.c,%.o,$(wildcard *.c))
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p><strong>使用<code>patsubst</code>函数</strong>：</p>
+<ul>
+<li><code>patsubst</code>函数用于模式替换。</li>
+<li>示例：<code>$(patsubst %.c,%.o,$(wildcard *.c))</code>会将所有<code>.c</code>文件名替换为<code>.o</code>文件名。</li>
+<li>这样，每当添加新的<code>.c</code>文件时，<code>OBJS</code>变量会自动更新，无需手动修改Makefile。</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-内置变量"><a href="#4-内置变量" class="headerlink" title="4. 内置变量"></a><strong>4. 内置变量</strong></h4><ul>
+<li><p><strong>内置变量</strong>：</p>
+<ul>
+<li><code>make</code>提供了一些内置变量，例如<code>$(CC)</code>表示C编译器，默认值是<code>cc</code>。</li>
+<li>示例：<pre><code class="makefile">$(TARGET): $(OBJS)
+    $(CC) -o $(TARGET) $(OBJS)
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p><strong>修改内置变量</strong>：</p>
+<ul>
+<li>可以重新定义内置变量的值。</li>
+<li>示例：使用交叉编译器时，可以设置<code>CC = riscv64-linux-gnu-gcc</code>。</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-自动变量"><a href="#5-自动变量" class="headerlink" title="5. 自动变量"></a><strong>5. 自动变量</strong></h4><ul>
+<li><p><strong>自动变量</strong>：</p>
+<ul>
+<li>在规则中自动指向特定值的变量。</li>
+<li>常用的自动变量：<ul>
+<li><code>$@</code>：目标文件名。</li>
+<li><code>$&lt;</code>：依赖列表中的第一个文件。</li>
+<li><code>$^</code>：所有依赖文件。</li>
+<li>示例：<pre><code class="makefile">world.out: hello.o main.o
+    @echo &#39;$$@ = $@&#39; # 目标文件名
+    @echo &#39;$$&lt; = $&lt;&#39; # 第一个依赖文件
+    @echo &#39;$$^ = $^&#39; # 所有依赖文件
+    $(CC) -o $@ $^
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>输出示例</strong>：</p>
+<pre><code class="bash">$@ = world.out
+$&lt; = hello.o
+$^ = hello.o main.o
+$(CC) -o world.out hello.o main.o
+</code></pre>
+</li>
+</ul>
+<h4 id="6-变量的调试"><a href="#6-变量的调试" class="headerlink" title="6. 变量的调试"></a><strong>6. 变量的调试</strong></h4><ul>
+<li><strong>打印变量</strong>：<ul>
+<li>使用<code>@echo</code>打印变量的值，便于调试。</li>
+<li>示例：<pre><code class="makefile">world.out: hello.o main.o
+    @echo &#39;$$@ = $@&#39;
+    @echo &#39;$$&lt; = $&lt;&#39;
+    @echo &#39;$$^ = $^&#39;
+    $(CC) -o $@ $^
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="7-小结-1"><a href="#7-小结-1" class="headerlink" title="7. 小结"></a><strong>7. 小结</strong></h4><ul>
+<li><strong>变量的作用</strong>：简化Makefile的编写，减少重复，提高可维护性。</li>
+<li><strong>变量的定义和引用</strong>：使用<code>变量名 = 值</code>定义，使用<code>$(变量名)</code>引用。</li>
+<li><strong>动态生成变量</strong>：使用<code>wildcard</code>和<code>patsubst</code>函数自动生成文件列表。</li>
+<li><strong>内置变量</strong>：使用内置变量（如<code>$(CC)</code>）简化命令。</li>
+<li><strong>自动变量</strong>：使用自动变量（如<code>$@</code>、<code>$&lt;</code>、<code>$^</code>）简化规则。</li>
+</ul>
+<hr>
