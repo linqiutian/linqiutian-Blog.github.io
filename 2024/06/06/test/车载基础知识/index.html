@@ -1,0 +1,468 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>车载基础知识 | 林秋天的博客</title><meta name="author" content="LinQiuTian"><meta name="copyright" content="LinQiuTian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#F8F5F0"><meta name="description" content="车载技术基础  更偏向软件方面  自动驾驶：这个领域涉及到开发和集成自动驾驶技术，包括传感器融合、决策算法、控制策略等，以实现车辆的自主导航和操作。 智能座舱：智能座舱是指车辆内部的智能化系统，包括信息娱乐系统、驾驶员监控系统、乘客交互界面等，旨在提升驾驶体验和安全性。 SOA和软总线：SOA（面向服务的架构）是一种软件设计模式，软总线则可能指的是软件定义的通信总线，这些技术有助于实">
+<meta property="og:type" content="article">
+<meta property="og:title" content="车载基础知识">
+<meta property="og:url" content="https://www.linqiutianovo.xyz/2024/06/06/test/%E8%BD%A6%E8%BD%BD%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="林秋天的博客">
+<meta property="og:description" content="车载技术基础  更偏向软件方面  自动驾驶：这个领域涉及到开发和集成自动驾驶技术，包括传感器融合、决策算法、控制策略等，以实现车辆的自主导航和操作。 智能座舱：智能座舱是指车辆内部的智能化系统，包括信息娱乐系统、驾驶员监控系统、乘客交互界面等，旨在提升驾驶体验和安全性。 SOA和软总线：SOA（面向服务的架构）是一种软件设计模式，软总线则可能指的是软件定义的通信总线，这些技术有助于实">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.linqiutianovo.xyz/img/data-structure-cover.jpg">
+<meta property="article:published_time" content="2024-06-06T11:50:16.000Z">
+<meta property="article:modified_time" content="2025-05-25T09:21:01.872Z">
+<meta property="article:author" content="LinQiuTian">
+<meta property="article:tag" content="车载基础知识">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.linqiutianovo.xyz/img/data-structure-cover.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "车载基础知识",
+  "url": "https://www.linqiutianovo.xyz/2024/06/06/test/%E8%BD%A6%E8%BD%BD%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/",
+  "image": "https://www.linqiutianovo.xyz/img/data-structure-cover.jpg",
+  "datePublished": "2024-06-06T11:50:16.000Z",
+  "dateModified": "2025-05-25T09:21:01.872Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "LinQiuTian",
+      "url": "https://www.linqiutianovo.xyz/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="https://www.fomal.cc/favicon.ico"><link rel="canonical" href="https://www.linqiutianovo.xyz/2024/06/06/test/%E8%BD%A6%E8%BD%BD%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.4.0-b1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#F8F5F0')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const hour = new Date().getHours()
+          const isNight = hour <= 6 || hour >= 18
+          if (theme === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else theme === 'light' ? activateLightMode() : activateDarkMode()
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"top-right"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '车载基础知识',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/universe.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(/url(https:/s2.loli.net/2024/08/07/EBzp91lhZCgXDI6.png));"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2024/08/07/KfPnTIM8WvotugL.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">20</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa-heart"></i><span> 留言板</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/data-structure-cover.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">林秋天的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">车载基础知识</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa-heart"></i><span> 留言板</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">车载基础知识</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-06-06T11:50:16.000Z" title="发表于 2024-06-06 19:50:16">2024-06-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-25T09:21:01.872Z" title="更新于 2025-05-25 17:21:01">2025-05-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%BD%A6%E8%BD%BD%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">车载基础知识</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">6.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>19分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;It has been&quot;,&quot;messageNext&quot;:&quot;days since the last update, the content of the article may be outdated.&quot;,&quot;postUpdate&quot;:&quot;2025-05-25 17:21:01&quot;}" hidden></div><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/2024/06/06/test/%E8%BD%A6%E8%BD%BD%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/Hexo-Blog\blog-demo\source\images\image-20250506131349931.png" alt="image-20250506131349931"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/2024/06/06/test/%E8%BD%A6%E8%BD%BD%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/Hexo-Blog\blog-demo\source\images\image-20250506131321041.png" alt="image-20250506131321041"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="H:/Hexo-Blog/blog-demo/source/images/image-20250506132441378.png" alt="image-20250506132441378"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="H:/Hexo-Blog/blog-demo/source/images/image-20250506132455224.png" alt="image-20250506132455224"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="H:/Hexo-Blog/blog-demo/source/images/image-20250506133501197.png" alt="image-20250506133501197"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="H:/Hexo-Blog/blog-demo/source/images/image-20250506133535453.png" alt="image-20250506133535453"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="H:/Hexo-Blog/blog-demo/source/images/image-20250506143413334.png" alt="image-20250506143241473"></p>
+<p>车载技术基础</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="H:/Hexo-Blog/blog-demo/source/images/image-20250506143948308.png" alt="image-20250506143948308"></p>
+<p>更偏向软件方面</p>
+<ol>
+<li><strong>自动驾驶</strong>：这个领域涉及到开发和集成自动驾驶技术，包括传感器融合、决策算法、控制策略等，以实现车辆的自主导航和操作。</li>
+<li><strong>智能座舱</strong>：智能座舱是指车辆内部的智能化系统，包括信息娱乐系统、驾驶员监控系统、乘客交互界面等，旨在提升驾驶体验和安全性。</li>
+<li><strong>SOA和软总线</strong>：SOA（面向服务的架构）是一种软件设计模式，软总线则可能指的是软件定义的通信总线，这些技术有助于实现车辆内部不同系统之间的高效通信和集成。</li>
+<li><strong>网络产品</strong>：这可能涉及到车辆的网络连接解决方案，包括车联网（V2X）、车载信息娱乐系统的网络服务等，以实现车辆与外部世界的连接。</li>
+<li><strong>视觉产品</strong>：这个领域可能包括车载摄像头系统、图像处理算法等，用于车辆的环境感知、驾驶员监控、乘客识别等功能。</li>
+<li><strong>车身控制</strong>：车身控制涉及到车辆的各种电子控制单元（ECU），如车窗控制、车内照明、车门锁定等，以实现车辆的智能化管理。</li>
+</ol>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="H:/Hexo-Blog/blog-demo/source/images/image-20250506144424064.png" alt="image-20250506144424064"></p>
+<p>汽车业务市场情况可以分为以下三个势力：</p>
+<ol>
+<li><strong>传统车企</strong>：<ul>
+<li>这些是基于原有的燃油车智能化以及转型生产电动车的车企。它们通常拥有悠久的历史和深厚的技术积累，正在逐步向智能化和电动化转型。图片中列举了包括通用汽车（GM）、奥迪（Audi）、宝马（BMW）、奔驰（Mercedes-Benz）、大众（Volkswagen）、丰田（Toyota）等在内的多家知名传统汽车制造商。</li>
+</ul>
+</li>
+<li><strong>新兴造车企业</strong>：<ul>
+<li>这些是从特斯拉（Tesla）出现后，特别是国内近几年产生的全新造车企业。它们通常以电动车为主要产品，已经量产了多个车型并且拥有一定的技术积累。图片中提到的新兴造车企业包括特斯拉（Tesla）、Rivian、Lucid、蔚来（NIO）、理想（Li Auto）、小鹏汽车（XPeng Motors）、零跑汽车（Leapmotor）、威马汽车（WM Motor）等。</li>
+</ul>
+</li>
+<li><strong>高技术企业</strong>：<ul>
+<li>这些是新进入局以及较大可能进入汽车行业的高技术企业。它们可能原本并非汽车制造商，但凭借在高科技领域的技术优势，有潜力进入汽车行业。图片中提到的可能进入汽车行业的高技术企业包括苹果（Apple）、索尼（Sony）、富士康（Foxconn）、小米（Xiaomi）、华为（Huawei）等。</li>
+</ul>
+</li>
+</ol>
+<p> 	</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="H:/Hexo-Blog/blog-demo/source/images/image-20250506144652829.png" alt="image-20250506144652829"></p>
+<ul>
+<li><strong>主机厂，OEM，车厂</strong>：这些词都指的是那些生产和销售汽车的大公司。它们有完整的生产线，可以自己采购各种零部件，然后组装成一辆完整的汽车。就像是汽车界的“大厨”，负责把各种“食材”（零部件）做成一道“大餐”（整车）。比如北京奔驰、上汽乘用车厂、小米汽车这些。</li>
+<li><strong>Tier1（一级供应商）</strong>：这些公司是直接给主机厂提供零部件或服务的。就像是给“大厨”提供“食材”的供应商。比如安徽智途公司可能会把他们生产的电子控制单元（ECU）卖给江淮乘用车厂，智途就是Tier1供应商；中科创达为通用汽车（GM）开发软件，中科创达也是Tier1供应商。</li>
+<li><strong>Tier2（二级供应商）</strong>：这些公司是给Tier1供应商提供商品或服务的。就像是给“食材”供应商提供原材料的公司。比如创达南京分公司可能会为安徽智途开发软件，创达就是Tier2供应商。</li>
+<li><strong>ECU（电子控制单元）</strong>：ECU就像是汽车的“大脑”，负责控制汽车的各种功能。它通过接收各种传感器的数据，来判断汽车的状态，然后指挥汽车的各个部分工作。比如控制发动机的运转、刹车系统的工作等等。</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image.png" alt="img"></p>
+<p>EE架构，全称是电子电气（Electrical&#x2F;Electronic）架构，是汽车中所有电子和电气系统的框架设计。它定义了车辆内部各个电子控制单元（ECU）的布局、通信方式、功能分配以及它们如何相互作用。EE架构是汽车电子系统的核心，它直接影响到车辆的性能、安全性、舒适性和燃油效率。</p>
+<p>随着汽车技术的发展，EE架构也在不断演进，以适应新的功能和需求，比如增加的电子设备、更复杂的传感器系统、车载信息娱乐系统、自动驾驶技术等。EE架构的演进大致可以分为以下几个阶段：</p>
+<ol>
+<li><strong>分布式架构</strong>：<ul>
+<li>在这个阶段，汽车的每个功能都有自己的电子控制单元（ECU）。这些ECU是独立的，通过CAN（控制器局域网）或LIN（局域互联网络）总线通信。</li>
+<li>每个ECU都有自己的传感器和算法，它们之间的通信不多。</li>
+<li>这种架构的缺点是布线复杂，需要大量的内部通信，导致成本增加。</li>
+</ul>
+</li>
+<li><strong>域集中式架构</strong>：<ul>
+<li>这个阶段将汽车的电子部件功能划分为几个域，如动力域、底盘域、座舱域、驾驶域和车身控制域。</li>
+<li>每个域都有自己的域控制器，域控制器通过CAN或以太网（Ethernet）网络将分散的ECU集中到一起。</li>
+<li>这种架构的优点是更容易实现OTA（空中下载）升级，提高运算能力，支持更灵活的通信网络，同时对信息安全和功能安全的要求更高。</li>
+</ul>
+</li>
+<li><strong>中央集中式架构</strong>：<ul>
+<li>在这个阶段，主控制器的运算能力进一步提高，出现了超级电脑的设计。</li>
+<li>整个系统中复杂的运算功能都集中到一个设备上，这个设备配置有强大的CPU和运算加速器，可以更有效地利用硬件性能。</li>
+<li>这种架构的优点是简化了布线设计，降低了成本，同时支持软件功能的迭代与扩展。</li>
+</ul>
+</li>
+</ol>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250506145833055.png" alt="image-20250506145833055"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250506150752230.png" alt="image-20250506150752230"></p>
+<ol>
+<li><strong>SOP</strong>：Start of Production的缩写，指的是芯片开始量产的时间。</li>
+</ol>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250506153008648.png" alt="image-20250506153008648"></p>
+<ol>
+<li><strong>处理器</strong>：<ul>
+<li>包括CPU（中央处理器）、GPU（图形处理器）、NPU（神经网络加速器）等，就像是电脑的大脑，负责思考和处理各种信息。</li>
+<li>处理视频、音频等，就像是电脑处理图片和声音一样。</li>
+<li>有各种接口，可以连接摄像头、麦克风等设备，就像是电脑的USB接口可以连接鼠标、键盘。</li>
+</ul>
+</li>
+<li><strong>存储器</strong>：<ul>
+<li>RAM（随机访问存储器）：就像是电脑的内存，用来临时存放正在处理的数据，断电后数据会消失。</li>
+<li>ROM（只读存储器）：包括SSD、Flash、SD卡、硬盘等，用来长期存放数据，断电后数据不会消失。</li>
+</ul>
+</li>
+<li><strong>安全和控制系统</strong>：<ul>
+<li>就像是电脑的安全软件，负责保护系统安全，防止未经授权的访问。</li>
+<li>控制电源管理，就像是电脑的电源管理功能，控制电源的开关和分配。</li>
+</ul>
+</li>
+<li><strong>通信部分</strong>：<ul>
+<li>板子内部通信接口：就像是电脑内部的连接线，用来连接不同的部件。</li>
+<li>外部通信接口：包括LVDS、USB、CAN、以太网等，用来连接显示屏、摄像头和其他电子控制单元（ECU），就像是电脑连接显示器、打印机等设备。</li>
+<li>座舱平台需要处理大量的音视频数据，所以接口的带宽（数据传输速度）很高。</li>
+</ul>
+</li>
+</ol>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250506153500766.png" alt="image-20250506153500766"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-1746517001188-3.png" alt="img"></p>
+<p>音频系统</p>
+<ol>
+<li><strong>通过板载音频DSP和功放</strong>：<ul>
+<li>板载音频DSP（数字信号处理器）就像是音频系统的大脑，负责处理音频信号，比如调整音量、平衡、音效等。</li>
+<li>功放（功率放大器）则负责将音频信号放大，以便能够驱动扬声器发出声音。</li>
+<li>在这种连接方式中，音频DSP和功放都集成在同一个电路板上，通过I2S&#x2F;TDM（一种音频数据传输协议）与SoC（系统级芯片）通信。</li>
+</ul>
+</li>
+<li><strong>通过外部音频DSP和功放</strong>：<ul>
+<li>在这种方式中，音频DSP和功放是分开的，位于不同的电路板上。</li>
+<li>SoC通过I2S&#x2F;TDM与外部DSP通信，DSP再通过I2C（一种简单的串行通信协议）与功放通信。</li>
+<li>这种方式提供了更大的灵活性，因为DSP和功放可以独立选择和更换。</li>
+</ul>
+</li>
+<li><strong>通过芯片内部的DSP处理音效</strong>：<ul>
+<li>在这种方式中，SoC内部集成了DSP，可以直接处理音频信号。</li>
+<li>音频信号通过I2S&#x2F;TDM传输到SoC内部的DSP进行处理，然后通过I2C与音频DAC&#x2F;ADC（数字模拟转换器&#x2F;模拟数字转换器）通信，最后通过内部功放输出到扬声器。</li>
+<li>这种方式简化了系统设计，因为所有功能都集成在SoC内部。</li>
+</ul>
+</li>
+</ol>
+<p>自动驾驶</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250506154033968.png" alt="image-20250506154033968"></p>
+<p>要认真对待 </p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250506160335715.png" alt="image-20250506160335715"></p>
+<p>![image-20250506160819356](.&#x2F;..&#x2F;..&#x2F;images&#x2F;image-20250506160819356.png</p>
+<h1 id="故障分析"><a href="#故障分析" class="headerlink" title="故障分析"></a>故障分析</h1><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250513140813946.png" alt="image-20250513140813946"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250513141619558.png" alt="image-20250513141619558"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250513143344174.png" alt="image-20250513143344174"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250513143428524.png" alt="image-20250513143428524"></p>
+<p>​		</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250513143815538.png" alt="image-20250513143815538"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250513144051469.png" alt="image-20250513144051469"></p>
+<p>根本原因分析（RCA）是一种结构化的问题解决方法，旨在通过识别、分析和解决根本原因来防止问题再次发生。该方法具有三个主要优点：能够明确问题定义，清晰地识别和说明问题的因果关系，以及有效定位问题的真正根源。实施RCA的基本步骤包括：首先把握现状，识别和澄清问题；其次进行原因调查，探究为何问题未被及时发现；然后进行问题纠正，采取措施处理导致问题的根本原因；最后是再发防止，通过改进措施确保问题不会重复发生。此外，该方法还包括对问题发生的不同层面进行分析，从直接原因到根本原因，以及制定相应的对策来防止问题再次流出。</p>
+<h1 id="开发环境之——git与repo的使用＜1＞"><a href="#开发环境之——git与repo的使用＜1＞" class="headerlink" title="开发环境之——git与repo的使用＜1＞"></a>开发环境之——git与repo的使用＜1＞</h1><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250513144831104.png" alt="image-20250513144831104"></p>
+<p>版本控制系统是一种用于记录文件内容变化并帮助实现版本控制的系统，它可以让用户在未来查阅特定版本的修订情况。根据其架构和工作方式，版本控制系统可以分为三种类型：本地版本控制系统（RCS），集中式版本控制系统（如CVS、SVN、Perforce），以及分布式版本控制系统（如Git、Mercurial、Bazaar、Darcs、BitKeeper）。这些系统帮助团队有效地管理代码和文档的变更历史，确保项目的协作和版本追踪。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250513150040756.png" alt="image-20250513150040756"></p>
+<p>分布式版本控制系统是一种允许每个用户计算机上都保存有完整的版本历史记录的系统，它不依赖于中央服务器来存储所有的版本信息。在这种系统中，每个用户的计算机（如Computer A和Computer B）都可以独立地保存文件的所有版本，包括版本1、版本2和版本3。这样的设计提高了系统的灵活性和容错性，因为即使中央服务器出现问题，各个用户的计算机上仍然可以访问到完整的版本历史。此外，这种系统还支持用户在没有网络连接的情况下工作，并且可以在任何时候与其他用户的版本进行合并和同步，从而促进了协作和版本控制的效率。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250513150658075.png" alt="image-20250513150658075">	</p>
+<p>Git是一个由Linus Torvalds在2005年开发的分布式版本控制系统，旨在支持Linux kernel项目。它允许用户在本地计算机上建立一个空目录，并从远程服务器同步一个或多个项目的内容，每个工作目录都是项目的完整拷贝，包含全部的版本历史信息。使用Git时，用户可以在不需要联网的情况下查看文件的变化和进行提交操作，这使得Git非常适合分布式协作和版本控制。</p>
+<p>git不需要联网</p>
+<p>Git 作为一个分布式版本控制系统，其设计允许用户在本地进行大部分的操作，这意味着在很多情况下，确实不需要联网。用户可以在本地仓库中进行文件的版本控制操作，如提交（commit）、查看历史记录（log）、分支（branch）和合并（merge）等，这些操作都不需要网络连接。</p>
+<p>然而，Git 的强大之处也在于它支持远程仓库的管理。当你需要与他人协作或者将你的代码推送（push）到远程仓库（如GitHub、GitLab等），或者从远程仓库拉取（pull）最新的代码时，就需要联网。此外，一些Git命令，如克隆（clone）一个远程仓库，或者与远程仓库进行交互的命令（如fetch、pull、push），也需要网络连接。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250513150908742.png" alt="image-20250513150908742"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250513150957026.png" alt="image-20250513150957026"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250513151131934.png" alt="image-20250513151131934"></p>
+<h4 id="为什么使用git"><a href="#为什么使用git" class="headerlink" title="为什么使用git"></a>为什么使用git</h4><p>Git是一个高效且设计简单的分布式版本控制系统，它能够支持大规模项目如Linux内核的开发，允许上千个并行开发的分支。Git的一个显著特点是它直接快照文件系统的状态，而不是比较文件差异，这样可以更高效地管理版本。几乎所有的操作都可以在本地执行，不需要联网，这使得Git在本地磁盘上保存着所有有关当前项目的历史更新。Git还通过计算内容的校验和（checksum）来保持数据的完整性，确保数据的唯一标识和索引。此外，Git的多数操作仅涉及将数据添加到数据库，这进一步增强了其性能和可靠性。这些特性使得Git成为现代软件开发中不可或缺的工具。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250513151304914.png" alt="image-20250513151304914"></p>
+<p>git的三种状态、3个工作区域</p>
+<p>Git通过三种状态和三个工作区域来管理文件和项目版本。三种状态包括：已提交（committed），表示文件已经被安全地保存在本地数据库中；已修改（modified），表示文件自上次提交后已经发生了变化，但还没有保存到数据库；已暂存（staged），表示文件的当前修改已被标记，准备在下一次提交时保存到数据库。</p>
+<p>三个工作区域分别是：本地数据目录，即项目的完整历史记录；工作目录，即项目文件的当前工作副本；暂存区域，即索引文件，用于暂存下次提交要保存的文件列表。</p>
+<p>Git的工作流程通常包括以下步骤：首先从本地数据目录检出项目到工作目录，然后在工作目录中对文件进行修改，接着将修改后的文件暂存，最后将暂存的文件提交到本地数据目录，完成一次版本更新。这个过程确保了文件的变更被有序地管理和记录，便于后续的版本控制和协作开发。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250513151429998.png" alt="image-20250513151429998"></p>
+<p>在Git中，分支是指项目的不同开发版本，它们共享一个共同的历史记录，但每个分支可以独立地发展自己的历史。分支的创建总是从某个已有的提交（通常是主分支）开始，然后从那个点分叉出去，形成新的发展路径。这种机制允许开发者在不影响主分支的情况下进行实验性开发或修复bug。图中展示了项目的原始开发线（Original line of development），以及从这条线上分出的三个分支（1st branch、2nd branch、3rd branch），每个分支都代表了项目的一个不同发展方向。通过这种方式，Git支持并行开发和灵活的项目管理。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250513152442097.png" alt="image-20250513152442097"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250513152502889.png" alt="image-20250513152502889"></p>
+<p>Git中的分支机制允许开发者从项目的任何提交点创建新的分支，每个分支都代表项目的一个独立开发路径。分支的创建和销毁成本非常低，这使得它们非常适合用于实验性开发、特性开发或修复bug等任务。</p>
+<p>在Git中，每个提交（commit）都可以建立分支，这意味着开发者可以从项目的任何历史点分叉出新的开发线。分支的创建是通过指向提交的可变指针来实现的，这些指针可以移动到不同的提交，从而形成不同的开发路径。每个分支都有自己的历史，但它们可以共享共同的提交历史。</p>
+<p>图中展示了Git分支的工作原理：</p>
+<ol>
+<li>第一张图展示了一个项目的提交历史，其中包含了多个分支（如master、testing、1st branch、2nd branch、3rd branch）。每个分支都从某个提交点开始，然后发展自己的历史。</li>
+<li>第二张图展示了从master分支创建新分支的过程。每个提交（如f30ab、34ac2、98ca9）都可以作为新分支的起点，新分支可以独立地进行开发，而不会影响其他分支。</li>
+</ol>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250513152626995.png" alt="image-20250513152626995"></p>
+<p>使用例子</p>
+<p>在Git中，分支的使用允许开发者在不影响主分支的情况下处理不同的开发任务。例如，在正常开发过程中，如果需要解决一个特定的问题（如问题#53），但又不能干扰主分支，可以创建一个新的分支专门用于这个问题的修复。在这个新分支上，开发者可以提交修复代码，而主分支则可以继续其正常的开发流程。</p>
+<p>当紧急修复完成时，可以通过合并操作将这个分支的更改整合回主分支。这种策略不仅提高了开发效率，还确保了主分支的稳定性。通过这种方式，Git的分支机制支持并行开发和灵活的问题处理，使得项目管理更加高效和有序。</p>
+<h4 id="GIT分支合并及冲突解决"><a href="#GIT分支合并及冲突解决" class="headerlink" title="GIT分支合并及冲突解决"></a>GIT分支合并及冲突解决</h4><h3 id="Git分支合并"><a href="#Git分支合并" class="headerlink" title="Git分支合并"></a>Git分支合并</h3><p>分支合并是Git中一个非常常见的操作，它允许开发者将一个分支的更改整合到另一个分支中。这通常发生在开发新功能或修复问题时，开发者会在一个单独的分支上进行工作，然后将这些更改合并回主分支（如<code>main</code>或<code>master</code>）。</p>
+<h4 id="使用git-merge命令"><a href="#使用git-merge命令" class="headerlink" title="使用git merge命令"></a>使用<code>git merge</code>命令</h4><p>最直接的分支合并方式是使用<code>git merge</code>命令。假设你有两个分支：<code>main</code>和<code>feature</code>，你在<code>feature</code>分支上开发了一些新功能，现在想要将这些更改合并到<code>main</code>分支。首先，你需要切换到<code>main</code>分支，使用命令<code>git checkout main</code>。然后，执行<code>git merge feature</code>，Git会尝试将<code>feature</code>分支的更改合并到<code>main</code>分支。如果合并过程中没有冲突，Git会自动完成合并，并创建一个新的合并提交。这个合并提交会记录两个分支的合并历史，使得代码的变更过程更加清晰。</p>
+<h4 id="使用git-rebase命令"><a href="#使用git-rebase命令" class="headerlink" title="使用git rebase命令"></a>使用<code>git rebase</code>命令</h4><p>除了<code>git merge</code>，<code>git rebase</code>也是一种常用的分支合并方式。<code>git rebase</code>的作用是将当前分支的更改重新应用到另一个分支的顶部。例如，如果你希望让<code>feature</code>分支的更改基于<code>main</code>分支的最新状态，可以执行<code>git rebase main</code>。这样，<code>feature</code>分支的提交会重新应用到<code>main</code>分支的最新提交之后。这种方式可以使<code>feature</code>分支的提交历史更加清晰，避免了复杂的合并提交。在完成<code>rebase</code>之后，你可以使用<code>git merge</code>将<code>feature</code>分支合并到<code>main</code>分支，或者直接将<code>feature</code>分支的更改推送到远程仓库（如果<code>feature</code>分支已经推送到远程仓库）。</p>
+<hr>
+<h3 id="Git冲突解决"><a href="#Git冲突解决" class="headerlink" title="Git冲突解决"></a>Git冲突解决</h3><p>尽管Git在合并分支时会尽量自动处理更改，但当多个分支对同一部分代码进行了不同的更改时，合并过程中可能会出现冲突。冲突需要手动解决，以下是解决冲突的详细步骤：</p>
+<h4 id="查看冲突"><a href="#查看冲突" class="headerlink" title="查看冲突"></a>查看冲突</h4><p>当合并分支时，如果出现冲突，Git会在冲突的文件中标记冲突的内容。冲突的文件中会包含如下标记：<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>表示当前分支的更改，<code>=======</code>是分隔符，表示冲突的分界点，<code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>表示另一个分支的更改。例如，冲突的代码可能看起来像这样：</p>
+<p>plaintext</p>
+<p>复制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span><br><span class="line">当前分支的代码</span><br><span class="line">=======</span><br><span class="line">另一个分支的代码</span><br><span class="line">&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature</span><br></pre></td></tr></table></figure>
+
+<p>你可以使用<code>git status</code>命令查看哪些文件存在冲突。Git会明确指出哪些文件需要解决冲突。</p>
+<h4 id="手动解决冲突"><a href="#手动解决冲突" class="headerlink" title="手动解决冲突"></a>手动解决冲突</h4><p>解决冲突通常需要手动编辑冲突的文件。打开冲突的文件，根据实际情况选择保留、修改或删除冲突的内容。例如，如果决定保留当前分支的更改，则删除<code>=======</code>和<code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>之间的内容，以及<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>和<code>=======</code>之间的标记。如果决定采用另一个分支的更改，则删除<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>和<code>=======</code>之间的内容，以及<code>=======</code>和<code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>之间的标记。当然，也可以根据需要对代码进行修改，以整合两个分支的更改。</p>
+<h4 id="标记冲突解决"><a href="#标记冲突解决" class="headerlink" title="标记冲突解决"></a>标记冲突解决</h4><p>在解决冲突后，需要使用<code>git add &lt;file&gt;</code>命令将冲突的文件标记为已解决。这一步非常重要，因为Git需要知道冲突已经被处理。之后，执行<code>git commit</code>命令完成合并提交。如果你使用的是<code>git rebase</code>，在解决冲突后，还需要执行<code>git rebase --continue</code>继续<code>rebase</code>过程。</p>
+<h4 id="使用工具辅助解决冲突"><a href="#使用工具辅助解决冲突" class="headerlink" title="使用工具辅助解决冲突"></a>使用工具辅助解决冲突</h4><p>Git支持使用图形化工具来解决冲突，这可以大大简化冲突解决的过程。例如，你可以使用<code>git mergetool</code>命令，Git会自动启动配置的合并工具（如<code>meld</code>、<code>kdiff3</code>等）。在工具中，你可以直观地比较和选择保留或修改冲突的内容。工具会自动将解决后的文件标记为已解决，从而避免了手动编辑文件和标记解决的繁琐过程。</p>
+<hr>
+<p>通过以上方法，你可以有效地进行Git分支合并和冲突解决，从而更好地管理代码版本。分支合并和冲突解决是团队协作开发中不可或缺的部分，掌握这些技能可以帮助你更高效地进行代码管理和协作</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250513210431768.png" alt="image-20250513210431768"></p>
+<p>Repo工具确实是专门为Android操作系统设计的，用于管理多个Git仓库。以下是Repo工具的一些关键信息和用途：</p>
+<ol>
+<li><strong>多仓库管理</strong>：Repo是一个基于Python的脚本工具，它封装了多条Git命令，帮助开发者管理Android源码中的多个Git仓库。这对于大型项目和团队协作尤为重要。</li>
+<li><strong>初始化和同步</strong>：使用<code>repo init</code>命令初始化项目，该命令会读取一个叫做<code>manifest</code>的XML配置文件，定义了项目中需要的Git仓库和版本。<code>repo sync</code>命令用于同步代码，克隆或更新项目中所有Git仓库。</li>
+<li><strong>分支操作</strong>：<code>repo start &lt;branch_name&gt; --all</code>命令用于在所有仓库中创建新的本地分支，便于跨模块开发。</li>
+<li><strong>代码审查</strong>：<code>repo upload</code>命令将本地提交推送到代码审核平台（如Gerrit），自动关联多个子仓库的变更，确保依赖关系正确。</li>
+<li><strong>清单文件（Manifest）</strong>：Repo使用清单文件定义所有子仓库的版本、分支和依赖关系，简化了开发者的代码同步、提交和代码审核流程。</li>
+<li><strong>与Gerrit集成</strong>：Repo与Gerrit代码审核系统集成，简化了代码审核和合并流程。</li>
+<li><strong>解决冲突</strong>：Repo工具提供了解决冲突的场景，如本地代码过期、跨仓库依赖冲突等。</li>
+<li><strong>下载和安装</strong>：Repo工具可以从官方的Git仓库下载，并且可以通过简单的命令添加到系统的PATH变量中，以便在终端中使用。</li>
+</ol>
+<p>git常用命令</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250513210758616.png" alt="image-20250513210758616"></p>
+<p>克隆远程现有仓库：<br>repository_ur是远程仓库地址</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone &lt;repository_url&gt; </span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/5a1381440c5449d486613ab1d72dd8b0.png" alt="在这里插入图片描述"></p>
+<p>Jenkins、Opengrok、JIRA的使用</p>
+<h3 id="1-JIRA"><a href="#1-JIRA" class="headerlink" title="1. JIRA"></a>1. <strong>JIRA</strong></h3><ul>
+<li><strong>功能</strong>：项目管理和问题跟踪工具。</li>
+<li><strong>嵌入式开发中的作用</strong>：<ul>
+<li>管理需求、任务和缺陷。</li>
+<li>跟踪硬件和软件开发进度。</li>
+<li>支持敏捷开发流程。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-Jenkins"><a href="#2-Jenkins" class="headerlink" title="2. Jenkins"></a>2. <strong>Jenkins</strong></h3><ul>
+<li><strong>功能</strong>：持续集成（CI）和持续部署（CD）工具。</li>
+<li><strong>嵌入式开发中的作用</strong>：<ul>
+<li>自动化构建和测试嵌入式软件。</li>
+<li>确保代码更新后符合质量标准。</li>
+<li>提高开发效率和交付速度。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-OpenGrok"><a href="#3-OpenGrok" class="headerlink" title="3. OpenGrok"></a>3. <strong>OpenGrok</strong></h3><ul>
+<li><strong>功能</strong>：代码搜索和交叉引用工具。</li>
+<li><strong>嵌入式开发中的作用</strong>：<ul>
+<li>快速查找和理解复杂代码。</li>
+<li>提供代码版本历史信息。</li>
+<li>帮助开发人员定位问题。</li>
+</ul>
+</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><strong>JIRA</strong> 用于项目管理和问题跟踪。</li>
+<li><strong>Jenkins</strong> 用于自动化构建和测试。</li>
+<li><strong>OpenGrok</strong> 用于代码搜索和理解。 这三种工具在嵌入式开发中可以相互配合，提升开发效率和产品质量。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://www.linqiutianovo.xyz">LinQiuTian</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://www.linqiutianovo.xyz/2024/06/06/test/%E8%BD%A6%E8%BD%BD%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">https://www.linqiutianovo.xyz/2024/06/06/test/%E8%BD%A6%E8%BD%BD%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://www.linqiutianovo.xyz" target="_blank">林秋天的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%BD%A6%E8%BD%BD%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">车载基础知识</a></div><div class="post-share"><div class="social-share" data-image="/img/data-structure-cover.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/06/06/test/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/data-structure-cover.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">数据结构</div></div><div class="info-2"><div class="info-item-1">写嵌入式用的到数据结构吗？看下linux内核就知道了，一堆数据结构，不学习数据结构，linux内核就看不懂了 使用数据结构是为了使代码结构更清晰，更容易把握代码结构、逻辑。 几个应用场景  “数组”。你肯定用过吧，属于数据结构“线性表”的一种形式。   “结构体”。学习过lwip可以知道从以太网上接收一堆数据后，把数据头的地址幅值给以太网包的数据结构定义的指针，可以直接使用此指针-&gt;成员变量的方式，使用接收到的数据。比使用一堆变量来利用接收到的数据方便太多了。  “队列”。热敏电阻测温，单片机用ADC测量电阻分压电压，然后对测量值用平滑均值滤波算法滤波，此时会用到“队列”，或用“环形队列”；  “树”。项目中经常会使用液晶屏作为显示，其中文本菜单有时用的比较多的一种方式，其中文本菜单常用“树”结构来实现。  “栈”。就不用说了，你已经用过了，不过不是你主动用的，它隐藏在你每次函数调用、中断调用中，可能你没有意识到。   简单几个例子，说明了数据结构非常常见，这个是必须要学的，不过有些不常用，比如图。 1.  ...</div></div></div></a><a class="pagination-related" href="/2024/08/06/test/2024-08-06-vi%E5%AD%A6%E4%B9%A0/" title="vi学习"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default-cover3.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">vi学习</div></div><div class="info-2"><div class="info-item-1"> a  光标后一位插入  A 行尾插入 i   光标原位置插入 I行首插入	 o 光标下一行插入 O 光标上一行插入	  nyy 复制 ndd删除  p光标下边复制 P光标下边复制 u撤回   ​		      k（上） ​	h（左）	     l（右） ​			j（下） </div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2024/08/07/KfPnTIM8WvotugL.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">LinQiuTian</div><div class="author-info-description">林秋天的博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">20</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/linqiutian"><i></i><span>🛴客官点一点...</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/linqiutian" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="/412581566@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><center>主域名：<br><a href="https://www.linqiutianovo.xyz"><b><font color="#5ea6e5">https://www.linqiutianovo.xyz/</font></b></a>&nbsp;|&nbsp;<a href="https://www.linqiutianovo.xyz/"><b><font color="#5ea6e5">https://www.linqiutianovo.xyz</font></b></a><br>备用域名：<br><a href="https://www.linqiutianovo.xyz"><b><font color="#5ea6e5">https://www.linqiutianovo.xyz</font></b></a><br><a href="https://www.linqiutianovo.xyz"><b><font color="#5ea6e5">aa.fomal.cc</font></b></a><br><a href="https://www.linqiutianovo.xyz/"><b><font color="#5ea6e5">https://www.linqiutianovo.xyz/</font></b></a><br><a href="mailto:412581566@fqq.com">📬：<b><font color="#a591e0">412581566@fqq.com</font></b></a></center></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%85%E9%9A%9C%E5%88%86%E6%9E%90"><span class="toc-text">故障分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E4%B9%8B%E2%80%94%E2%80%94git%E4%B8%8Erepo%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%9C1%EF%BC%9E"><span class="toc-text">开发环境之——git与repo的使用＜1＞</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8git"><span class="toc-text">为什么使用git</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GIT%E5%88%86%E6%94%AF%E5%90%88%E5%B9%B6%E5%8F%8A%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3"><span class="toc-text">GIT分支合并及冲突解决</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git%E5%88%86%E6%94%AF%E5%90%88%E5%B9%B6"><span class="toc-text">Git分支合并</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8git-merge%E5%91%BD%E4%BB%A4"><span class="toc-text">使用git merge命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8git-rebase%E5%91%BD%E4%BB%A4"><span class="toc-text">使用git rebase命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3"><span class="toc-text">Git冲突解决</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%86%B2%E7%AA%81"><span class="toc-text">查看冲突</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%8B%E5%8A%A8%E8%A7%A3%E5%86%B3%E5%86%B2%E7%AA%81"><span class="toc-text">手动解决冲突</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E8%AE%B0%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3"><span class="toc-text">标记冲突解决</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%B7%A5%E5%85%B7%E8%BE%85%E5%8A%A9%E8%A7%A3%E5%86%B3%E5%86%B2%E7%AA%81"><span class="toc-text">使用工具辅助解决冲突</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-JIRA"><span class="toc-text">1. JIRA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Jenkins"><span class="toc-text">2. Jenkins</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-OpenGrok"><span class="toc-text">3. OpenGrok</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2024 - 2025 By LinQiuTian</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.4.0-b1"></script><script src="/js/main.js?v=5.4.0-b1"></script><script src="/js/tw_cn.js?v=5.4.0-b1"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"></div><div class="aplayer" data-id="12551163241" data-server="netease" data-type="playlist"  data-fixed="true" data-theme="#3F51B5"></div><canvas id="universe"></canvas><script defer src="/js/universe.js"></script><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/dist/fireworks.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search articles..." type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.4.0-b1"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    if(parent_div_git) {
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = '/';
+  var qweather_key = '637b20351e874329896d0920eb741c8e';
+  var gaud_map_key = '4a866722dcf666eb29a2326ae458eaf1';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '113.34532,23.15624';
+  var clock_default_rectangle_enable = 'true';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v6.2.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v4.3.1" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://vercel.com/" style="margin-inline:5px" data-title="本站采用多线部署，主线路托管于Vercel" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Hosted-Vercel-brightgreen?style=flat&amp;logo=Vercel" alt=""/></a><a class="github-badge" target="_blank" href="https://dashboard.4everland.org/" style="margin-inline:5px" data-title="本站采用多线部署，备用线路托管于4EVERLAND" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Hosted-4EVERLAND-22DDDD?style=flat&amp;logo=IPFS" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '2');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body></html>
