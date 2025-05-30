@@ -1,0 +1,643 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>linux智能家居产品 | 林秋天的博客</title><meta name="author" content="LinQiuTian"><meta name="copyright" content="LinQiuTian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#F8F5F0"><meta name="description" content="12345678910111213- 驱动开发与设备树配置：    - 成功移植并实现了 DHT11 温湿度传感器、SR501 红外人体感应器、AP3216C 环境光与接近传感器以及 SG90 伺服电机控制器等外设的 Linux 驱动程序。    - 通过对设备树（Device Tree）的精确配置，确保了硬件资源的有效管理和外设的正确识别。     GPIO、I2C、PWM 和中断管理：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux智能家居产品">
+<meta property="og:url" content="https://www.linqiutianovo.xyz/2024/08/07/test/linux%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85%E4%BA%A7%E5%93%81/index.html">
+<meta property="og:site_name" content="林秋天的博客">
+<meta property="og:description" content="12345678910111213- 驱动开发与设备树配置：    - 成功移植并实现了 DHT11 温湿度传感器、SR501 红外人体感应器、AP3216C 环境光与接近传感器以及 SG90 伺服电机控制器等外设的 Linux 驱动程序。    - 通过对设备树（Device Tree）的精确配置，确保了硬件资源的有效管理和外设的正确识别。     GPIO、I2C、PWM 和中断管理：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.linqiutianovo.xyz/img/markdown-cover.jpg">
+<meta property="article:published_time" content="2024-08-07T06:09:33.000Z">
+<meta property="article:modified_time" content="2025-05-28T12:26:32.945Z">
+<meta property="article:author" content="LinQiuTian">
+<meta property="article:tag" content="林秋天的博客">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.linqiutianovo.xyz/img/markdown-cover.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "linux智能家居产品",
+  "url": "https://www.linqiutianovo.xyz/2024/08/07/test/linux%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85%E4%BA%A7%E5%93%81/",
+  "image": "https://www.linqiutianovo.xyz/img/markdown-cover.jpg",
+  "datePublished": "2024-08-07T06:09:33.000Z",
+  "dateModified": "2025-05-28T12:26:32.945Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "LinQiuTian",
+      "url": "https://www.linqiutianovo.xyz/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="https://www.fomal.cc/favicon.ico"><link rel="canonical" href="https://www.linqiutianovo.xyz/2024/08/07/test/linux%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85%E4%BA%A7%E5%93%81/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.4.0-b1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#F8F5F0')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const hour = new Date().getHours()
+          const isNight = hour <= 6 || hour >= 18
+          if (theme === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else theme === 'light' ? activateLightMode() : activateDarkMode()
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"top-right"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'linux智能家居产品',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/universe.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(/url(https:/s2.loli.net/2024/08/07/EBzp91lhZCgXDI6.png));"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2024/08/07/KfPnTIM8WvotugL.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa-heart"></i><span> 留言板</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/markdown-cover.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">林秋天的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">linux智能家居产品</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa-heart"></i><span> 留言板</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">linux智能家居产品</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-08-07T06:09:33.000Z" title="发表于 2024-08-07 14:09:33">2024-08-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-28T12:26:32.945Z" title="更新于 2025-05-28 20:26:32">2025-05-28</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>25分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;It has been&quot;,&quot;messageNext&quot;:&quot;days since the last update, the content of the article may be outdated.&quot;,&quot;postUpdate&quot;:&quot;2025-05-28 20:26:32&quot;}" hidden></div><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">- 驱动开发与设备树配置：</span><br><span class="line">    - 成功移植并实现了 DHT11 温湿度传感器、SR501 红外人体感应器、AP3216C 环境光与接近传感器以及 SG90 伺服电机控制器等外设的 Linux 驱动程序。</span><br><span class="line">    - 通过对设备树（Device Tree）的精确配置，确保了硬件资源的有效管理和外设的正确识别。</span><br><span class="line">     GPIO、I2C、PWM 和中断管理：</span><br><span class="line">    - 利用 GPIO（通用输入输出接口）、I2C（串行总线协议）、PWM（脉宽调制）等接口的管理，为外设提供了灵活的控制手段。</span><br><span class="line">    - 利用高效的中断处理机制，保证了系统可靠性。</span><br><span class="line">    LCD 显示与 Input 子系统：</span><br><span class="line">    - 利用 LCD 显示屏，支持显示图形界面和其他相关信息。</span><br><span class="line">    - 开发板集成了 Input 子系统，用于处理来自触摸屏或其他输入设备的用户输入。</span><br><span class="line">    - Pinctrl 子系统与同步机制：</span><br><span class="line">    - 应用了 Pinctrl（引脚控制）子系统来动态配置引脚功能，提高了系统的灵活性。</span><br><span class="line">    - 实现了多任务间的同步与互斥机制，确保了多线程操作的一致性和稳定性。</span><br><span class="line">    关键技术：驱动开发、应用开发，设备树配置、QT移植与应用开发、MQTT移植，gpio、i2c、pwm、Interrupt, lcd,Input子系统,Pinctrl子系统,同步与互斥</span><br></pre></td></tr></table></figure>
+
+<h1 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h1><p><strong>项目名称：</strong> <strong>基于 IMX6ULL PRO 的智能家居控制系统</strong></p>
+<p><strong>项目概述：</strong>本项目开发一套简易智能家居控制系统，利用 IMX6ULL PRO 开发板作为核心硬件平台，搭载 Linux 实时操作系统。项目通过移植和开发各类驱动及应用程序，实现了对家居环境的有效监测与智能控制。</p>
+<p><strong>关键技术与实现：</strong></p>
+<ul>
+<li>驱动开发与设备树配置：<ul>
+<li>成功移植并实现了 DHT11 温湿度传感器、SR501 红外人体感应器、AP3216C 环境光与接近传感器以及 SG90 伺服电机控制器等外设的 Linux 驱动程序。</li>
+<li>通过对设备树（Device Tree）的精确配置，确保了硬件资源的有效管理和外设的正确识别。</li>
+</ul>
+</li>
+<li>QT 图形界面移植与开发：<ul>
+<li>使用 Qt 框架开发了用于设备控制和状态显示的图形用户界面，并成功移植到 ARM 架构的开发板上运行。</li>
+</ul>
+</li>
+<li>MQTT 协议栈移植：<ul>
+<li>移植了 MQTT 协议栈到 ARM 开发板上，确保设备与阿里云服务器之间的稳定数据传输。</li>
+</ul>
+</li>
+<li>GPIO、I2C、PWM 和中断管理：<ul>
+<li>利用 GPIO（通用输入输出接口）、I2C（串行总线协议）、PWM（脉宽调制）等接口的管理，为外设提供了灵活的控制手段。</li>
+<li>利用高效的中断处理机制，保证了系统可靠性。</li>
+</ul>
+</li>
+<li>LCD 显示与 Input 子系统：<ul>
+<li>利用 LCD 显示屏，支持显示图形界面和其他相关信息。</li>
+<li>开发板集成了 Input 子系统，用于处理来自触摸屏或其他输入设备的用户输入。</li>
+</ul>
+</li>
+<li>Pinctrl 子系统与同步机制：<ul>
+<li>应用了 Pinctrl（引脚控制）子系统来动态配置引脚功能，提高了系统的灵活性。</li>
+<li>实现了多任务间的同步与互斥机制，确保了多线程操作的一致性和稳定性。</li>
+</ul>
+</li>
+</ul>
+<p><strong>系统架构与功能：</strong></p>
+<ul>
+<li>通过集成开发板内置的 Wi-Fi 模块，实现了设备与互联网的无缝连接。</li>
+<li>移植 MQTT 协议栈，确保了与阿里云服务器之间的高效数据交换。</li>
+<li>开发了网页端交互界面，支持远程控制家居自动化模块，使得用户可以通过任何联网设备轻松管理家庭环境。</li>
+</ul>
+<p><strong>关键技术：驱动开发、应用开发，设备树配置、QT 移植与应用开发、MQTT 移植，gpio、i2c、pwm、Interrupt, lcd,Input 子系统，Pinctrl 子系统，同步与互斥</strong></p>
+<p>这是一个基于嵌入式Linux的智能家居项目，目标是在开发板上实现一个可以通过本地界面和微信小程序控制的设备。主要功能包括控制LED灯、显示温湿度值等，并通过MQTT(paho mqtt)协议与云平台通信。</p>
+<p>该项目涵盖了硬件设计、嵌入式系统开发、网络通信、图形用户界面设计以及云平台对接等多个领域，涉及的技术栈丰富多样，包括但不限于Linux内核定制、驱动程序开发、Qt框架应用、JsonRPC远程调用、MQTT协议等。整个项目从需求分析、系统设计、代码实现到测试部署，历经多个阶段，历时数月完成，充分体现了我在嵌入式系统开发领域的综合能力。</p>
+<ul>
+<li><p><strong>项目成果与创新点</strong>：</p>
+<ul>
+<li>成功实现了通过本地QT界面以及微信小程序远程控制LED灯开关、显示温湿度值等功能，为用户提供了灵活多样的操作方式。</li>
+<li>在开发过程中，采用了JsonRPC实现前后台分离的架构设计，提高了系统的可维护性和可扩展性，降低了前后台程序之间的耦合度。</li>
+<li>利用MQTT协议实现了设备与云平台之间的高效通信，使得设备能够实时上传数据并接收来自云端的控制指令，为后续的智能家居设备互联互通和智能化管理奠定了基础。<ul>
+<li>自主设计并实现了一套完整的智能家居设备控制协议，确保了不同设备之间的兼容性和互操作性，为后续产品的升级和扩展提供了便利。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>项目影响力与应用前景</strong>：本项目的成功实施不仅为智能家居领域提供了一种可行的技术解决方案，也为相关产品的研发和推广提供了有益的借鉴。通过将嵌入式Linux技术与物联网技术相结合，可以广泛应用于家庭自动化、智能安防、能源管理等多个场景，具有广阔的市场应用前景和商业价值。</p>
+</li>
+</ul>
+<h1 id="关于项目技术细节"><a href="#关于项目技术细节" class="headerlink" title="关于项目技术细节"></a>关于项目技术细节</h1><h3 id="1-你在项目中使用了JsonRPC实现前后台分离，具体是如何实现的？为什么要选择这种架构？"><a href="#1-你在项目中使用了JsonRPC实现前后台分离，具体是如何实现的？为什么要选择这种架构？" class="headerlink" title="1.你在项目中使用了JsonRPC实现前后台分离，具体是如何实现的？为什么要选择这种架构？"></a>1.你在项目中使用了JsonRPC实现前后台分离，具体是如何实现的？为什么要选择这种架构？</h3><ul>
+<li><p><strong>具体实现方式</strong>：在项目中，前后台程序通过 JsonRPC 进行通信。前台程序负责图形用户界面（GUI）的显示和用户交互，后台程序负责处理硬件操作和业务逻辑。前后台程序分别运行在不同的进程中，通过网络通信（TCP&#x2F;UDP）进行数据交换。前台程序通过 JsonRPC 客户端向后台程序发送请求，后台程序通过 JsonRPC 服务器接收请求并返回结果。</p>
+</li>
+<li><p><strong>选择这种架构的原因</strong>：</p>
+<ul>
+<li><strong>降低耦合度</strong>：前后台程序分别独立开发，降低了相互之间的依赖，便于维护和扩展。</li>
+<li><strong>提高可维护性</strong>：前后台程序的职责明确，便于单独进行功能测试和优化。</li>
+<li><strong>支持多平台</strong>：前后台程序可以通过网络通信在不同的设备上运行，提高了系统的灵活性和可扩展性。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-MQTT协议在项目中起到了什么作用？你是如何处理MQTT消息的订阅和发布的？"><a href="#2-MQTT协议在项目中起到了什么作用？你是如何处理MQTT消息的订阅和发布的？" class="headerlink" title="2.MQTT协议在项目中起到了什么作用？你是如何处理MQTT消息的订阅和发布的？"></a>2.MQTT协议在项目中起到了什么作用？你是如何处理MQTT消息的订阅和发布的？</h3><ul>
+<li><p><strong>作用</strong>：MQTT 协议在项目中用于实现设备与云平台之间的通信，支持一对多的消息发布和订阅。通过 MQTT 协议，设备可以将数据上传到云平台，同时云平台也可以向设备发送指令。</p>
+</li>
+<li><p><strong>消息处理</strong>：</p>
+<ul>
+<li><p><strong>订阅消息</strong>：设备端程序通过 MQTT 客户端订阅云平台的特定主题，如 <code>$thing/down/property/&#123;ProductID&#125;/&#123;DeviceName&#125;</code>，用于接收来自云平台的指令。</p>
+</li>
+<li><p><strong>发布消息</strong>：设备端程序通过 MQTT 客户端向云平台的特定主题发布数据，如 <code>$thing/up/property/&#123;ProductID&#125;/&#123;DeviceName&#125;</code>，用于上传设备的状态数据。</p>
+</li>
+<li><p><strong>消息格式</strong>：消息内容通常为 JSON 格式，便于解析和处理。例如，上传温湿度数据的消息格式如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;method&quot;</span><span class="punctuation">:</span> <span class="string">&quot;report&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;clientToken&quot;</span><span class="punctuation">:</span> <span class="string">&quot;v2530526688yDDou::d791c1a6-1a4b-4a44-b313-f911d704d765&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;timestamp&quot;</span><span class="punctuation">:</span> <span class="number">1628646783</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;params&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;temp_value&quot;</span><span class="punctuation">:</span> <span class="number">28</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;humi_value&quot;</span><span class="punctuation">:</span> <span class="number">98</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="3-在开发嵌入式Linux应用时，你是如何进行系统调试和优化的？有没有遇到什么技术难题，是如何解决的？"><a href="#3-在开发嵌入式Linux应用时，你是如何进行系统调试和优化的？有没有遇到什么技术难题，是如何解决的？" class="headerlink" title="3.在开发嵌入式Linux应用时，你是如何进行系统调试和优化的？有没有遇到什么技术难题，是如何解决的？"></a>3.在开发嵌入式Linux应用时，你是如何进行系统调试和优化的？有没有遇到什么技术难题，是如何解决的？</h3><ul>
+<li><p><strong>调试方法</strong>：</p>
+<ul>
+<li><p><strong>日志记录</strong>：在关键位置添加日志记录，记录程序的运行状态和错误信息，便于问题排查。</p>
+</li>
+<li><p><strong>断点调试</strong>：使用 GDB 等调试工具设置断点，逐步跟踪程序的执行流程，定位问题。</p>
+</li>
+<li><p><strong>网络抓包</strong>：使用 Wireshark 等工具抓取网络数据包，分析网络通信过程中的问题。</p>
+</li>
+<li><p><strong>优化方法</strong>：</p>
+<ul>
+<li><strong>代码优化</strong>：通过代码分析工具（如 Valgrind）检测内存泄漏和性能瓶颈，优化代码。</li>
+<li><strong>硬件优化</strong>：合理配置硬件资源，如调整 GPIO 引脚的配置，优化驱动程序。</li>
+</ul>
+</li>
+<li><p><strong>遇到的技术难题及解决方法</strong>：</p>
+<ul>
+<li><strong>问题</strong>：在开发过程中，遇到了跨平台兼容性问题，不同开发板的硬件资源和驱动程序存在差异。</li>
+<li><strong>解决方法</strong>：通过编写跨平台的代码，使用条件编译（如 <code>#ifdef</code>）来处理不同平台的差异。同时，为每个开发板编写详细的硬件资源文档，确保代码的可移植性。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-你对Qt框架的掌握程度如何？在项目中是如何利用Qt开发图形用户界面的？"><a href="#4-你对Qt框架的掌握程度如何？在项目中是如何利用Qt开发图形用户界面的？" class="headerlink" title="4.你对Qt框架的掌握程度如何？在项目中是如何利用Qt开发图形用户界面的？"></a>4.你对Qt框架的掌握程度如何？在项目中是如何利用Qt开发图形用户界面的？</h3><ul>
+<li><strong>掌握程度</strong>：对 Qt 框架有深入的了解，熟悉 Qt 的主要组件和功能，如 QWidget、QLabel、QPushButton 等。能够使用 Qt Designer 设计图形用户界面，并通过代码实现界面的动态交互。</li>
+<li><strong>GUI 开发</strong>：<ul>
+<li><strong>界面设计</strong>：使用 Qt Designer 设计界面布局，添加控件（如按钮、标签等）。</li>
+<li><strong>代码实现</strong>：通过 Qt 框架提供的类和方法，实现控件的事件处理和数据绑定。例如，为按钮添加点击事件处理函数，更新标签显示的内容。</li>
+</ul>
+</li>
+</ul>
+<h1 id="关于项目设计与规划"><a href="#关于项目设计与规划" class="headerlink" title="关于项目设计与规划"></a>关于项目设计与规划</h1><h3 id="1-项目的整体架构是怎样的？你是如何进行模块划分和功能设计的？"><a href="#1-项目的整体架构是怎样的？你是如何进行模块划分和功能设计的？" class="headerlink" title="1.项目的整体架构是怎样的？你是如何进行模块划分和功能设计的？"></a>1.项目的整体架构是怎样的？你是如何进行模块划分和功能设计的？</h3><ul>
+<li><p><strong>架构设计</strong>：项目采用分层架构，分为硬件层、驱动层、后台服务层和前台界面层。</p>
+<ul>
+<li><strong>硬件层</strong>：负责与硬件设备进行直接交互，如 GPIO 控制、温湿度传感器读取等。</li>
+<li><strong>驱动层</strong>：提供硬件设备的驱动程序，封装硬件操作的细节，为上层提供统一的接口。</li>
+<li><strong>后台服务层</strong>：处理业务逻辑，如数据处理、网络通信等。使用 JsonRPC 和 MQTT 协议与前台界面层进行通信。</li>
+<li><strong>前台界面层</strong>：负责图形用户界面的显示和用户交互，通过 JsonRPC 调用后台服务层的接口。</li>
+</ul>
+<p><strong>. 模块划分和功能设计</strong></p>
+<ul>
+<li><p><strong>模块划分</strong>：</p>
+<ul>
+<li><p><strong>硬件控制模块</strong>：负责控制 LED 灯、读取温湿度传感器数据等。</p>
+</li>
+<li><p><strong>网络通信模块</strong>：负责与云平台的 MQTT 通信，处理订阅和发布消息。</p>
+</li>
+<li><p><strong>数据处理模块</strong>：负责处理从硬件设备获取的数据，并将其格式化为 JSON 格式。</p>
+</li>
+<li><p><strong>用户界面模块</strong>：负责显示温湿度数据和控制 LED 灯的开关。</p>
+</li>
+<li><p><strong>功能设计</strong>：</p>
+<ul>
+<li><strong>本地控制</strong>：通过图形用户界面控制 LED 灯的开关，显示温湿度数据。</li>
+<li><strong>远程控制</strong>：通过微信小程序远程控制 LED 灯的开关，获取设备状态数据。</li>
+<li><strong>数据上传</strong>：将设备的温湿度数据上传到云平台。</li>
+<li><strong>指令接收</strong>：接收云平台下发的控制指令，如开关 LED 灯。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-在项目开发过程中，你是如何进行需求分析和需求变更管理的？"><a href="#2-在项目开发过程中，你是如何进行需求分析和需求变更管理的？" class="headerlink" title="2.在项目开发过程中，你是如何进行需求分析和需求变更管理的？"></a>2.在项目开发过程中，你是如何进行需求分析和需求变更管理的？</h3><ul>
+<li><strong>需求分析</strong>：<ul>
+<li><strong>用户调研</strong>：通过与用户沟通，了解用户的需求和期望。</li>
+<li><strong>功能规划</strong>：根据用户需求，规划项目的功能模块和开发计划。</li>
+<li><strong>技术选型</strong>：选择适合的技术栈和工具，确保项目的可行性。</li>
+</ul>
+</li>
+<li><strong>需求变更管理</strong>：<ul>
+<li><strong>变更记录</strong>：记录需求变更的详细信息，包括变更原因、内容和影响范围。</li>
+<li><strong>影响评估</strong>：评估需求变更对项目进度和质量的影响。</li>
+<li><strong>沟通协调</strong>：与团队成员和用户进行沟通，确保需求变更的顺利实施。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-你如何确保项目的进度和质量？有没有使用过项目管理工具或方法？"><a href="#3-你如何确保项目的进度和质量？有没有使用过项目管理工具或方法？" class="headerlink" title="3.你如何确保项目的进度和质量？有没有使用过项目管理工具或方法？"></a>3.你如何确保项目的进度和质量？有没有使用过项目管理工具或方法？</h3><ul>
+<li><strong>进度管理</strong>：<ul>
+<li><strong>制定计划</strong>：根据项目需求，制定详细的开发计划，包括各个阶段的里程碑和时间表。</li>
+<li><strong>定期检查</strong>：定期检查项目进度，及时发现和解决问题。</li>
+<li><strong>调整计划</strong>：根据实际情况，适时调整项目计划，确保项目按时完成。</li>
+</ul>
+</li>
+<li><strong>项目管理工具</strong>：使用 Trello、Jira 等项目管理工具，跟踪项目进度和任务状态。</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250526212910856.png" alt="image-20250526212910856"></p>
+<h1 id="1-2-2-软件结构"><a href="#1-2-2-软件结构" class="headerlink" title="1.2.2 软件结构"></a>1.2.2 软件结构</h1><p>  <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250526212925438.png" alt="image-20250526212925438"></p>
+<p>使用文件 IO 操作硬件  </p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250526213759330.png" alt="image-20250526213759330"></p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;unistd.h&gt;
+int main(int argc, char *argv[]) &#123;
+    int fd, ret;
+    char buf[2];
+
+/* 2. 打开文件 */
+fd = open(&quot;/dev/100ask_led&quot;, O_RDWR);
+if (fd == -1) &#123;
+    printf(&quot;can not open file /dev/100ask_led\n&quot;);
+    return -1;
+&#125;
+if (argc == 3) &#123;
+    /* write */
+    buf[0] = strtol(argv[1], NULL, 0); // 哪个LED
+    if (strcmp(argv[2], &quot;on&quot;) == 0)
+        buf[1] = 0; // 状态
+    else
+        buf[1] = 1;
+    ret = write(fd, buf, 2);
+&#125;
+
+close(fd);
+return 0;
+</code></pre>
+<p>}</p>
+<p>这段代码的主要功能是通过文件操作来控制一个LED灯的开关状态。代码首先尝试以读写模式打开一个名为<code>/dev/100ask_led</code>的设备文件，这个文件通常代表一个硬件设备，可能是一个LED灯。如果文件打开失败，程序会打印一条错误信息并返回-1，表示程序执行失败。如果文件成功打开，程序会检查命令行参数的数量是否为3。这里期望有两个额外的参数，第一个参数用于指定要控制的LED灯编号，第二个参数用于指定LED灯的状态（开或关）。代码使用<code>strtol</code>函数将第一个参数转换为长整型数，并存储在<code>buf[0]</code>中。然后，程序比较第二个参数是否为字符串”on”，如果是，则将<code>buf[1]</code>设置为0，表示LED灯关闭；如果不是，则将<code>buf[1]</code>设置为1，表示LED灯打开。最后，程序使用<code>write</code>函数将<code>buf</code>数组写入到文件描述符<code>fd</code>中，以此来控制LED灯的状态。</p>
+<h1 id="使用-JsonRPC-实现前后台"><a href="#使用-JsonRPC-实现前后台" class="headerlink" title="使用 JsonRPC 实现前后台"></a>使用 JsonRPC 实现前后台</h1><h2 id="把程序拆分为前后台"><a href="#把程序拆分为前后台" class="headerlink" title="把程序拆分为前后台"></a>把程序拆分为前后台</h2><h4 id="为何要拆分？"><a href="#为何要拆分？" class="headerlink" title="为何要拆分？"></a>为何要拆分？</h4><p>对于比较复杂的程序，前台界面显示、后台程序由不同的团队进行开发，双方定义好交互的接口即可。这样，前台、后台程序可以分别独立开发，降低相互之间的依赖。<br>比如：<br>① 当更改硬件，比如更换LED引脚时，前台程序无需改变，只需要修改后台程序<br>② 想调整界面时，只需要修改前台程序，无需修改后台程序</p>
+<ul>
+<li><p><strong>降低耦合性</strong>：前后台程序分别由不同的团队开发，通过定义接口，降低相互依赖。</p>
+</li>
+<li><p><strong>便于扩展和维护</strong>：更改硬件或调整界面时，只需修改对应的部分，无需改动另一部分。</p>
+</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250526214437761.png" alt="image-20250526214437761"></p>
+<p>RPC 是远程过程调用（Remote Procedure Call）的意思，而 json 是比较流行的传递信息的格式。  </p>
+<h4 id="如何拆分？"><a href="#如何拆分？" class="headerlink" title="如何拆分？"></a>如何拆分？</h4><ul>
+<li><strong>定义接口</strong>：前后台程序通过网络通信实现交互，使用JsonRPC远程调用。</li>
+<li><strong>实现前后台程序</strong>：前台程序负责界面显示，后台程序负责具体功能实现，通过JsonRPC进行通信。</li>
+</ul>
+<h4 id="网络传输中的-2-个对象：-server-和-client"><a href="#网络传输中的-2-个对象：-server-和-client" class="headerlink" title="网络传输中的 2 个对象： server 和 client"></a>网络传输中的 2 个对象： server 和 client</h4><p>我们经常访问网站，这涉及 2 个对象：网站服务器，浏览器。网站服务器平时安静地呆着，浏览器主动发起数据请求。网站服务器、浏览器可以抽象成 2 个软件的概念： server 程序、 client 程序。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250526214512905.png" alt="image-20250526214512905"></p>
+<h4 id="两种传输方式：-TCP-UDP"><a href="#两种传输方式：-TCP-UDP" class="headerlink" title="两种传输方式： TCP&#x2F;UDP"></a>两种传输方式： TCP&#x2F;UDP</h4><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250526214535322.png" alt="image-20250526214535322"></p>
+<ol>
+<li><p><strong>应用层（Application Layer）</strong>：</p>
+<ul>
+<li>这是用户直接交互的层，负责处理特定的应用程序细节，如电子邮件、文件传输和网页浏览。它定义了用于应用程序间通信的协议和标准。</li>
+</ul>
+</li>
+<li><p><strong>运输层（Transport Layer）</strong>：</p>
+<ul>
+<li><p>负责在网络中的两个节点之间提供可靠的数据传输。它确保数据的完整性和顺序性，并且处理端到端的通信。常见的运输层协议包括TCP（传输控制协议）和UDP（用户数据报协议）。</p>
+<p>运输层主要使用以下两种协议：<br>① 传输控制协议 TCP(Transmission Control Protocol)：面向连接的，数据传输的单位是报文段，能够提供可靠的交付。<br>② 用户数据包协议 UDP(User Datagram Protocol)：无连接的，数据传输的单位是用户数据报，不保证提供可靠的交付，只能提供“尽最大努力交付”。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>网络层（Network Layer）</strong>：</p>
+<ul>
+<li>负责将被称为数据包（datagram）的网络层分组从一台主机移动到另一台主机。</li>
+</ul>
+</li>
+<li><p><strong>链路层（Data Link Layer）</strong>：</p>
+<ul>
+<li>因特网的网络层通过源和目的地之间的一系列路由器路由数据报</li>
+</ul>
+</li>
+<li><p><strong>物理层（Physical Layer）</strong>：</p>
+<ul>
+<li>在物理层上所传数据的单位是比特。物理层的任务就是透明地传送比特流</li>
+</ul>
+<p>我们需要使用“<strong>运输层”</strong>编写应用程序，我们的应用程序位于“<strong>应用层</strong>”。</p>
+</li>
+</ol>
+<p>使用“运输层”时，可以选择 TCP 协议，也可以选择 UDP 协议。  </p>
+<h5 id="TCP-和-UDP-原理上的区别"><a href="#TCP-和-UDP-原理上的区别" class="headerlink" title="TCP 和 UDP 原理上的区别"></a>TCP 和 UDP 原理上的区别</h5><p>TCP 向它的应用程序提供了面向连接的服务。这种服务有 2 个特点：可靠传输、流量控制（即发送方&#x2F;接收方速率匹配）。它包括了应用层报文划分为短报文，并提供拥塞控制机制。</p>
+<p>UDP 协议向它的应用程序提供无连接服务。它没有可靠性，没有流量控制，也没有拥塞控制。  </p>
+<h5 id="为何存在-UDP-协议"><a href="#为何存在-UDP-协议" class="headerlink" title="为何存在 UDP 协议"></a>为何存在 UDP 协议</h5><p>既然 TCP 提供了可靠数据传输服务，而 UDP 不能提供，那么 TCP 是否总是首选呢？<br>答案是否定的，因为有许多应用更适合用 UDP，举个例子：视频通话时，使用 UDP，偶尔的丢包、偶尔的花屏时可以忍受的；如果使用 TCP，每个数据包都要确保可靠传输，当它出错时就重传，这会导致后续的数据包被阻滞，视频效果反而不好。</p>
+<h2 id="网络编程主要函数介绍"><a href="#网络编程主要函数介绍" class="headerlink" title="网络编程主要函数介绍"></a>网络编程主要函数介绍</h2><h3 id="socket函数"><a href="#socket函数" class="headerlink" title="socket函数"></a>socket函数</h3><p><strong>此函数用于创建一个套接字。</strong>   </p>
+<p>socket本来也是用于同主机的进程间通信的</p>
+<p>后来又了TCP&#x2F;IP协议族的加入，才能实现网络通信</p>
+<p>socket是什么？</p>
+<p>是一个编程接口</p>
+<p>是一种特殊的文件描述符 (everything in Unix is a file)</p>
+<p>并不仅限于TCP&#x2F;IP协议</p>
+<p>并不仅限于linux</p>
+<p>面向连接 (Transmission Control Protocol - TCP&#x2F;IP)</p>
+<p>无连接 (User Datagram Protocol -UDP 和 Inter-network Packet Exchange - IPX)</p>
+<p>socket是内核给我们提供的函数，将复杂的网络通的过程转换成了我们熟悉的IO操作</p>
+<p>TCP&#x2F;IP协议被集成到操作系统的内核中，引入了新型的“I&#x2F;O”操作，我们操作套接字，</p>
+<p>只需要通过传参的方式，来指定想使用的协议即可。</p>
+<p>对套接字的read操作，就是在套接字上接收数据</p>
+<p>对套接字的write操作，就是向套接字上发送数据</p>
+<p>套接字的类型：</p>
+<p>流式套接字(SOCK_STREAM)—-给TCP使用</p>
+<p> 提供了一个面向连接、可靠的数据传输服务，数据无差</p>
+<p> 错、无重复的发送且按发送顺序接收。内设置流量控制，</p>
+<p> 避免数据流淹没慢的接收方。数据被看作是字节流，</p>
+<p> 无长度限制。</p>
+<p>数据报套接字(SOCK_DGRAM)—-给UDP使用</p>
+<p>提供无连接服务。数据包以独立数据包的形式被发送，</p>
+<p>不提供无差错保证，数据可能丢失或重复，顺序发送，</p>
+<p>可能乱序接收。</p>
+<p>原始套接字(SOCK_RAW)</p>
+<p>可以对较低层次协议如IP、ICMP直接访问。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/socket.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">socket</span><span class="params">(<span class="type">int</span> domain, <span class="type">int</span> type, <span class="type">int</span> protocol)</span>;</span><br><span class="line">功能：</span><br><span class="line">	创建套接字</span><br><span class="line">参数：</span><br><span class="line">	domain：通信域</span><br><span class="line">		AF_UNIX, AF_LOCAL	本地通信使用</span><br><span class="line">		AF_INET				IPV4使用</span><br><span class="line">		AF_INET6			IPV6使用</span><br><span class="line">		AF_PACKET			原始套接字使用</span><br><span class="line">	type：套接字的类型</span><br><span class="line">		SOCK_STREAM			TCP使用</span><br><span class="line">		SOCK_DGRAM			UDP使用</span><br><span class="line">		SOCK_RAW			原始套接字使用</span><br><span class="line">	protocol：附加协议</span><br><span class="line">		没有可以传 <span class="number">0</span></span><br><span class="line">返回值：</span><br><span class="line">	成功  套接字(文件描述符)</span><br><span class="line">	失败 <span class="number">-1</span> 重置错误码</span><br></pre></td></tr></table></figure>
+
+<h3 id="bind函数"><a href="#bind函数" class="headerlink" title="bind函数"></a>bind函数</h3><p>从函数用于将地址绑定到一个套接字。  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;sys/types.h&gt;</span><br><span class="line">#include &lt;sys/socket.h&gt;</span><br><span class="line">int bind(int sockfd, const struct sockaddr *addr,</span><br><span class="line">                socklen_t addrlen);</span><br><span class="line">功能：绑定套接字和网络信息结构体</span><br><span class="line">参数：</span><br><span class="line">    sockfd：套接字</span><br><span class="line">    addr：</span><br><span class="line">        struct sockaddr &#123;</span><br><span class="line">            sa_family_t sa_family;</span><br><span class="line">            char        sa_data[14];</span><br><span class="line">        &#125;</span><br><span class="line">        上面的结构体只是为了强转防止编译警告的，实际使用的是下面的结构体</span><br><span class="line">        struct sockaddr_in &#123;</span><br><span class="line">            sa_family_t    sin_family; /* AF_INET */</span><br><span class="line">            in_port_t      sin_port;   /* 网络字节序的端口号 */</span><br><span class="line">            struct in_addr sin_addr;   /* IP地址 */</span><br><span class="line">        &#125;;</span><br><span class="line">        /* Internet address. */</span><br><span class="line">        struct in_addr &#123;</span><br><span class="line">            uint32_t       s_addr;     /* 网络字节序的无符号4字节整型的IP地址 */</span><br><span class="line">        &#125;;</span><br><span class="line">    addrlen：addr的长度</span><br><span class="line">返回值：</span><br><span class="line">    成功 0</span><br><span class="line">    失败 -1 重置错误码 </span><br></pre></td></tr></table></figure>
+
+<h3 id="listen函数"><a href="#listen函数" class="headerlink" title="listen函数"></a>listen函数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;sys/types.h&gt;</span><br><span class="line">#include &lt;sys/socket.h&gt;</span><br><span class="line">int listen(int sockfd, int backlog);</span><br><span class="line">功能：</span><br><span class="line">    将套接字设置成被动监听状态 只有这个状态的套接字才能用于等待客户端连接</span><br><span class="line">参数：</span><br><span class="line">    sockfd：套接字</span><br><span class="line">    backlog：半连接队列的长度，一般传 5 10 都行 不是0就行</span><br><span class="line">返回值：</span><br><span class="line">    成功 0</span><br><span class="line">    失败 -1 重置错误码</span><br></pre></td></tr></table></figure>
+
+<h3 id="accept函数"><a href="#accept函数" class="headerlink" title="accept函数"></a>accept函数</h3><p>服务器使用此函数获得连接请求，并且建立连接。  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;sys/types.h&gt;</span><br><span class="line">#include &lt;sys/socket.h&gt;</span><br><span class="line">int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);</span><br><span class="line">功能：</span><br><span class="line">    提取半连接队列中的第一个客户端连接，如果成功，会返回一个</span><br><span class="line">    新的套接字，专门用于和当前客户端通信，返回的套接字和原套接字类型相同</span><br><span class="line">参数：</span><br><span class="line">    sockfd：listen后的sockfd</span><br><span class="line">    addr：用来保存客户端网络信息结构体的缓冲区的首地址</span><br><span class="line">        如果不关心 可以传 NULL</span><br><span class="line">    addrlen：addr的长度，如果不关心 可以传 NULL</span><br><span class="line">返回值：</span><br><span class="line">    成功 返回新的文件描述符 专门用于和当前客户端通信</span><br><span class="line">    失败 -1 重置错误码</span><br></pre></td></tr></table></figure>
+
+<h3 id="connect函数"><a href="#connect函数" class="headerlink" title="connect函数"></a>connect函数</h3><p>可以用connect建立一个连接，在connect中所指定的地址是想与之通信的服务器的地址  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;sys/types.h&gt;</span><br><span class="line">#include &lt;sys/socket.h&gt;</span><br><span class="line">int connect(int sockfd, const struct sockaddr *addr,</span><br><span class="line">                   socklen_t addrlen);</span><br><span class="line">功能：</span><br><span class="line">    与服务器建立连接</span><br><span class="line">参数：</span><br><span class="line">    sockfd：套接字</span><br><span class="line">    addr：服务器的网络信息结构体</span><br><span class="line">    addrlen：addr的长度</span><br><span class="line">返回值：</span><br><span class="line">    成功 0</span><br><span class="line">    失败 -1 重置错误码</span><br></pre></td></tr></table></figure>
+
+<h2 id="JSON-RPC-示例与情景分析"><a href="#JSON-RPC-示例与情景分析" class="headerlink" title="JSON-RPC 示例与情景分析"></a>JSON-RPC 示例与情景分析</h2><h4 id="JSON-是什么"><a href="#JSON-是什么" class="headerlink" title="JSON 是什么"></a>JSON 是什么</h4><p>JSON（JavaScript Object Notation， JavaScript 对象表示法）是基于 ECMAScript 的一个子集设计的，是一种开放标准的文件格式和数据交换格式，它易于人阅读和编写，同时也易于机器解析和生成。 JSON 独立于语言设计，很多编程语言都支持 JSON 格式的数据交换。 JSON 是一种常用的数据格式，在电子数据交换中有多种用途，包括与服务器之间的Web 应用程序的数据交换。其简洁和清晰的层次结构有效地提升了网络传输效率，使其成为理想的数据交换语言。其文件通常使用扩展名.json。</p>
+<h2 id="基于-JSON-RPC-操作硬件"><a href="#基于-JSON-RPC-操作硬件" class="headerlink" title="基于 JSON-RPC 操作硬件"></a>基于 JSON-RPC 操作硬件</h2><p>程序A：调用rpc_led_control发起远程调用，让程序B去控制LED。<br>程序A：调用rpc_dht11_read发起远程调用，让程序B去读取温湿度的值</p>
+<p>在 Ubuntu 中交叉编译程序。先编译 libev 库，再编译 jsonrpc 库，最后编译、执行测试程序测试程序。  </p>
+<p>编译 libev 库    编译 jsonrpc 库  </p>
+<h1 id="线程的概念"><a href="#线程的概念" class="headerlink" title="线程的概念"></a>线程的概念</h1><p>线程（LWP）是轻量级的进程，进程是资源分配的最小单位，线程是系统调度的最小单位。</p>
+<p>线程不会分配内存空间，一个进程内至少有一个线程，叫做主线程，</p>
+<p>也可以有多个线程，这多个线程共用进程的内存空间(0-3G)。</p>
+<p>多线程没有对进程安全，多线程的效率比较高。</p>
+<p>多线程的函数是使用第三方的库函数</p>
+<p>编程时，需要包含头文件  <strong>#include  &lt;pthread.h&gt;</strong></p>
+<p>编译时，需要链接线程的函数库 <strong>-lpthread</strong></p>
+<h1 id="①-MQTT-网络技术"><a href="#①-MQTT-网络技术" class="headerlink" title="① MQTT 网络技术"></a>① MQTT 网络技术</h1><h3 id="MQTT-概述"><a href="#MQTT-概述" class="headerlink" title="MQTT 概述"></a>MQTT 概述</h3><ul>
+<li><h2 id="Paho-MQTT：-Paho-MQTT-是-Eclipse-Paho-项目的一部分，是一个开源的-MQTT-客户端库，支持多种编程语言，包括-C、C-、Java、Python、JavaScript-等。它的目标是为开发者提供一个简单易用的-MQTT-客户端库，以便在各种平台和设备上实现-MQTT-协议。"><a href="#Paho-MQTT：-Paho-MQTT-是-Eclipse-Paho-项目的一部分，是一个开源的-MQTT-客户端库，支持多种编程语言，包括-C、C-、Java、Python、JavaScript-等。它的目标是为开发者提供一个简单易用的-MQTT-客户端库，以便在各种平台和设备上实现-MQTT-协议。" class="headerlink" title="Paho MQTT：- Paho MQTT 是 Eclipse Paho 项目的一部分，是一个开源的 MQTT 客户端库，支持多种编程语言，包括 C、C++、Java、Python、JavaScript 等。它的目标是为开发者提供一个简单易用的 MQTT 客户端库，以便在各种平台和设备上实现 MQTT 协议。"></a><strong>Paho MQTT</strong>：<br>- Paho MQTT 是 Eclipse Paho 项目的一部分，是一个开源的 MQTT 客户端库，支持多种编程语言，包括 C、C++、Java、Python、JavaScript 等。它的目标是为开发者提供一个简单易用的 MQTT 客户端库，以便在各种平台和设备上实现 MQTT 协议。</h2></li>
+</ul>
+<p>MQTT 协议全称是 Message Queuing Telemetry Transport， 即“消息队列遥测传输协议” ，它是物联网常用的应用层协议，运行在 TCP&#x2F;IP 中的应用层中，依赖 TCP 协议，因此它具有非常高的可靠性。 同时它是基于 TCP 协议的“客户端-服务器” 模型发布&#x2F;订阅主题消息的轻量级协议。<br>MQTT 协议提供一对多的消息发布，可以降低应用程序的耦合性，用户只需要编写极少量的应用代码就能完成一对多的消息发布与订阅，该协议是基于“客户端-服务器” 模型，在协议中主要有三种身份：发布者（ Publisher）、服务器（ Broker）以及订阅者（Subscriber）。其中， MQTT 消息的发布者和订阅者都是客户端，服务器只是作为一个中转的存在，将发布者发布的消息进行转发给所有订阅该主题的订阅者；发布者可以发布在其权限之内的所有主题，并且消息发布者可以同时是订阅者，实现了生产者与消费者的脱耦，发布的消息可以同时被多个订阅者订阅。<br>MQTT 通信模型示意图如下</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./../../images/image-20250527145600470.png" alt="image-20250527145600470"></p>
+<p>MQTT 客户端的功能：<br>① 发布消息给其它相关的客户端。<br>② 订阅主题请求接收相关的应用消息。<br>③ 取消订阅主题请求移除接收应用消息。<br>④ 从服务端终止连接。</p>
+<p>MQTT 服务器常被称为 Broker（消息代理），以是一个应用程序或一台设备，它一般为云服务器，比如 BTA 三巨头的一些物联网平台就是常使用 MQTT 协议，它是位于消息发布者和订阅者之间，以便用于接收消息并发送到订阅者之中，它的功能有：<br>① 接受来自客户端的网络连接请求。<br>② 接受客户端发布的应用消息。<br>③ 处理客户端的订阅和取消订阅请求。<br>④ 转发应用消息给符合条件的已订阅客户端（包括发布者自身）。</p>
+<h2 id="MQTT-概述2"><a href="#MQTT-概述2" class="headerlink" title="MQTT 概述2"></a>MQTT 概述2</h2><ul>
+<li><ul>
+<li><h3 id="1-MQTT协议概述"><a href="#1-MQTT协议概述" class="headerlink" title="1. MQTT协议概述"></a><strong>1. MQTT协议概述</strong></h3><ul>
+<li><strong>定义</strong>：MQTT（Message Queuing Telemetry Transport）是一种轻量级的消息传输协议，常用于物联网（IoT）领域。它基于TCP&#x2F;IP协议，支持低带宽、高延迟或不可靠的网络环境。</li>
+<li><strong>特点</strong>：<ul>
+<li><strong>轻量级</strong>：协议简单，数据包小，适合在带宽受限的网络中使用。</li>
+<li><strong>高可靠性</strong>：基于TCP协议，确保消息的可靠传输。</li>
+<li><strong>一对多通信</strong>：支持发布&#x2F;订阅模型，一个发布者可以向多个订阅者发送消息。</li>
+<li><strong>低功耗</strong>：适合电池供电的设备，减少网络通信的能耗。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-MQTT通信模型"><a href="#2-MQTT通信模型" class="headerlink" title="2. MQTT通信模型"></a><strong>2. MQTT通信模型</strong></h3><ul>
+<li><strong>发布者（Publisher）</strong>：负责发布消息到特定主题（Topic）。</li>
+<li><strong>订阅者（Subscriber）</strong>：订阅特定主题，接收发布者发送的消息。</li>
+<li><strong>Broker（消息代理）</strong>：作为中间服务器，接收发布者的消息并转发给订阅者。常见的Broker有EMQX、Mosquitto等。</li>
+</ul>
+<p><strong>3. MQTT消息类型</strong></p>
+<ul>
+<li><strong>CONNECT</strong>：客户端连接到Broker的请求。</li>
+<li><strong>CONNACK</strong>：Broker对连接请求的响应。</li>
+<li><strong>PUBLISH</strong>：发布消息到特定主题。</li>
+<li><strong>SUBSCRIBE</strong>：订阅特定主题。</li>
+<li><strong>SUBACK</strong>：Broker对订阅请求的响应。</li>
+<li><strong>UNSUBSCRIBE</strong>：取消订阅特定主题。</li>
+<li><strong>UNSUBACK</strong>：Broker对取消订阅请求的响应。</li>
+<li><strong>PINGREQ</strong>：客户端发送的心跳检测消息。</li>
+<li><strong>PINGRESP</strong>：Broker对心跳检测消息的响应。</li>
+<li><strong>DISCONNECT</strong>：客户端断开连接的请求。</li>
+</ul>
+<p><strong>4. MQTT QoS（服务质量）</strong></p>
+<ul>
+<li><strong>QoS 0</strong>：最多一次，消息可能丢失。</li>
+<li><strong>QoS 1</strong>：至少一次，消息可能重复。</li>
+<li><strong>QoS 2</strong>：恰好一次，确保消息只被接收一次。</li>
+</ul>
+<h4 id="5-应用场景"><a href="#5-应用场景" class="headerlink" title="5. 应用场景"></a><strong>5. 应用场景</strong></h4><ul>
+<li><strong>智能家居</strong>：设备之间通过MQTT协议通信，实现远程控制和状态上报。</li>
+<li><strong>工业物联网</strong>：传感器设备通过MQTT将数据发送到服务器，服务器进行数据分析和处理。</li>
+<li><strong>车联网</strong>：车辆与服务器之间通过MQTT协议进行数据交互，实现远程监控和故障诊断。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="②-配置文件处理"><a href="#②-配置文件处理" class="headerlink" title="② 配置文件处理"></a>② 配置文件处理</h1><h4 id="1-配置文件的作用"><a href="#1-配置文件的作用" class="headerlink" title="1**. 配置文件的作用**"></a>1**. 配置文件的作用**</h4><ul>
+<li><strong>存储参数</strong>：用于存储程序运行时需要的参数，如网络配置、设备信息、用户设置等。</li>
+<li><strong>灵活性</strong>：通过修改配置文件，可以在不修改代码的情况下调整程序的行为。</li>
+<li><strong>可维护性</strong>：便于程序的维护和升级，减少硬编码带来的问题。</li>
+</ul>
+<h4 id="2-配置文件的格式"><a href="#2-配置文件的格式" class="headerlink" title="2. 配置文件的格式"></a><strong>2. 配置文件的格式</strong></h4><ul>
+<li><p><strong>INI格式</strong>：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[section1]</span></span><br><span class="line"><span class="attr">key1</span>=value1</span><br><span class="line"><span class="attr">key2</span>=value2</span><br><span class="line"></span><br><span class="line"><span class="section">[section2]</span></span><br><span class="line"><span class="attr">key3</span>=value3</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>JSON格式</strong>：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;section1&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;key1&quot;</span><span class="punctuation">:</span> <span class="string">&quot;value1&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;key2&quot;</span><span class="punctuation">:</span> <span class="string">&quot;value2&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;section2&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;key3&quot;</span><span class="punctuation">:</span> <span class="string">&quot;value3&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>XML格式</strong>：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">section1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">key1</span>&gt;</span>value1<span class="tag">&lt;/<span class="name">key1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">key2</span>&gt;</span>value2<span class="tag">&lt;/<span class="name">key2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">section1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">section2</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">key3</span>&gt;</span>value3<span class="tag">&lt;/<span class="name">key3</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">section2</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">config</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="③-RPC-远程调用"><a href="#③-RPC-远程调用" class="headerlink" title="③ RPC 远程调用"></a>③ RPC 远程调用</h1><h4 id="1-RPC概述"><a href="#1-RPC概述" class="headerlink" title="1. RPC概述"></a><strong>1. RPC概述</strong></h4><ul>
+<li><strong>定义</strong>：RPC（Remote Procedure Call）是一种允许一个程序调用另一个程序中的函数或方法的协议，就好像调用本地函数一样。</li>
+<li><strong>特点</strong>：<ul>
+<li><strong>透明性</strong>：客户端调用远程函数时，就像调用本地函数一样，无需关心底层的通信细节。</li>
+<li><strong>异构性</strong>：支持不同平台、不同语言之间的通信。</li>
+<li><strong>效率</strong>：减少网络通信的开销，提高通信效率。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-JSON-RPC协议"><a href="#2-JSON-RPC协议" class="headerlink" title="2. JSON-RPC协议"></a><strong>2. JSON-RPC协议</strong></h4><ul>
+<li><p><strong>定义</strong>：JSON-RPC是一种基于JSON格式的RPC协议，使用JSON作为数据交换格式。</p>
+</li>
+<li><p><strong>消息结构</strong>：</p>
+<ul>
+<li><p><strong>请求消息</strong>：</p>
+<p>JSON</p>
+<p>复制</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;jsonrpc&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;method&quot;</span><span class="punctuation">:</span> <span class="string">&quot;methodName&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;params&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>param1<span class="punctuation">,</span> param2<span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">1</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>响应消息</strong>：</p>
+<p>JSON</p>
+<p>复制</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;jsonrpc&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;result&quot;</span><span class="punctuation">:</span> <span class="string">&quot;resultValue&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">1</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><strong>错误处理</strong>：</p>
+<p>JSON</p>
+<p>复制</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;jsonrpc&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;error&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;code&quot;</span><span class="punctuation">:</span> <span class="number">-32601</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;message&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Method not found&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">1</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="3-RPC在项目中的应用"><a href="#3-RPC在项目中的应用" class="headerlink" title="3. RPC在项目中的应用"></a><strong>3. RPC在项目中的应用</strong></h4><ul>
+<li><strong>前后台分离</strong>：通过RPC实现前后台程序的分离，前台程序负责用户界面，后台程序负责硬件操作和业务逻辑。</li>
+<li><strong>远程控制</strong>：客户端通过RPC调用服务器端的函数，实现远程控制设备的功能。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://www.linqiutianovo.xyz">LinQiuTian</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://www.linqiutianovo.xyz/2024/08/07/test/linux%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85%E4%BA%A7%E5%93%81/">https://www.linqiutianovo.xyz/2024/08/07/test/linux%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85%E4%BA%A7%E5%93%81/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://www.linqiutianovo.xyz" target="_blank">林秋天的博客</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/markdown-cover.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/08/06/test/%E5%8D%9A%E5%AE%A2/Markdown%E8%AF%AD%E6%B3%95%E8%87%AA%E5%B8%A6%E6%A0%BC%E5%BC%8F(%E5%A6%82%E4%BD%95%E5%86%99%E5%8D%9A%E5%AE%A2)/" title="Markdown语法自带格式(如何写博客)"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/markdown-cover.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Markdown语法自带格式(如何写博客)</div></div><div class="info-2"><div class="info-item-1"> 用Typora软件更简单 Typora安装激活流程_哔哩哔哩_bilibili Typora安装文件及下载地址~链接:https://pan.baidu.com/s/17CunIoob5JbtQZ1N5ZIyfg?pwd=zspz 提取码:zspz 一键3连 上传代码 1hexo cl&amp;&amp;hexo g&amp;&amp;hexo d  多级标题123456# H1## H2### H3#### H4##### H5###### H6    文字样式123456789101112131415&lt;u&gt;下划线演示&lt;/u&gt;文字**加粗**演示文字*斜体*演示文本`高亮`演示文本~~删除~~线演示&lt;font size = 5&gt;5号字&lt;/font&gt;&lt;font face=&quot;黑体&quot;&gt;黑体&lt;/font&gt;&lt;font color=blue&gt;蓝色&lt;/font&gt;&lt;table&gt;&lt;tr&gt;&lt;td...</div></div></div></a><a class="pagination-related" href="/2024/08/07/test/liunx%E9%A9%B1%E5%8A%A8/Linux%E9%A9%B1%E5%8A%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0--Linux%E4%B8%AD%E6%96%AD%E5%AE%9E%E9%AA%8C/" title="Linux驱动学习笔记--11.Linux中断实验"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/markdown-cover.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Linux驱动学习笔记--11.Linux中断实验</div></div><div class="info-2"><div class="info-item-1">[正点原子]Linux驱动学习笔记–11.Linux中断实验1. Cortex-A7中断系统详解1.1 Cortex-A7中断系统简介跟 STM32 一样， Cortex-A7 也有中断向量表，中断向量表也是在代码的最前面。 CortexA7 内核有 8 个异常中断，这 8 个异常中断的中断向量表如下所示：   </div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2024/08/07/KfPnTIM8WvotugL.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">LinQiuTian</div><div class="author-info-description">林秋天的博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/linqiutian"><i></i><span>🛴客官点一点...</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/linqiutian" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="/412581566@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><center>主域名：<br><a href="https://www.linqiutianovo.xyz"><b><font color="#5ea6e5">https://www.linqiutianovo.xyz/</font></b></a>&nbsp;|&nbsp;<a href="https://www.linqiutianovo.xyz/"><b><font color="#5ea6e5">https://www.linqiutianovo.xyz</font></b></a><br>备用域名：<br><a href="https://www.linqiutianovo.xyz"><b><font color="#5ea6e5">https://www.linqiutianovo.xyz</font></b></a><br><a href="https://www.linqiutianovo.xyz"><b><font color="#5ea6e5">aa.fomal.cc</font></b></a><br><a href="https://www.linqiutianovo.xyz/"><b><font color="#5ea6e5">https://www.linqiutianovo.xyz/</font></b></a><br><a href="mailto:412581566@fqq.com">📬：<b><font color="#a591e0">412581566@fqq.com</font></b></a></center></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D"><span class="toc-text">项目介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E9%A1%B9%E7%9B%AE%E6%8A%80%E6%9C%AF%E7%BB%86%E8%8A%82"><span class="toc-text">关于项目技术细节</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BD%A0%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8%E4%BA%86JsonRPC%E5%AE%9E%E7%8E%B0%E5%89%8D%E5%90%8E%E5%8F%B0%E5%88%86%E7%A6%BB%EF%BC%8C%E5%85%B7%E4%BD%93%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%9A%84%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E9%80%89%E6%8B%A9%E8%BF%99%E7%A7%8D%E6%9E%B6%E6%9E%84%EF%BC%9F"><span class="toc-text">1.你在项目中使用了JsonRPC实现前后台分离，具体是如何实现的？为什么要选择这种架构？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-MQTT%E5%8D%8F%E8%AE%AE%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E8%B5%B7%E5%88%B0%E4%BA%86%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8%EF%BC%9F%E4%BD%A0%E6%98%AF%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86MQTT%E6%B6%88%E6%81%AF%E7%9A%84%E8%AE%A2%E9%98%85%E5%92%8C%E5%8F%91%E5%B8%83%E7%9A%84%EF%BC%9F"><span class="toc-text">2.MQTT协议在项目中起到了什么作用？你是如何处理MQTT消息的订阅和发布的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%9C%A8%E5%BC%80%E5%8F%91%E5%B5%8C%E5%85%A5%E5%BC%8FLinux%E5%BA%94%E7%94%A8%E6%97%B6%EF%BC%8C%E4%BD%A0%E6%98%AF%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E7%B3%BB%E7%BB%9F%E8%B0%83%E8%AF%95%E5%92%8C%E4%BC%98%E5%8C%96%E7%9A%84%EF%BC%9F%E6%9C%89%E6%B2%A1%E6%9C%89%E9%81%87%E5%88%B0%E4%BB%80%E4%B9%88%E6%8A%80%E6%9C%AF%E9%9A%BE%E9%A2%98%EF%BC%8C%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E7%9A%84%EF%BC%9F"><span class="toc-text">3.在开发嵌入式Linux应用时，你是如何进行系统调试和优化的？有没有遇到什么技术难题，是如何解决的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%BD%A0%E5%AF%B9Qt%E6%A1%86%E6%9E%B6%E7%9A%84%E6%8E%8C%E6%8F%A1%E7%A8%8B%E5%BA%A6%E5%A6%82%E4%BD%95%EF%BC%9F%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E6%98%AF%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8Qt%E5%BC%80%E5%8F%91%E5%9B%BE%E5%BD%A2%E7%94%A8%E6%88%B7%E7%95%8C%E9%9D%A2%E7%9A%84%EF%BC%9F"><span class="toc-text">4.你对Qt框架的掌握程度如何？在项目中是如何利用Qt开发图形用户界面的？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E9%A1%B9%E7%9B%AE%E8%AE%BE%E8%AE%A1%E4%B8%8E%E8%A7%84%E5%88%92"><span class="toc-text">关于项目设计与规划</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84%E6%98%AF%E6%80%8E%E6%A0%B7%E7%9A%84%EF%BC%9F%E4%BD%A0%E6%98%AF%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E6%A8%A1%E5%9D%97%E5%88%92%E5%88%86%E5%92%8C%E5%8A%9F%E8%83%BD%E8%AE%BE%E8%AE%A1%E7%9A%84%EF%BC%9F"><span class="toc-text">1.项目的整体架构是怎样的？你是如何进行模块划分和功能设计的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%9C%A8%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E8%BF%87%E7%A8%8B%E4%B8%AD%EF%BC%8C%E4%BD%A0%E6%98%AF%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90%E5%92%8C%E9%9C%80%E6%B1%82%E5%8F%98%E6%9B%B4%E7%AE%A1%E7%90%86%E7%9A%84%EF%BC%9F"><span class="toc-text">2.在项目开发过程中，你是如何进行需求分析和需求变更管理的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%BD%A0%E5%A6%82%E4%BD%95%E7%A1%AE%E4%BF%9D%E9%A1%B9%E7%9B%AE%E7%9A%84%E8%BF%9B%E5%BA%A6%E5%92%8C%E8%B4%A8%E9%87%8F%EF%BC%9F%E6%9C%89%E6%B2%A1%E6%9C%89%E4%BD%BF%E7%94%A8%E8%BF%87%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7%E6%88%96%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="toc-text">3.你如何确保项目的进度和质量？有没有使用过项目管理工具或方法？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-2-2-%E8%BD%AF%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="toc-text">1.2.2 软件结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-JsonRPC-%E5%AE%9E%E7%8E%B0%E5%89%8D%E5%90%8E%E5%8F%B0"><span class="toc-text">使用 JsonRPC 实现前后台</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%8A%E7%A8%8B%E5%BA%8F%E6%8B%86%E5%88%86%E4%B8%BA%E5%89%8D%E5%90%8E%E5%8F%B0"><span class="toc-text">把程序拆分为前后台</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BA%E4%BD%95%E8%A6%81%E6%8B%86%E5%88%86%EF%BC%9F"><span class="toc-text">为何要拆分？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%8B%86%E5%88%86%EF%BC%9F"><span class="toc-text">如何拆分？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%93%E4%B8%AD%E7%9A%84-2-%E4%B8%AA%E5%AF%B9%E8%B1%A1%EF%BC%9A-server-%E5%92%8C-client"><span class="toc-text">网络传输中的 2 个对象： server 和 client</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E4%BC%A0%E8%BE%93%E6%96%B9%E5%BC%8F%EF%BC%9A-TCP-UDP"><span class="toc-text">两种传输方式： TCP&#x2F;UDP</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#TCP-%E5%92%8C-UDP-%E5%8E%9F%E7%90%86%E4%B8%8A%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">TCP 和 UDP 原理上的区别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%BA%E4%BD%95%E5%AD%98%E5%9C%A8-UDP-%E5%8D%8F%E8%AE%AE"><span class="toc-text">为何存在 UDP 协议</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%B8%BB%E8%A6%81%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D"><span class="toc-text">网络编程主要函数介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#socket%E5%87%BD%E6%95%B0"><span class="toc-text">socket函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bind%E5%87%BD%E6%95%B0"><span class="toc-text">bind函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#listen%E5%87%BD%E6%95%B0"><span class="toc-text">listen函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#accept%E5%87%BD%E6%95%B0"><span class="toc-text">accept函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#connect%E5%87%BD%E6%95%B0"><span class="toc-text">connect函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JSON-RPC-%E7%A4%BA%E4%BE%8B%E4%B8%8E%E6%83%85%E6%99%AF%E5%88%86%E6%9E%90"><span class="toc-text">JSON-RPC 示例与情景分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JSON-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">JSON 是什么</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E-JSON-RPC-%E6%93%8D%E4%BD%9C%E7%A1%AC%E4%BB%B6"><span class="toc-text">基于 JSON-RPC 操作硬件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">线程的概念</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E2%91%A0-MQTT-%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF"><span class="toc-text">① MQTT 网络技术</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MQTT-%E6%A6%82%E8%BF%B0"><span class="toc-text">MQTT 概述</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Paho-MQTT%EF%BC%9A-Paho-MQTT-%E6%98%AF-Eclipse-Paho-%E9%A1%B9%E7%9B%AE%E7%9A%84%E4%B8%80%E9%83%A8%E5%88%86%EF%BC%8C%E6%98%AF%E4%B8%80%E4%B8%AA%E5%BC%80%E6%BA%90%E7%9A%84-MQTT-%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%BA%93%EF%BC%8C%E6%94%AF%E6%8C%81%E5%A4%9A%E7%A7%8D%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%EF%BC%8C%E5%8C%85%E6%8B%AC-C%E3%80%81C-%E3%80%81Java%E3%80%81Python%E3%80%81JavaScript-%E7%AD%89%E3%80%82%E5%AE%83%E7%9A%84%E7%9B%AE%E6%A0%87%E6%98%AF%E4%B8%BA%E5%BC%80%E5%8F%91%E8%80%85%E6%8F%90%E4%BE%9B%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E6%98%93%E7%94%A8%E7%9A%84-MQTT-%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%BA%93%EF%BC%8C%E4%BB%A5%E4%BE%BF%E5%9C%A8%E5%90%84%E7%A7%8D%E5%B9%B3%E5%8F%B0%E5%92%8C%E8%AE%BE%E5%A4%87%E4%B8%8A%E5%AE%9E%E7%8E%B0-MQTT-%E5%8D%8F%E8%AE%AE%E3%80%82"><span class="toc-text">Paho MQTT：- Paho MQTT 是 Eclipse Paho 项目的一部分，是一个开源的 MQTT 客户端库，支持多种编程语言，包括 C、C++、Java、Python、JavaScript 等。它的目标是为开发者提供一个简单易用的 MQTT 客户端库，以便在各种平台和设备上实现 MQTT 协议。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MQTT-%E6%A6%82%E8%BF%B02"><span class="toc-text">MQTT 概述2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-MQTT%E5%8D%8F%E8%AE%AE%E6%A6%82%E8%BF%B0"><span class="toc-text">1. MQTT协议概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-MQTT%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9E%8B"><span class="toc-text">2. MQTT通信模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">5. 应用场景</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E2%91%A1-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86"><span class="toc-text">② 配置文件处理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-text">1**. 配置文件的作用**</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E6%A0%BC%E5%BC%8F"><span class="toc-text">2. 配置文件的格式</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E2%91%A2-RPC-%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8"><span class="toc-text">③ RPC 远程调用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-RPC%E6%A6%82%E8%BF%B0"><span class="toc-text">1. RPC概述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-JSON-RPC%E5%8D%8F%E8%AE%AE"><span class="toc-text">2. JSON-RPC协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-RPC%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-text">3. RPC在项目中的应用</span></a></li></ol></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2024 - 2025 By LinQiuTian</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.4.0-b1"></script><script src="/js/main.js?v=5.4.0-b1"></script><script src="/js/tw_cn.js?v=5.4.0-b1"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"></div><div class="aplayer" data-id="12551163241" data-server="netease" data-type="playlist"  data-fixed="true" data-theme="#3F51B5"></div><canvas id="universe"></canvas><script defer src="/js/universe.js"></script><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/dist/fireworks.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search articles..." type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.4.0-b1"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    if(parent_div_git) {
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = '/';
+  var qweather_key = '637b20351e874329896d0920eb741c8e';
+  var gaud_map_key = '4a866722dcf666eb29a2326ae458eaf1';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '113.34532,23.15624';
+  var clock_default_rectangle_enable = 'true';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v6.2.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v4.3.1" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://vercel.com/" style="margin-inline:5px" data-title="本站采用多线部署，主线路托管于Vercel" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Hosted-Vercel-brightgreen?style=flat&amp;logo=Vercel" alt=""/></a><a class="github-badge" target="_blank" href="https://dashboard.4everland.org/" style="margin-inline:5px" data-title="本站采用多线部署，备用线路托管于4EVERLAND" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Hosted-4EVERLAND-22DDDD?style=flat&amp;logo=IPFS" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '2');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body></html>
