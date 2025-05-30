@@ -1,0 +1,1009 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>C语言第1-4章内容 | 林秋天的博客</title><meta name="author" content="LinQiuTian"><meta name="copyright" content="LinQiuTian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#F8F5F0"><meta name="description" content="第一章 计算机内部结构1.1 计算机内部结构（存储器、CPU、输入输出设备）1.2 C语言的起源和发展1.3 C语言的特点和优缺点1.4 C语言的应用领域1.5 C语言中的八进制、十进制、十六进制数和计算机二进制1.6 C语言的第一个hello world程序  一、计算机内部结构1.1 冯·诺伊曼架构1.1.1 冯·诺伊曼 基本信息：约翰·冯·诺伊曼，1903-1957，匈牙利裔美国数学家和理论">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C语言第1-4章内容">
+<meta property="og:url" content="https://www.linqiutianovo.xyz/2023/09/20/test/c%E5%92%8Cc++/C%E8%AF%AD%E8%A8%80(1-4%E7%AB%A0)/index.html">
+<meta property="og:site_name" content="林秋天的博客">
+<meta property="og:description" content="第一章 计算机内部结构1.1 计算机内部结构（存储器、CPU、输入输出设备）1.2 C语言的起源和发展1.3 C语言的特点和优缺点1.4 C语言的应用领域1.5 C语言中的八进制、十进制、十六进制数和计算机二进制1.6 C语言的第一个hello world程序  一、计算机内部结构1.1 冯·诺伊曼架构1.1.1 冯·诺伊曼 基本信息：约翰·冯·诺伊曼，1903-1957，匈牙利裔美国数学家和理论">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.linqiutianovo.xyz/img/default-cover2.jpg">
+<meta property="article:published_time" content="2023-09-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-05-30T10:06:44.281Z">
+<meta property="article:author" content="LinQiuTian">
+<meta property="article:tag" content="C语言">
+<meta property="article:tag" content="基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.linqiutianovo.xyz/img/default-cover2.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "C语言第1-4章内容",
+  "url": "https://www.linqiutianovo.xyz/2023/09/20/test/c%E5%92%8Cc++/C%E8%AF%AD%E8%A8%80(1-4%E7%AB%A0)/",
+  "image": "https://www.linqiutianovo.xyz/img/default-cover2.jpg",
+  "datePublished": "2023-09-19T16:00:00.000Z",
+  "dateModified": "2025-05-30T10:06:44.281Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "LinQiuTian",
+      "url": "https://www.linqiutianovo.xyz/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="https://www.fomal.cc/favicon.ico"><link rel="canonical" href="https://www.linqiutianovo.xyz/2023/09/20/test/c%E5%92%8Cc++/C%E8%AF%AD%E8%A8%80(1-4%E7%AB%A0)/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.4.0-b1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#F8F5F0')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const hour = new Date().getHours()
+          const isNight = hour <= 6 || hour >= 18
+          if (theme === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else theme === 'light' ? activateLightMode() : activateDarkMode()
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"top-right"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'C语言第1-4章内容',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/universe.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(/url(https:/s2.loli.net/2024/08/07/EBzp91lhZCgXDI6.png));"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2024/08/07/KfPnTIM8WvotugL.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">28</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa-heart"></i><span> 留言板</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/default-cover2.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">林秋天的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">C语言第1-4章内容</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa-heart"></i><span> 留言板</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">C语言第1-4章内容</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-09-19T16:00:00.000Z" title="发表于 2023-09-20 00:00:00">2023-09-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-30T10:06:44.281Z" title="更新于 2025-05-30 18:06:44">2025-05-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C%E8%AF%AD%E8%A8%80/">C语言</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">14.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>52分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;It has been&quot;,&quot;messageNext&quot;:&quot;days since the last update, the content of the article may be outdated.&quot;,&quot;postUpdate&quot;:&quot;2025-05-30 18:06:44&quot;}" hidden></div><h1 id="第一章-计算机内部结构"><a href="#第一章-计算机内部结构" class="headerlink" title="第一章 计算机内部结构"></a><strong>第一章 计算机内部结构</strong></h1><p><strong>1.1 计算机内部结构（存储器、CPU、输入输出设备）</strong><br><strong>1.2 C语言的起源和发展</strong><br><strong>1.3 C语言的特点和优缺点</strong><br><strong>1.4 C语言的应用领域</strong><br><strong>1.5 C语言中的八进制、十进制、十六进制数和计算机二进制</strong><br><strong>1.6 C语言的第一个hello world程序</strong></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="H:/Hexo-Blog/blog-demo/source/images/1694402772337-c1eff0d2-cb85-47f3-9b8f-10a0fea49e61-1748589409790-9.jpeg" alt="img"></p>
+<h2 id="一、计算机内部结构"><a href="#一、计算机内部结构" class="headerlink" title="一、计算机内部结构"></a>一、计算机内部结构</h2><h3 id="1-1-冯·诺伊曼架构"><a href="#1-1-冯·诺伊曼架构" class="headerlink" title="1.1 冯·诺伊曼架构"></a>1.1 冯·诺伊曼架构</h3><h4 id="1-1-1-冯·诺伊曼"><a href="#1-1-1-冯·诺伊曼" class="headerlink" title="1.1.1 冯·诺伊曼"></a>1.1.1 冯·诺伊曼</h4><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="H:/Hexo-Blog/blog-demo/source/images/image-20250530151730082.png" alt="image-20250530151730082"></p>
+<p>基本信息：约翰·冯·诺伊曼，1903-1957，匈牙利裔美国数学家和理论物理学家。<br>重要贡献：开创了存储程序的计算机设计概念，即冯·诺伊曼架构。</p>
+<h4 id="冯诺伊曼架构"><a href="#冯诺伊曼架构" class="headerlink" title="冯诺伊曼架构"></a>冯诺伊曼架构</h4><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="H:/Hexo-Blog/blog-demo/source/images/image-20250530151754770.png" alt="image-20250530151754770"></p>
+<p><strong>定义</strong>：冯·诺伊曼模型，也称冯·诺伊曼架构，是现代计算机的基础，分为输入设备，输出设备，存储器，处理器和总线五部分。<br><strong>输入设备</strong>：让用户向计算机输入数据，如键盘，鼠标等。<br><strong>输出设备</strong>：让计算机将处理过的数据展示给用户，如显示器，打印机等。<br><strong>存储器</strong>：用于存储数据和指令，在冯·诺伊曼模型中，数据和指令存储在同一内存中。</p>
+<ul>
+<li>硬盘 ： 外部存储设备</li>
+<li>内存 ： 存储程序运行数据</li>
+<li>缓存 ： 集成在CPU内部</li>
+</ul>
+<p><strong>处理器</strong>：负责执行指令和处理数据，由算术逻辑单元和控制单元组成。总线：连接各个部分，负责数据传输。</p>
+<h2 id="二、C语言的起源和发展"><a href="#二、C语言的起源和发展" class="headerlink" title="二、C语言的起源和发展"></a>二、C语言的起源和发展</h2><p>C 语言于 20 世纪 70 年代诞生于美国的贝尔实验室。在此之前，人们编写系统软件主要使用汇编语言，汇编语言编写的程序依赖于计算机硬件，其可读性和可移植性都比较差。而高级语言的可读性和可移植性虽然较汇编语言好，但一般又不具备低级语言的能够直观地对硬件实现控制和操作而且执行速度快等特点。</p>
+<p>（1）C语言最初由美国贝尔实验室的D.M. Ritchie在B语言的基础上设计，主要为描述和实现UNIX操作系统。那时，C语言仅在贝尔实验室内部使用。<br>（2）然后到了1975年，UNIX的第6版发布后，C语言因其突出的优点引起了广泛关注。随后，到1977年出现了可移植的C语言。<br>（3）1978年，UNIX的第7版发布，其中使用的C语言被视为后来广泛使用的C语言版本的基础，也被称为标准C语言。<br>（4）1983年，美国国家标准学会（ANSI）对C语言进行了发展和扩充，并制定了新的标准，称为ANSI C。<br>（5）最后到了1990年，国际标准化组织（ISO）制定了ISO C标准，至今流行的C语言编译系统都是以此为标准。</p>
+<h2 id="三、C语言的特点和优缺点"><a href="#三、C语言的特点和优缺点" class="headerlink" title="三、C语言的特点和优缺点"></a>三、C语言的特点和优缺点</h2><h3 id="3-1-C语言的特点："><a href="#3-1-C语言的特点：" class="headerlink" title="3.1 C语言的特点："></a>3.1 C语言的特点：</h3><p><strong>简洁和高效</strong>：C语言的语法简洁，而且执行速度快。它允许程序员直接操作硬件，因此经常用于系统编程。<br><strong>过程式</strong>：C语言是一种过程式语言，这意味着它侧重于过程和函数。<br><strong>低级功能</strong>：C语言提供了对内存的直接访问和操作，这对于开发底层应用程序和系统非常有用。<br><strong>可移植性</strong>：C语言编写的程序可以在多种不同的硬件平台上运行，只要有适当的编译器。<br><strong>丰富的库支持</strong>：C语言有一个广泛的标准库，提供了许多内置的函数。<br><strong>扩展性</strong>：C语言允许程序员轻松地扩展其功能通过使用外部库。</p>
+<h3 id="3-2-C语言的优点："><a href="#3-2-C语言的优点：" class="headerlink" title="3.2 C语言的优点："></a>3.2 C语言的优点：</h3><p><strong>性能：</strong>C语言编写的程序通常具有很高的执行速度和优化的内存使用。<br><strong>控制：</strong>提供了对硬件资源的底层访问和控制。<br><strong>广泛应用：</strong>C语言用于开发各种类型的应用程序，包括操作系统、数据库系统、图形包和游戏等。</p>
+<h3 id="3-3-C语言的缺点："><a href="#3-3-C语言的缺点：" class="headerlink" title="3.3 C语言的缺点："></a>3.3 C语言的缺点：</h3><p><strong>安全性：</strong>C语言中的内存管理是手动的，并且它允许直接操作内存地址，这可能导致安全问题，如缓冲区溢出。<br><strong>复杂性：</strong>尽管C语言的语法相对简单，但它的低级特性使得编写复杂程序变得困难。<br><strong>缺乏现代特性：</strong>与一些现代语言相比，C语言缺少一些高级特性，如垃圾收集、异常处理和面向对象编程。<br><strong>调试和维护：</strong>由于C语言的低级性质，调试和维护C语言程序可能会比使用高级语言更加困难。</p>
+<h2 id="四、C语言的应用领域"><a href="#四、C语言的应用领域" class="headerlink" title="四、C语言的应用领域"></a>四、C语言的应用领域</h2><p><strong>操作系统：</strong>许多现代操作系统，包括Linux，Windows以及大部分Unix和Unix-like系统，都是用C语言编写的。这是因为C语言可以提供底层硬件访问和高效的内存管理。<br><strong>嵌入式系统：</strong>由于C语言的执行效率高且占用资源少，因此非常适合于嵌入式系统和实时系统的开发。<br><strong>硬件驱动：</strong>硬件驱动程序通常需要直接与特定硬件设备交互，而C语言提供了直接访问物理地址和硬件的能力。<br><strong>系统软件：</strong>除了操作系统外，很多系统级的软件，如数据库、网络服务器等，也是用C语言开发的。<br><strong>编译器和解释器：</strong>很多现代编程语言的编译器和解释器都是用C或C编写的。例如，Python的解释器CPython和Java的虚拟机JVM等。<br><strong>图形和游戏编程：</strong>C语言也在图形和游戏编程中被广泛使用，尤其是在需要对性能要求很高的场合。<br><strong>科学计算：</strong>很多科学计算软件和库，例如MATLAB等，底层都是用C或C编写的，以保证计算效率。</p>
+<h2 id="五、八进制、十进制、十六进制数和计算机二进制"><a href="#五、八进制、十进制、十六进制数和计算机二进制" class="headerlink" title="五、八进制、十进制、十六进制数和计算机二进制"></a>五、<strong>八进制、十进制、十六进制数和计算机二进制</strong></h2><p><strong>十进制： 遇十进一 10个基础数</strong><br><strong>八进制： 遇十进一 8个基础数</strong>	<br><strong>十六进制： 遇十进一 16个基础数 0x</strong><br><strong>二进制： 遇十进一 2个基础数</strong></p>
+<h2 id="六-C语言的第一个hello-world程序"><a href="#六-C语言的第一个hello-world程序" class="headerlink" title="六 C语言的第一个hello world程序"></a><strong>六 C语言的第一个hello world程序</strong></h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="comment">//  标准输入输出</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> <span class="type">const</span> *argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;hello hqyj\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="H:/Hexo-Blog/blog-demo/source/images/1694401532597-5a388e94-d5d5-4b76-aa56-537f6d476394.jpeg" alt="img"></p>
+<p><strong>#include &lt;stdio.h&gt;</strong><br><strong>&#x2F;&#x2F; 标准输入输出</strong><br><strong>定义头文件</strong></p>
+<p><strong>主函数</strong><br>**int main(int argc, char const <em>argv[])</em></p>
+<p><strong>打印并输出到终端（屏幕）</strong><br><strong>printf(“hello hqyj\n”);</strong></p>
+<p><strong>1、返回一个值</strong><br><strong>2、退出函数</strong><br><strong>return n;</strong></p>
+<p><strong>n的类型，和你的函数类型一致</strong><br><strong>如果函数是void 空类型 直接 return；</strong></p>
+<h1 id="第二章-C语言基础"><a href="#第二章-C语言基础" class="headerlink" title="第二章 C语言基础"></a><strong>第二章 C语言基础</strong></h1><p>@[toc]<strong>目标</strong></p>
+<ul>
+<li>1、C语言程序的基本结构</li>
+<li>2、C语言关键字和标识符</li>
+<li>3、C语言的数据类型和变量的以及存储类型</li>
+<li>4、C语言中的标准输入输出函数</li>
+<li>5、C语言中的常量</li>
+<li>6、C语言中的运算符</li>
+<li>7、C语言中的表达式式</li>
+</ul>
+<h2 id="一、C语言程序的基本结构"><a href="#一、C语言程序的基本结构" class="headerlink" title="一、C语言程序的基本结构"></a>一、C语言程序的基本结构</h2><h3 id="1-1-基本结构"><a href="#1-1-基本结构" class="headerlink" title="1.1 基本结构"></a>1.1 基本结构</h3><p>C语言程序的基本结构包括以下几个部分：<br><strong>1.预处理指令</strong>：这些编译器指令，通常放在程序的开头，#include &lt;stdio.h&gt; 。预处理器指令以#字符开始，最常见的#include,用于包含其他的头文件。<strong>2.函数</strong>：C程序中至少包含一个函数，即main()函数。main()函数是程序执行的起点。此外，一个C程序中可以包含其他的函数，这些函数可以自己定义也可以是从库中调用。<br><strong>3.变量</strong>：变量用于存储数据。在C语言中，每个变量都有特有类型。<br><strong>4.语句&amp;表达式</strong>：语句是执行特定任务的语句，如赋值语句、调用函数等，表达式则是计算产生值的计算公式。<br><strong>5.注释</strong>：注释用于解释程序的功能，对代码进行解释和描述。在C语言中，注释可以用&#x2F; <em>注释内容</em> &#x2F;或者&#x2F;&#x2F;注释内容来书写。<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.nlark.com/yuque/0/2023/png/8368890/1694402052443-c71c85bb-05c5-4dcb-aa9e-c1c70e110bb2.png#averageHue=%23ebebeb&clientId=u1e415e4d-0a0d-4&from=paste&id=u49d8c282&originHeight=892&originWidth=948&originalType=url&ratio=1.5&rotation=0&showTitle=false&size=319759&status=done&style=none&taskId=ua10423ec-bf6b-477f-bd6b-1cb5bb08a1a&title=?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_enpo%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10" alt="img"></p>
+<p>1、预处理<br>#include<br>2、main<br>主函数 不管在外面写了多少个函数 只能运行main<br>要运行外部函数，则需要通过main直接或间接的调用<br>3、语句<br>需要执行的程序</p>
+<p>实例程序</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span>   <span class="comment">//预处理指令</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 这是一个简单的C程序 */</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>          <span class="comment">//函数开始</span></span><br><span class="line"> &#123;</span><br><span class="line">     <span class="type">int</span> a = <span class="number">10</span>;     <span class="comment">//定义变量和赋值语句</span></span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;Hello World&quot;</span>);  <span class="comment">//语句：调用printf函数</span></span><br><span class="line">     <span class="keyword">return</span> <span class="number">0</span>;       <span class="comment">//语句：返回，结束main函数</span></span><br><span class="line"> &#125;                   <span class="comment">//函数结束</span></span><br></pre></td></tr></table></figure>
+
+<p>在这个程序中：<br>#include &lt;stdio.h&gt;是预处理指令，用于包含stdio.h头文件。<br>main()是函数，程序的入口。<br>int a &#x3D; 10为变量赋值语句。<br>printf是一个函数调用该语句，用于输出字符以及字符串和变量a的值。</p>
+<h3 id="1-2-gcc编译器"><a href="#1-2-gcc编译器" class="headerlink" title="1.2 gcc编译器"></a>1.2 gcc编译器</h3><p><strong>gcc编译器的使用</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gcc [文件名]     						编译</span><br><span class="line">./a.out					 						执行</span><br><span class="line"></span><br><span class="line">gcc [文件名] -o [程序名]    改名执行文件名称</span><br><span class="line"></span><br><span class="line">多文件</span><br><span class="line">gcc *.c -o [程序名]				多文件编译    要求这整个文件夹都是同一个工程</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-1-gcc编译流程"><a href="#1-2-1-gcc编译流程" class="headerlink" title="1.2.1 gcc编译流程"></a>1.2.1 gcc编译流程</h4><p>gcc的编译流程分为4个步骤：<br>①预处理 		-E .i 展开头文件 替换宏定义 删除注释<br>②编译		-S .s 纠错<br>③汇编		-c .o<br>④链接		a.out<br>支持以下后缀：<br>.c	C语言源代码<br>.h	程序中所包含的头文件<br>.i	已经预处理过的C源代码文件<br>.s	汇编语言源代码文件<br>.o	汇编后的目标文件<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="H:/Hexo-Blog/blog-demo/source/images/1694412923517-c33863b7-41f0-4096-820b-e77c7c48e39a.jpeg" alt="img"></p>
+<hr>
+<p>接下通过一个实例程序来对gcc进行讲解，实例程序如下，分为两个文件一个hello.c和hello.h：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">//hello.c//</span><br><span class="line"> #include &lt;stdio.h&gt;</span><br><span class="line"> #include &quot;hello.h&quot;</span><br><span class="line"> int main()</span><br><span class="line"> &#123;</span><br><span class="line">     u8 i;</span><br><span class="line">     printf(&quot;%ld\n&quot;,sizeof(i));</span><br><span class="line">     return 0;</span><br><span class="line"> &#125;</span><br><span class="line">#ifndef __HELLO_H_</span><br><span class="line"> #define __HELLO_H_</span><br><span class="line"> </span><br><span class="line"> typedef unsigned int u8;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> #endif</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>预处理阶段：</strong><br>gcc的选项”-E”可以使用编译器在预处理结束时就停止编译，选项-o是指定gcc输出结果，<br>gcc -E -o [目标文件] [编译文件] gcc -E -o hello.i hello.c<br><strong>编译阶段：</strong><br>编译器在预处理结束后开始使用，gcc首先要检查代码的规范性、是否还有语法错误等，在检查无误后，就开始把代码翻译成汇编语言。<br>gcc -S -o [目标文件] [编译文件] gcc -S -o hello.s hello.i<br><strong>汇编阶段:</strong><br>汇编的过程就是将.s文件生成生产目标文件，我们在使用-c就可以看到汇编的代码转换成为.o的二进制目标代码了。<br>gcc -c -o [目标文件] [编译文件]gcc -c -o hello.o hello.s<br><strong>链接阶段：</strong><br>成功编译后，就进入到了链接阶段，在这里涉及到一个很重要的概念：函数库。<br>当我们使用一些库文件时，则会</p>
+<h2 id="二、C语言关键字和标识符"><a href="#二、C语言关键字和标识符" class="headerlink" title="二、C语言关键字和标识符"></a>二、C语言关键字和标识符</h2><h3 id="2-1关键字"><a href="#2-1关键字" class="headerlink" title="2.1关键字"></a>2.1关键字</h3><p><strong>关键字</strong>：关键字是C语言中预先定义并保留的特殊单词，每个关键字在C语言中都有特定的含义和用途。我们在编写C程序时不能将关键字作为变量名或者其他标识名。以下是C语言的关键字：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span>        <span class="type">double</span>      <span class="type">int</span>         <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class"><span class="title">break</span>       <span class="title">else</span>        <span class="title">long</span>        <span class="title">switch</span></span></span><br><span class="line"><span class="class"><span class="title">case</span>        <span class="title">enum</span>        <span class="title">register</span>    <span class="title">typedef</span></span></span><br><span class="line"><span class="class"><span class="title">char</span>        <span class="title">extern</span>      <span class="title">return</span>      <span class="title">union</span></span></span><br><span class="line"><span class="class"><span class="title">const</span>       <span class="title">float</span>       <span class="title">short</span>       <span class="title">unsigned</span></span></span><br><span class="line"><span class="class"><span class="title">continue</span>    <span class="title">for</span>         <span class="title">signed</span>      <span class="title">void</span></span></span><br><span class="line"><span class="class"><span class="title">default</span>     <span class="title">goto</span>        <span class="title">sizeof</span>      <span class="title">volatile</span></span></span><br><span class="line"><span class="class"><span class="title">do</span>          <span class="title">if</span>          <span class="title">static</span>      <span class="title">while</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2标识符"><a href="#2-2标识符" class="headerlink" title="2.2标识符"></a>2.2标识符</h3><p><strong>标识符</strong>：是程序编写过程中的变量名、函数名、数组名等元素定义的名称。标识符的命名需要遵循以下规则：<br>1.标识符的第一个字符必须是字母（大写或小写）或者下划线”_”。<br>2.后续的字符可以是字母、数字或下划线。<br>3.关键字不能作为标识符。<br>4.标识符在C语言中是区分大小写的。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//正确</span></span><br><span class="line"><span class="type">int</span> myVar;</span><br><span class="line"><span class="type">double</span> _myVar;</span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> <span class="type">int</span> var123;</span><br><span class="line"><span class="type">void</span> <span class="title function_">myFunction</span><span class="params">()</span>;</span><br><span class="line"><span class="comment">//错误</span></span><br><span class="line"><span class="type">int</span> <span class="number">123</span>var;    <span class="comment">// 以数字开头</span></span><br><span class="line"><span class="type">double</span> <span class="type">double</span>; <span class="comment">// 使用了关键字</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>随堂小测：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">int score;              // 正确</span><br><span class="line">double _maxValue;       // 正确</span><br><span class="line">char response1;         // 正确</span><br><span class="line">int 7score;             // 错误，名称不能以数字开头</span><br><span class="line">void print_score();     // 正确</span><br><span class="line">double double;          // 错误，不能使用关键字作为名称</span><br><span class="line">char a b;               // 错误，名称中不能有空格</span><br><span class="line">int number of students; // 错误，名称中不能有空格</span><br><span class="line">void PrintScore();      // 正确，但不符合C语言的常见命名习惯，函数名通常全部小写，如print_score</span><br><span class="line">int NumberOfStudents;   // 正确，但不符合C语言的常见命名习惯，更常见的是使用下划线，如number_of_students</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="三、C语言的数据类型和变量的以及存储类型"><a href="#三、C语言的数据类型和变量的以及存储类型" class="headerlink" title="三、C语言的数据类型和变量的以及存储类型"></a>三、C语言的数据类型和变量的以及存储类型</h2><h3 id="3-1-计算机数据的表示"><a href="#3-1-计算机数据的表示" class="headerlink" title="3.1 计算机数据的表示"></a>3.1 计算机数据的表示</h3><h4 id="3-1-1-进制"><a href="#3-1-1-进制" class="headerlink" title="3.1.1 进制"></a>3.1.1 进制</h4><p>计算机中数据通常以二进制形式表示，但根据需要，它们可以进一步划分为不同的类型。以下是常见的计算机中数据表示的方式：</p>
+<h5 id="3-1-1-1-数值数据"><a href="#3-1-1-1-数值数据" class="headerlink" title="3.1.1.1 数值数据"></a>3.1.1.1 数值数据</h5><ol>
+<li><strong>二进制</strong>：这是计算机最基础的数据表示方式，所有的信息都可以转换为0和1。这是因为计算机的硬件电路（例如，开关和逻辑门）最适合处理二进制系统。</li>
+<li><strong>十进制</strong>：尽管计算机内部使用二进制，但在显示和输入数据时，通常使用我们更熟悉的十进制系统。计算机内部会将十进制数字转换为二进制，进行计算后再转回十进制。</li>
+<li><strong>十六进制</strong>：十六进制被广泛用于计算机科学和编程，因为它可以更简洁地表示二进制数。每个十六进制数字可以精确地表示四个二进制位，这使得二进制数和十六进制数之间的转换非常直接。</li>
+<li><strong>各进制的前缀和后缀</strong></li>
+</ol>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="H:/Hexo-Blog/blog-demo/source/images/1705913805089-42cec186-671d-4880-9f6f-fb9a0dde9403.png" alt="img"></p>
+<p>6、进制间的转化</p>
+<p>短除法和乘积法</p>
+<h5 id="3-1-1-1-非数值数据"><a href="#3-1-1-1-非数值数据" class="headerlink" title="3.1.1.1 非数值数据"></a>3.1.1.1 非数值数据</h5><ol>
+<li><strong>ASCII</strong>：ASCII是一种将字符（如字母、数字和特殊符号）映射到二进制数的标准。例如，在ASCII中，大写字母A的编码是65，对应的二进制是1000001。</li>
+</ol>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.nlark.com/yuque/0/2023/png/8368890/1694413927041-f1076166-e505-4a03-a6d3-0da3526c6f8d.png#averageHue=%23d2d2d2&clientId=u87bc8a45-431d-4&from=paste&height=615&id=uf648587b&originHeight=923&originWidth=1434&originalType=binary&ratio=1.5&rotation=0&showTitle=false&size=1855008&status=done&style=none&taskId=u69f69612-fbc5-4daa-a5a0-59a75716fc2&title=&width=956?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_enpo%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10" alt="img"></p>
+<ol>
+<li><strong>浮点数</strong>：计算机使用浮点数表示法来存储和操作实数。IEEE 754标准定义了浮点数的表示方式和操作，这是现代计算机最广泛使用的浮点数标准。</li>
+</ol>
+<h4 id="3-1-2-源码、反码、补码"><a href="#3-1-2-源码、反码、补码" class="headerlink" title="3.1.2 源码、反码、补码"></a>3.1.2 源码、反码、补码</h4><p>原码、反码和补码是用于表示和存储二进制有符号整数的方式。它们都用最高位（通常是左边的位）表示符号，0表示正，1表示负。<br><strong>原码</strong>：原码就是符号位加上真值的绝对值，即用第一位表示符号，其余位表示值。比如如果是8位二进制：</p>
+<ul>
+<li>[+1]原 &#x3D; 0000 0001</li>
+<li>[-1]原 &#x3D; 1000 0001</li>
+</ul>
+<p>有符号数的第一位为符号位<br><strong>反码</strong>：正数的反码是其本身，负数的反码是在其原码的基础上, <strong>符号位</strong>不变，其余各位取反。</p>
+<ul>
+<li>[+1]反 &#x3D; 0000 0001</li>
+<li>[-1]反 &#x3D; 1111 1110</li>
+</ul>
+<p><strong>补码</strong>：正数的补码就是其本身，负数的补码是在其原码的基础上，符号位不变，其余各个位取反，然后最后一位加1。</p>
+<ul>
+<li>[+1]补 &#x3D; 0000 0001</li>
+<li>[-1]补 &#x3D; 1111 1111</li>
+</ul>
+<p>原码 本身<br>反码	原码取反<br>补码	反码 + 1<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="H:/Hexo-Blog/blog-demo/source/images/1694414463919-3a9085cb-c5aa-44c1-9bf2-e9c1db389d41.jpeg" alt="img"></p>
+<h3 id="3-2-数据类型"><a href="#3-2-数据类型" class="headerlink" title="3.2 数据类型"></a>3.2 数据类型</h3><h4 id="数据类型的作用"><a href="#数据类型的作用" class="headerlink" title="数据类型的作用"></a>数据类型的作用</h4><p>在计算机最开始的时候，没有这么大的存储空间，需要一个东西规范存储空间的大小</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="H:/Hexo-Blog/blog-demo/source/images/1694414895788-0970ee59-ece2-4e51-8f25-de4805bf240f.jpeg" alt="img"><br>在C语言中，数据类型指的是用于声明不同类型的变量或函数的一个广泛的系统。变量的类型决定了变量存储的大小和布局，该范围内的值都可以存储在内存中，以及该位置可以参与的运算。<br>C语言中的数据类型主要可以分为以下几类：</p>
+<h4 id="3-2-1-基本类型：它们是算术类型，包括两种类型：整数类型和浮点类型。"><a href="#3-2-1-基本类型：它们是算术类型，包括两种类型：整数类型和浮点类型。" class="headerlink" title="3.2.1 基本类型：它们是算术类型，包括两种类型：整数类型和浮点类型。"></a>3.2.1 <strong>基本类型</strong>：它们是算术类型，包括两种类型：整数类型和浮点类型。</h4><ul>
+<li>整数类型包括：char、short int、int、long int、long long int。</li>
+<li>浮点类型包括：float、double、long double。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//● 整数类型包括：char、short int、int、long int、long long int。</span></span><br><span class="line"><span class="comment">//● 浮点类型包括：float、double、long double。</span></span><br><span class="line"><span class="comment">//● ascll</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> <span class="type">const</span> *argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//int               整型</span></span><br><span class="line">    <span class="type">int</span> num = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%ld\n&quot;</span>,<span class="keyword">sizeof</span>(num));</span><br><span class="line">    <span class="comment">//char              字符型</span></span><br><span class="line">    <span class="type">char</span> ch = <span class="string">&#x27;A&#x27;</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ch);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%ld\n&quot;</span>,<span class="keyword">sizeof</span>(ch));</span><br><span class="line">    <span class="comment">//short int         短整型</span></span><br><span class="line">    <span class="type">short</span> <span class="type">int</span> sh_in = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%ld\n&quot;</span> , <span class="keyword">sizeof</span>(sh_in));</span><br><span class="line">    <span class="comment">//long int          长整型</span></span><br><span class="line">    <span class="comment">//long long int     长长整型</span></span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> lo_in = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%ld\n&quot;</span> , <span class="keyword">sizeof</span>(lo_in));</span><br><span class="line">    <span class="comment">//无符号 整型</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> un_in = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%ld\n&quot;</span> , <span class="keyword">sizeof</span>(un_in));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="comment">//● 浮点类型包括：float、double、long double。</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> <span class="type">const</span> *argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//单精度浮点型          4</span></span><br><span class="line">    <span class="type">float</span> fl = <span class="number">3.14</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%ld\n&quot;</span> , <span class="keyword">sizeof</span>(fl));</span><br><span class="line">    <span class="comment">//双精度浮点型          8</span></span><br><span class="line">    <span class="type">double</span> dou = <span class="number">3.14</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%ld\n&quot;</span> , <span class="keyword">sizeof</span>(dou));</span><br><span class="line">    <span class="comment">//长双精度浮点型        16</span></span><br><span class="line">    <span class="type">long</span> <span class="type">double</span> dou_1 = <span class="number">3.14</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%ld\n&quot;</span> , <span class="keyword">sizeof</span>(dou_1));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、C语言中的标准输入输出函数"><a href="#四、C语言中的标准输入输出函数" class="headerlink" title="四、C语言中的标准输入输出函数"></a>四、C语言中的标准输入输出函数</h2><hr>
+<h3 id="4-2-缓冲区"><a href="#4-2-缓冲区" class="headerlink" title="4.2 缓冲区"></a>4.2 缓冲区</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.nlark.com/yuque/0/2023/png/8368890/1694402052315-6787a482-0758-47ac-95c2-8cfbf0b92003.png#averageHue=%23eeeeee&clientId=u1e415e4d-0a0d-4&from=paste&id=ubf32db6f&originHeight=746&originWidth=1080&originalType=url&ratio=1.5&rotation=0&showTitle=false&size=270818&status=done&style=none&taskId=u2dbca5a3-476d-4828-9f43-d51e57558dd&title=?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_enpo%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10" alt="img"></p>
+<ol>
+<li><strong>输入缓冲区：</strong> 当我们在键盘上敲击字符时，这些字符首先被存储在输入缓冲区中。当我们按下回车键或者缓冲区满时，存储在缓冲区的数据才会被送入程序处理。</li>
+<li><strong>输出缓冲区：</strong> 当我们执行一个输出函数(如printf)时，数据首先被放入输出缓冲区，直到缓冲区满或者调用刷新缓冲区函数（如fflush）时，才会真正输出到屏幕上。</li>
+</ol>
+<h3 id="4-2-输入函数："><a href="#4-2-输入函数：" class="headerlink" title="4.2 输入函数："></a>4.2 输入函数：</h3><ol>
+<li>scanf()：此函数用于从标准输入（键盘）读取并转换。它需要一个格式字符串，该字符串确定了如何读取输入。</li>
+<li>getchar()：此函数从标准输入读取并返回一个字符。</li>
+<li>gets()：此函数从指定的流中读取并存储一行字符。该行以空字符终止。</li>
+</ol>
+<h3 id="4-3-输出函数："><a href="#4-3-输出函数：" class="headerlink" title="4.3 输出函数："></a>4.3 输出函数：</h3><ol>
+<li>printf()：此函数用于在标准输出（显示器）上打印格式化的输出。它需要一个格式字符串，该字符串确定了如何打印变量的值。</li>
+<li>putchar()：此函数将一个字符写入标准输出。</li>
+<li>puts()：此函数写一个字符串和一个尾随的换行符到标准输出。</li>
+</ol>
+<h4 id="scanf-printf-格式化输入-输出"><a href="#scanf-printf-格式化输入-输出" class="headerlink" title="scanf printf 格式化输入\输出"></a>scanf printf 格式化输入\输出</h4><p><strong>scanf</strong> </p>
+<p>*<em>函数原型 extern int scanf (const char <em>__restrict <strong>format, …)</strong> wur;</em></em><br><strong>函数参数</strong><br>**const char <em>__restrict __format 输入格式</em><br><strong>…多参数 输入数据</strong><br><strong>返回值</strong>		<br><strong>函数功能 从标准输入设备(键盘)中获取数据</strong></p>
+<p><strong>printf</strong></p>
+<p>**函数原型 printf (const char <em>__restrict __fmt, …)</em><br><strong>函数参数</strong><br>**const char <em>__restrict __fmt 输出格式</em><br><strong>…多参数 输出数据</strong><br><strong>返回值	没有</strong><br><strong>函数功能 向标准输出设备（屏幕 终端）中输出数据</strong></p>
+<h4 id="putchar-getchar-单字符输入-输出"><a href="#putchar-getchar-单字符输入-输出" class="headerlink" title="putchar getchar 单字符输入\输出"></a>putchar getchar 单字符输入\输出</h4><p><strong>putchar</strong></p>
+<p>putchar (int __c)<br>{<br>return *IO_putc (<strong><strong>c, stdout);<br>*</strong><em><strong>}<br>*</strong></em><strong>*函数原型 putchar (int</strong> c)</strong><br><strong>函数参数</strong><br><strong>int c 需要输出的字符</strong><br><strong>返回值	没有</strong><br><strong>函数功能 向标准输出设备（屏幕 终端）中输出数据</strong></p>
+<p><strong>getchar</strong></p>
+<p><strong>getchar (void)</strong><br><strong>{</strong><br> <strong>return _IO_getc (stdin);</strong><br><strong>}</strong></p>
+<p><strong>函数原型 getchar (void)</strong><br><strong>函数参数</strong><br><strong>返回值		return _IO_getc (stdin); 	返回从键盘中读取到的一个字符</strong><br><strong>函数功能 从标准输入设备(键盘)中获取数据</strong></p>
+<h5 id="4-5-3-printf描述符"><a href="#4-5-3-printf描述符" class="headerlink" title="4.5.3 printf描述符"></a>4.5.3 printf描述符</h5><p>格式符号111</p>
+<table>
+<thead>
+<tr>
+<th><strong>格式说明符</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%d</td>
+<td>以十进制形式输出带符号整数</td>
+</tr>
+<tr>
+<td>%u</td>
+<td>以十进制形式输出无符号整数</td>
+</tr>
+<tr>
+<td>%f</td>
+<td>以小数形式输出单、双精度浮点数</td>
+</tr>
+<tr>
+<td>%e, %E</td>
+<td>以指数形式输出单、双精度浮点数</td>
+</tr>
+<tr>
+<td>%g, %G</td>
+<td>根据值的不同，自动选择%f或%e、%E格式输出单、双精度浮点数</td>
+</tr>
+<tr>
+<td>%c</td>
+<td>输出一个字符</td>
+</tr>
+<tr>
+<td>%s</td>
+<td>输出一个字符串</td>
+</tr>
+<tr>
+<td>%p</td>
+<td>输出一个指针（以十六进制形式输出指针的值）</td>
+</tr>
+<tr>
+<td>%x, %X</td>
+<td>以十六进制形式输出无符号整数</td>
+</tr>
+<tr>
+<td>%o</td>
+<td>以八进制形式输出无符号整数</td>
+</tr>
+<tr>
+<td>%ld</td>
+<td>输出长整型（sizeof的输出常用）</td>
+</tr>
+<tr>
+<td>%lu</td>
+<td>输出无符号长整型</td>
+</tr>
+</tbody></table>
+<p>格式的描述符a1</p>
+<table>
+<thead>
+<tr>
+<th><strong>修饰符</strong></th>
+<th><strong>示例代码</strong></th>
+<th><strong>输出</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-</td>
+<td>printf(“%-10d”, 123);</td>
+<td>123</td>
+<td>左对齐输出</td>
+</tr>
+<tr>
+<td>+</td>
+<td>printf(“%+d”, 123);</td>
+<td>+123</td>
+<td>在正数前面显示加号</td>
+</tr>
+<tr>
+<td>空格</td>
+<td>printf(“% d”, 123);</td>
+<td>123</td>
+<td>在正数前面显示空格</td>
+</tr>
+<tr>
+<td>#</td>
+<td>printf(“%#o”, 123);</td>
+<td>0173</td>
+<td>以八进制显示数值</td>
+</tr>
+<tr>
+<td>0</td>
+<td>printf(“%010d”, 123);</td>
+<td>0000000123</td>
+<td>左边用0填充</td>
+</tr>
+<tr>
+<td>数字</td>
+<td>printf(“%10d”, 123);</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>printf(“%-10d”, 123);</td>
+<td>123</td>
+<td>设定字段宽度为10</td>
+<td></td>
+</tr>
+<tr>
+<td>.</td>
+<td>printf(“%.2f”, 123.456);</td>
+<td>123.46</td>
+<td>保留2位小数</td>
+</tr>
+<tr>
+<td>l</td>
+<td>printf(“%ld”, 123456789L);</td>
+<td>123456789</td>
+<td>长整型</td>
+</tr>
+<tr>
+<td>ll</td>
+<td>printf(“%lld”, 123456789012345LL);</td>
+<td>123456789012345</td>
+<td>长长整型</td>
+</tr>
+<tr>
+<td>h</td>
+<td>short s &#x3D; 123; printf(“%hd”, s);</td>
+<td>123</td>
+<td>短整型</td>
+</tr>
+<tr>
+<td>hh</td>
+<td>signed char c &#x3D; 123; printf(“%hhd”, c);</td>
+<td>123</td>
+<td>有符号字符</td>
+</tr>
+<tr>
+<td>L</td>
+<td>printf(“%Lf”, 123456.789L);</td>
+<td>123456.789000</td>
+<td>长双精度浮点数</td>
+</tr>
+</tbody></table>
+<h5 id="4-5-4-scanf描述符"><a href="#4-5-4-scanf描述符" class="headerlink" title="4.5.4 scanf描述符"></a>4.5.4 scanf描述符</h5><p>描述符</p>
+<table>
+<thead>
+<tr>
+<th><strong>描述符</strong></th>
+<th><strong>作用</strong></th>
+<th><strong>示例</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%d</td>
+<td>匹配带符号的十进制整数</td>
+<td>scanf(“%d”, &amp;num);</td>
+</tr>
+<tr>
+<td>%i</td>
+<td>匹配带符号的整数，可以是十进制、八进制、十六进制</td>
+<td>scanf(“%i”, &amp;num);</td>
+</tr>
+<tr>
+<td>%o</td>
+<td>匹配八进制整数</td>
+<td>scanf(“%o”, &amp;num);</td>
+</tr>
+<tr>
+<td>%u</td>
+<td>匹配无符号十进制整数</td>
+<td>scanf(“%u”, &amp;num);</td>
+</tr>
+<tr>
+<td>%x%X</td>
+<td>匹配无符号十六进制整数</td>
+<td>scanf(“%x”, &amp;num);</td>
+</tr>
+<tr>
+<td>%f</td>
+<td>匹配浮点数</td>
+<td>scanf(“%f”, &amp;num);</td>
+</tr>
+<tr>
+<td>%e%E</td>
+<td>匹配浮点数，可以是指数形式</td>
+<td>scanf(“%e”, &amp;num);</td>
+</tr>
+<tr>
+<td>%g%G</td>
+<td>根据数值和精度选择 %f 或 %e (%E)</td>
+<td>scanf(“%g”, &amp;num);</td>
+</tr>
+<tr>
+<td>%c</td>
+<td>匹配一个字符</td>
+<td>scanf(“%c”, &amp;char);</td>
+</tr>
+<tr>
+<td>%s</td>
+<td>匹配字符串，遇到空格、制表符或换行符结束</td>
+<td>scanf(“%s”, str);</td>
+</tr>
+<tr>
+<td>%p</td>
+<td>匹配指针</td>
+<td>scanf(“%p”, &amp;ptr);</td>
+</tr>
+</tbody></table>
+<p><strong>注意：scanf中的 %s 和 printf 中的 %s 的行为是完全不同的。printf 中的 %s 会输出字符串直到遇到空字符 ‘\0’，而 scanf 中的 %s 会读取输入直到遇到一个空格、制表符或换行符。</strong></p>
+<h4 id="4-6-字符串I-O：puts-和gets"><a href="#4-6-字符串I-O：puts-和gets" class="headerlink" title="4.6 字符串I&#x2F;O：puts()和gets()"></a>4.6 字符串I&#x2F;O：puts()和gets()</h4><h5 id="4-6-1-puts"><a href="#4-6-1-puts" class="headerlink" title="4.6.1 puts"></a>4.6.1 puts</h5><hr>
+<p>函数：<strong>puts()</strong><br>头文件：#include &lt;stdio.h&gt;<br>函数原型：int puts(const char <em>s);<br>功能：将字符串s和一个尾随的换行符写入到标准输出(stdout)。<br>参数：</em>s – 指向一个字符数组的指针，该数组包含了一个空字符(‘\0’)来结束输入的字符串。<br>返回值：如果执行成功，返回非负值，如果发生错误则返回EOF。</p>
+<hr>
+<h5 id="4-6-1-gets"><a href="#4-6-1-gets" class="headerlink" title="4.6.1 gets"></a>4.6.1 gets</h5><hr>
+<p>函数：<strong>gets()</strong><br>头文件：#include &lt;stdio.h&gt;<br>函数原型：char <em>gets(char</em> s);<br>功能：从标准输入(stdin)读取一行，并把它保存到str所指向的字符数组，它会在读取的行尾自动加上null字符，但它不会保留换行符。<br>参数：*s – 一个数组，该数组用来存储读取的字符串，直到一个换行符(‘\n’)或EOF。<br>返回值：如果执行成功，返回str。如果发生错误或读到文件的末尾且未读到任何字符，返回NULL。<br>注意：C11已经从库函数中删除了gets()，使用该函数可能会存在安全风险，比如缓冲区溢出等问题，通常建议使用fgets()替代。</p>
+<hr>
+<h3 id="五、C语言中的常量"><a href="#五、C语言中的常量" class="headerlink" title="五、C语言中的常量"></a>五、C语言中的常量</h3><hr>
+<p>#define LENGTH 10 const int WIDTH &#x3D; 5;</p>
+<hr>
+<p>比较</p>
+<ul>
+<li>#define是预处理器宏，而const是语言自身的一部分。</li>
+<li>const可以用于更复杂的类型，比如对象，而#define只能用于基本类型。</li>
+<li>#define不分配存储空间，而const通常分配存储空间（例如在RAM中）。</li>
+<li>const常量的类型和大小都是固定的，但#define预处理器宏没有固定的类型或大小。</li>
+</ul>
+<h2 id="六、C语言中的运算符"><a href="#六、C语言中的运算符" class="headerlink" title="六、C语言中的运算符"></a>六、C语言中的运算符</h2><table>
+<thead>
+<tr>
+<th><strong>运算符类别</strong></th>
+<th><strong>运算符</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>算术运算符</td>
+<td>+，-，*，&#x2F;，%</td>
+</tr>
+<tr>
+<td>赋值运算符</td>
+<td>&#x3D;，+&#x3D;，-&#x3D;，*&#x3D;，&#x2F;&#x3D;，%&#x3D;</td>
+</tr>
+<tr>
+<td>关系运算符</td>
+<td>&#x3D;&#x3D;，!&#x3D;，&gt;，&lt;，&gt;&#x3D;，&lt;&#x3D;</td>
+</tr>
+<tr>
+<td>逻辑运算符</td>
+<td>&amp;&amp;，|| ，！</td>
+</tr>
+<tr>
+<td>位运算符</td>
+<td>&amp;，|，^，~，&lt;&lt;，&gt;&gt;</td>
+</tr>
+<tr>
+<td>条件运算符</td>
+<td>? :</td>
+</tr>
+<tr>
+<td>自增自减运算符</td>
+<td>++，– 前置和后置得一个关系</td>
+</tr>
+<tr>
+<td>逗号运算符</td>
+<td>,</td>
+</tr>
+<tr>
+<td>指针运算符</td>
+<td>*，&amp;</td>
+</tr>
+<tr>
+<td>sizeof运算符</td>
+<td>sizeof （单目）</td>
+</tr>
+</tbody></table>
+<h3 id="6-1-算术运算符"><a href="#6-1-算术运算符" class="headerlink" title="6.1 算术运算符"></a>6.1 算术运算符</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">20</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;a + b = %d\n&quot;</span>, a + b);  <span class="comment">// 30</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;a - b = %d\n&quot;</span>, a - b);  <span class="comment">// -10</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;a * b = %d\n&quot;</span>, a * b);  <span class="comment">// 200</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;b / a = %d\n&quot;</span>, b / a);  <span class="comment">// 2</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;b %% a = %d\n&quot;</span>, b % a);  <span class="comment">// 0</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-赋值运算符"><a href="#6-2-赋值运算符" class="headerlink" title="6.2 赋值运算符"></a>6.2 赋值运算符</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line">    a += <span class="number">20</span>;  <span class="comment">// a = a + 20</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;a = %d\n&quot;</span>, a);  <span class="comment">// 30</span></span><br><span class="line"></span><br><span class="line">    a -= <span class="number">5</span>;  <span class="comment">// a = a - 5</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;a = %d\n&quot;</span>, a);  <span class="comment">// 25</span></span><br><span class="line"></span><br><span class="line">    a *= <span class="number">2</span>;  <span class="comment">// a = a * 2</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;a = %d\n&quot;</span>, a);  <span class="comment">// 50</span></span><br><span class="line"></span><br><span class="line">    a /= <span class="number">10</span>;  <span class="comment">// a = a / 10</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;a = %d\n&quot;</span>, a);  <span class="comment">// 5</span></span><br><span class="line"></span><br><span class="line">    a %= <span class="number">3</span>;  <span class="comment">// a = a % 3</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;a = %d\n&quot;</span>, a);  <span class="comment">// 2</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-3-关系运算符"><a href="#6-3-关系运算符" class="headerlink" title="6.3 关系运算符"></a>6.3 关系运算符</h3><p>关系运算符在C语言中用于比较两个值，结果为一个布尔值（0或1）。如果比较的条件成立，那么结果为1，否则为0。以下是C语言中的关系运算符：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">20</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;a &gt; b: %d\n&quot;</span>, a &gt; b);  <span class="comment">// 0 (false)</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;a &lt; b: %d\n&quot;</span>, a &lt; b);  <span class="comment">// 1 (true)</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;a &gt;= b: %d\n&quot;</span>, a &gt;= b);  <span class="comment">// 0 (false)</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;a &lt;= b: %d\n&quot;</span>, a &lt;= b);  <span class="comment">// 1 (true)</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;a == b: %d\n&quot;</span>, a == b);  <span class="comment">// 0 (false)</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;a != b: %d\n&quot;</span>, a != b);  <span class="comment">// 1 (true)</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-4-逻辑运算符"><a href="#6-4-逻辑运算符" class="headerlink" title="6.4 逻辑运算符"></a>6.4 逻辑运算符</h3><p>逻辑运算符用于链接和操作布尔值（真或假，即1或0）。C语言中的逻辑运算符包括“与”（&amp;&amp;），“或”（||）和“非”（！）。以下是这些运算符的解释：<br>**1.**逻辑与运算符（&amp;&amp;）：当两边的操作数都为真（非零）时，结果才为真。如果任一操作数为假（即零），结果就为假。<br>例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="type">int</span> b = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> result = a || b; <span class="comment">// result 的值为 1，因为 a 为非零</span></span><br></pre></td></tr></table></figure>
+
+<p>**2.**逻辑或运算符（||）：只要两个操作数中的任一操作数为真，结果就为真。只有当两个操作数都为假，结果才为假。<br>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int a = 1;</span><br><span class="line">int b = 0;</span><br><span class="line">int result = a || b; // result 的值为 1，因为 a 为非零</span><br></pre></td></tr></table></figure>
+
+<p>**3.**逻辑非运算符（!）：这是一个单目运算符，对一个布尔值进行取反操作。如果操作数为真，结果为假，反之亦然。<br>例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="type">int</span> result = !a; <span class="comment">// result 的值为 0，因为 a 为真（非零）</span></span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;a &amp;&amp; b: %d\n&quot;</span>, a &amp;&amp; b);  <span class="comment">// 0 (false)</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;a || b: %d\n&quot;</span>, a || b);  <span class="comment">// 1 (true)</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;!a: %d\n&quot;</span>, !a);  <span class="comment">// 0 (false)</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;!b: %d\n&quot;</span>, !b);  <span class="comment">// 1 (true)</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-5-位运算符"><a href="#6-5-位运算符" class="headerlink" title="6.5 位运算符"></a>6.5 位运算符</h3><p>位运算符直接对整数在内存中的二进制位进行操作。这些运算符包括：<br>按位与(&amp;) ： 全一得一<br>按位或(|)	： 	有一得一<br>按位异或(^)	： 相同为0 不同为1<br>取反(~)	： 取反<br>左移(&lt;&lt;)和右移(&gt;&gt;）	：</p>
+<p>下面详细解释每一种：<br>**1.**按位与运算符（&amp;）：如果两个相应的二进制位都为1，则结果为1，否则为0。<br>例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">60</span>;  <span class="comment">// 60的二进制是 0011 1100</span></span><br><span class="line"><span class="type">int</span> b = <span class="number">13</span>;  <span class="comment">// 13的二进制是 0000 1101</span></span><br><span class="line"><span class="type">int</span> result = a &amp; b;  <span class="comment">// result 的值为 12，二进制为 0000 1100</span></span><br></pre></td></tr></table></figure>
+
+<p>**2.**按位或运算符（|）：如果两个相应的二进制位中至少有一个1，则结果为1，否则为0。<br>例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">60</span>;  <span class="comment">// 60的二进制是 0011 1100</span></span><br><span class="line"><span class="type">int</span> b = <span class="number">13</span>;  <span class="comment">// 13的二进制是 0000 1101</span></span><br><span class="line"><span class="type">int</span> result = a | b;  <span class="comment">// result 的值为 61，二进制为 0011 1101</span></span><br></pre></td></tr></table></figure>
+
+<p>**3.**按位异或运算符（^）：如果两个相应的二进制位值相同，则结果为0，否则为1。<br>例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">60</span>;  <span class="comment">// 60的二进制是 0011 1100</span></span><br><span class="line"><span class="type">int</span> b = <span class="number">13</span>;  <span class="comment">// 13的二进制是 0000 1101</span></span><br><span class="line"><span class="type">int</span> result = a ^ b;  <span class="comment">// result 的值为 49，二进制为 0011 0001</span></span><br></pre></td></tr></table></figure>
+
+<p>**4.**取反运算符（~）：对数的每一位取反，0变1，1变0。<br>例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">60</span>;  <span class="comment">// 60的二进制是 0011 1100</span></span><br><span class="line"><span class="type">int</span> result = ~a;  <span class="comment">// result 的值为 -61，二进制为 1100 0011</span></span><br></pre></td></tr></table></figure>
+
+<p>**5.**左移运算符（&lt;&lt;）：把位向左移动指定的位数，右边用0填充。<br>例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">15</span>;  <span class="comment">// 15的二进制是 0000 1111</span></span><br><span class="line"><span class="type">int</span> result = a &lt;&lt; <span class="number">2</span>;  <span class="comment">// result 的值为 60，二进制为 0011 1100</span></span><br></pre></td></tr></table></figure>
+
+<p>**6.**右移运算符（&gt;&gt;）：把位向右移动指定的位数，左边的空位如何填充取决于数字的符号（正数左边填充0，负数左边填充1）。<br>例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">15</span>;  <span class="comment">// 15的二进制是 0000 1111</span></span><br><span class="line"><span class="type">int</span> result = a &gt;&gt; <span class="number">2</span>;  <span class="comment">// result 的值为 3，二进制为 0000 0011</span></span><br></pre></td></tr></table></figure>
+
+<p>实例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">60</span>; <span class="comment">/* 60 = 0011 1100 */</span></span><br><span class="line">    <span class="type">int</span> b = <span class="number">13</span>; <span class="comment">/* 13 = 0000 1101 */</span></span><br><span class="line">    <span class="type">int</span> result;</span><br><span class="line"></span><br><span class="line">    result = a &amp; b; <span class="comment">/* 12 = 0000 1100 */</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;result = a &amp; b: %d\n&quot;</span>, result);</span><br><span class="line"></span><br><span class="line">    result = a | b; <span class="comment">/* 61 = 0011 1101 */</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;result = a | b: %d\n&quot;</span>, result);</span><br><span class="line"></span><br><span class="line">    result = a ^ b; <span class="comment">/* 49 = 0011 0001 */</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;result = a ^ b: %d\n&quot;</span>, result);</span><br><span class="line"></span><br><span class="line">    result = ~a; <span class="comment">/*-61 = 1100 0011 */</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;result = ~a: %d\n&quot;</span>, result);</span><br><span class="line"></span><br><span class="line">    result = a &lt;&lt; <span class="number">2</span>; <span class="comment">/* 240 = 1111 0000 */</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;result = a &lt;&lt; 2: %d\n&quot;</span>, result);</span><br><span class="line"></span><br><span class="line">    result = a &gt;&gt; <span class="number">2</span>; <span class="comment">/* 15 = 0000 1111 */</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;result = a &gt;&gt; 2: %d\n&quot;</span>, result);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-6-条件运算符"><a href="#6-6-条件运算符" class="headerlink" title="6.6 条件运算符"></a>6.6 条件运算符</h3><p>条件运算符也称为<strong>三元运算符</strong>，其格式为：<br><strong>条件表达式 ? 表达式1 : 表达式2</strong><br>三元运算符的执行过程是这样的：</p>
+<ul>
+<li>首先，程序会计算条件表达式的值</li>
+<li>如果条件表达式的值为真（非0），那么程序会计算调大是1</li>
+</ul>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    int a = 10;</span><br><span class="line">    int b = 20;</span><br><span class="line">    int max = a &gt; b ? a : b;</span><br><span class="line">    printf(&quot;最大的数是：%d\n&quot;, max);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    int a = 10;</span><br><span class="line">    int b = (a == 1) ? 20 : 30;</span><br><span class="line">    printf(&quot;b is %d\n&quot;, b);  // b is 30</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-7-自增自减运算符"><a href="#6-7-自增自减运算符" class="headerlink" title="6.7 自增自减运算符"></a>6.7 自增自减运算符</h3><p>C语言中的自增（++）和自减（–）运算符用于增加或减少变量的值。这些运算符有前缀和后缀两种形式，对应着不同的操作顺序。</p>
+<ul>
+<li>前缀自增&#x2F;自减：先进行自增&#x2F;自减操作，然后再进行其他操作。例如，++a 或 –a。</li>
+<li>后缀自增&#x2F;自减：先进行其他操作，然后再进行自增&#x2F;自减操作。例如，a++ 或 a–。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int a = 10;</span><br><span class="line">int b = ++a; // 先增加a的值，然后赋值给b。此时a和b都为11。</span><br><span class="line"></span><br><span class="line">a = 10; // 重置a的值为10</span><br><span class="line">b = a++; // 先将a的值赋给b，然后再增加a的值。此时a为11，b为10。</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-8-逗号运算符"><a href="#6-8-逗号运算符" class="headerlink" title="6.8 逗号运算符"></a>6.8 逗号运算符</h3><p>逗号运算符在C语言中被用来链接两个或更多的独立的表达式，从而使它们能在一行内执行。逗号运算符有两个主要的特点：</p>
+<ol>
+<li>从左至右的顺序执行：逗号运算符的所有操作数都按从左到右的顺序进行计算。</li>
+<li>返回值：逗号运算符的返回值是最后一个表达式的值。</li>
+</ol>
+<p>让我们看一个简单的例 子来更好地理解这个概念：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> a, b;</span><br><span class="line"></span><br><span class="line">    a = (b=<span class="number">4</span>, b+<span class="number">2</span>); </span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;a 的值是 %d\n&quot;</span>, a );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述代码中，逗号运算符将两个表达式b&#x3D;4和b+2链接在一起。首先，b&#x3D;4被执行，然后执行b+2，最后，b+2的结果被赋给变量a。因此，a的最终值为6。<br>请注意，虽然逗号运算符可以将多个表达式链接在一起，但过度使用可能会使代码难以理解和维护。在编程时，最好尽可能地保持代码的清晰和简洁。</p>
+<h3 id="6-9-指针运算符"><a href="#6-9-指针运算符" class="headerlink" title="6.9 指针运算符"></a>6.9 指针运算符</h3><p>在C语言中，我们主要有4个指针运算符，它们是：</p>
+<ol>
+<li><em>（解引用运算符）：这个运算符返回指针所指向的值。例如，如果p是一个指向整数的指针，并且该整数的值是10，那么</em>p将返回10。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int a = 10;</span><br><span class="line">int *p = &amp;a;</span><br><span class="line">printf(&quot;%d\n&quot;, *p);  // 输出: 10</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>&amp;（取地址运算符）：这个运算符返回变量的内存地址。例如，如果a是一个整数，那么&amp;a将返回这个整数在内存中的地址。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a = 10;</span><br><span class="line">printf(&quot;%p\n&quot;, &amp;a);  // 输出: a在内存中的地址</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>和–（自增和自减运算符）：这些运算符用于改变指针的值，使其指向下一个或上一个内存位置。如果p是一个指向整数的指针，并且整数占用4个字节，那么p将使p指向内存中的下一个整数，而p–将使p指向内存中的上一个整数。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int arr[] = &#123;10, 20, 30&#125;;</span><br><span class="line">int *p = arr;</span><br><span class="line">printf(&quot;%d\n&quot;, *p);  // 输出: 10</span><br><span class="line">p++;</span><br><span class="line">printf(&quot;%d\n&quot;, *p);  // 输出: 20</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>指针比较运算符：这些包括 &#x3D;&#x3D;、!&#x3D;、&lt;、&gt;、&lt;&#x3D;、&gt;&#x3D;。它们可以用来比较两个指针的值（即它们所指向的内存地址）。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int a = 10, b = 20;</span><br><span class="line">int *p1 = &amp;a, *p2 = &amp;b;</span><br><span class="line"></span><br><span class="line">if (p1 != p2) &#123;</span><br><span class="line">    printf(&quot;p1 and p2 point to different locations.\n&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上就是C语言中关于指针的主要运算符。</p>
+<h3 id="6-10-sizeof运算符"><a href="#6-10-sizeof运算符" class="headerlink" title="6.10 sizeof运算符"></a>6.10 sizeof运算符</h3><p>sizeof运算符是C语言中的一种单目运算符，用于获取一个特定类型或特定对象的大小（以字节为单位）。其可以应用于任何数据类型，包括基本类型（如int、char、double等）、派生类型（如数组、指针等）和自定义类型（如结构体、联合等）。<br>以下是sizeof运算符的一些使用示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int a;</span><br><span class="line">    double b;</span><br><span class="line">    char c[10];</span><br><span class="line">    </span><br><span class="line">    printf(&quot;Size of int: %lu\n&quot;, sizeof(a));  // 输出: Size of int: 4</span><br><span class="line">    printf(&quot;Size of double: %lu\n&quot;, sizeof(b));  // 输出: Size of double: 8</span><br><span class="line">    printf(&quot;Size of char[10]: %lu\n&quot;, sizeof(c));  // 输出: Size of char[10]: 10</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述代码中，sizeof(a)返回变量a的大小（以字节为单位），sizeof(b)返回变量b的大小，sizeof(c)返回数组c的大小。<br>需要注意的是，sizeof运算符返回的是size_t类型的值，这是一种无符号整型数据类型，所以在printf函数中应该使用%lu（代表长无符号整型）来格式化输出。<br>另外，你也可以使用sizeof运算符来获取一个类型的大小，而不仅仅是变量的大小。例如，sizeof(int)将返回int类型的大小，sizeof(double)将返回double类型的大小。</p>
+<h1 id="第三章-流程控制语句和循环结构"><a href="#第三章-流程控制语句和循环结构" class="headerlink" title="第三章 流程控制语句和循环结构"></a><strong>第三章 流程控制语句和循环结构</strong></h1><h2 id="3-1-C语言中的分支语句-if-else语句、switch语句"><a href="#3-1-C语言中的分支语句-if-else语句、switch语句" class="headerlink" title="3.1 C语言中的分支语句: if-else语句、switch语句"></a>3.1 C语言中的分支语句: if-else语句、switch语句</h2><h3 id="3-1-1-if-else语句"><a href="#3-1-1-if-else语句" class="headerlink" title="3.1.1 if-else语句"></a>3.1.1 if-else语句</h3><p>在C语言中，if-else结构是一种条件控制语句，<br>在C语言（以及其他许多编程语言中），if-else结构是一种条件控制语句，它用于基于特定条件执行不同的代码块。下面是if-else语句的基本结构和用法说明：</p>
+<ol>
+<li><strong>if 语句</strong>：如果给定条件为真（即条件评估为非零值），则执行if块中的语句。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if (condition) &#123;</span><br><span class="line">     // 代码块 1: 当条件为真时执行这里的代码</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><strong>if-else 语句</strong>：如果if中的条件为真，则执行if块中的语句；否则，执行else块中的语句。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if (condition) &#123;</span><br><span class="line">     // 代码块 1: 当条件为真时执行这里的代码</span><br><span class="line"> &#125; else &#123;</span><br><span class="line">     // 代码块 2: 当条件为假时执行这里的代码</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><strong>if-else if-else 语句</strong>：可以使用多个else if来检查多个条件，如果前面的条件都不满足，则执行最后的else块中的语句。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if (condition1) &#123;</span><br><span class="line">     // 代码块 1: 当条件1为真时执行这里的代码</span><br><span class="line"> &#125; else if (condition2) &#123;</span><br><span class="line">     // 代码块 2: 当条件1为假而条件2为真时执行这里的代码</span><br><span class="line"> &#125; else &#123;</span><br><span class="line">     // 代码块 3: 当条件1和条件2都为假时执行这里的代码</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="用法示例"><a href="#用法示例" class="headerlink" title="用法示例"></a>用法示例</h3><p>下面是一个简单的示例，说明了if-else语句的使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"> </span><br><span class="line"> int main() &#123;</span><br><span class="line">     int x = 10;</span><br><span class="line"> </span><br><span class="line">     if (x &gt; 10) &#123;</span><br><span class="line">         printf(&quot;x大于10\n&quot;);</span><br><span class="line">     &#125; else if (x == 10) &#123;</span><br><span class="line">         printf(&quot;x等于10\n&quot;);</span><br><span class="line">     &#125; else &#123;</span><br><span class="line">         printf(&quot;x小于10\n&quot;);</span><br><span class="line">     &#125;</span><br><span class="line"> </span><br><span class="line">     return 0;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个示例中，输出将是：<br>x等于10<br>因为x等于10，所以else if中的条件为真，执行了与该条件相关联的代码块。</p>
+<h3 id="3-1-2-switch语句"><a href="#3-1-2-switch语句" class="headerlink" title="3.1.2 switch语句"></a>3.1.2 switch语句</h3><p>switch语句是另一种条件控制语句，它允许你根据一个变量或表达式的值来执行多个不同的代码块。这里是它的基本结构和作用：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (expression) &#123;</span><br><span class="line">    <span class="keyword">case</span> constant1:</span><br><span class="line">        <span class="comment">// 代码块 1: 如果表达式的值等于constant1，执行这里的代码</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> constant2:</span><br><span class="line">        <span class="comment">// 代码块 2: 如果表达式的值等于constant2，执行这里的代码</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// ... (更多的case分支)</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="comment">// 默认代码块: 如果表达式的值不匹配任何case常量，执行这里的代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="组件说明"><a href="#组件说明" class="headerlink" title="组件说明"></a>组件说明</h3><ol>
+<li><strong>switch (expression)</strong>: 以某个表达式或变量为基础启动一个新的switch语句。</li>
+<li><strong>case constantN</strong>: 定义一个新的case分支，其中constantN是一个常量表达式，表示该分支的匹配值。</li>
+<li><strong>break</strong>: 用于退出switch语句并继续执行switch块之后的代码。</li>
+<li><strong>default</strong>: 如果没有任何case分支与表达式的值匹配，将执行default块中的代码。</li>
+</ol>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>下面是一个简单的示例，说明了switch语句的使用：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">     <span class="type">int</span> x = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">switch</span> (x) &#123;</span><br><span class="line">         <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">             <span class="built_in">printf</span>(<span class="string">&quot;x等于1\n&quot;</span>);</span><br><span class="line">             <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">             <span class="built_in">printf</span>(<span class="string">&quot;x等于2\n&quot;</span>);</span><br><span class="line">             <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">             <span class="built_in">printf</span>(<span class="string">&quot;x等于3\n&quot;</span>);</span><br><span class="line">             <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">default</span>:</span><br><span class="line">             <span class="built_in">printf</span>(<span class="string">&quot;x不等于1、2或3\n&quot;</span>);</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个示例中，输出将是：<br>x等于2<br>因为x等于2，所以匹配了case 2分支，执行了与该分支相关联的代码块。注意，break语句用于防止代码从一个case块“跌落”到下一个case块（称为fallthrough），这是一个常见的程序错误来源。</p>
+<h2 id="3-2-C语言中的循环语句-while循环、do-while循环、for循环"><a href="#3-2-C语言中的循环语句-while循环、do-while循环、for循环" class="headerlink" title="3.2 C语言中的循环语句: while循环、do-while循环、for循环"></a>3.2 C语言中的循环语句: while循环、do-while循环、for循环</h2><h3 id="3-2-1-while循环"><a href="#3-2-1-while循环" class="headerlink" title="3.2.1 while循环"></a>3.2.1 while循环</h3><h3 id="语法结构"><a href="#语法结构" class="headerlink" title="语法结构"></a>语法结构</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (condition) &#123;</span><br><span class="line">    <span class="comment">// 代码块：只要条件为真，就会重复执行这里的代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="组件说明-1"><a href="#组件说明-1" class="headerlink" title="组件说明"></a>组件说明</h3><ol>
+<li><strong>while (condition)</strong>: 在这里，“condition”是一个布尔表达式，用于决定是否执行循环体。如果条件为真（即结果为非零值），则会执行循环体。在每次循环迭代结束时，此条件将被重新评估。</li>
+<li><strong>代码块</strong>: 这是需要多次执行的代码段。它可以包含各种语句和控制流结构。</li>
+</ol>
+<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><p>下面是一个更加详细的示例，其中我们将使用while循环来找出一个整数范围内的所有偶数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">     <span class="type">int</span> i = <span class="number">1</span>;</span><br><span class="line">     <span class="type">int</span> upperLimit = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;1到10之间的偶数有：\n&quot;</span>);</span><br><span class="line">     <span class="keyword">while</span> (i &lt;= upperLimit) &#123;</span><br><span class="line">         <span class="keyword">if</span> (i % <span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">             <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, i);</span><br><span class="line">         &#125;</span><br><span class="line">         i++;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;\n循环结束\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个示例中，输出将是：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>到<span class="number">10</span>之间的偶数有：</span><br><span class="line"><span class="number">2</span> <span class="number">4</span> <span class="number">6</span> <span class="number">8</span> <span class="number">10</span> </span><br><span class="line">    循环结束</span><br></pre></td></tr></table></figure>
+
+<h3 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h3><ol>
+<li><strong>初始化变量</strong>: 在循环开始之前，我们首先初始化了两个变量：i（用作循环计数器）和upperLimit（用作循环的上限）。</li>
+<li><strong>循环条件</strong>: while (i &lt;&#x3D; upperLimit)是循环的条件。只要i的值小于或等于upperLimit的值，循环将继续。</li>
+<li><strong>循环体</strong>: 循环体中有一个if语句，用于检查当前i的值是否为偶数。如果是，则将其打印到控制台。</li>
+<li><strong>迭代步进</strong>: 在循环体的末尾，我们增加了i的值，这样可以逐渐接近循环的终止条件，避免无限循环。</li>
+</ol>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li>确保循环有一个可达到的终止条件，以避免无限循环。</li>
+<li>可以使用break语句提前退出循环，或使用continue语句来跳过当前迭代的剩余部分，并立即开始下一次迭代。</li>
+<li>在while循环内，你可以嵌套其他控制流结构，如if-else语句或甚至其他while循环，以创建更复杂的逻辑和控制流。</li>
+<li>通过合理的代码注释和良好的代码组织来保持循环的清晰和可读性。</li>
+</ul>
+<h3 id="3-2-2-do-while循环"><a href="#3-2-2-do-while循环" class="headerlink" title="3.2.2 do-while循环"></a>3.2.2 do-while循环</h3><h3 id="do-while-循环的说明"><a href="#do-while-循环的说明" class="headerlink" title="do-while 循环的说明"></a>do-while 循环的说明</h3><ul>
+<li>do-while循环是C语言中的另一种循环结构，它至少执行一次循环体，然后根据给定的条件来决定是否继续执行循环。以下是它的基本结构和作用：</li>
+</ul>
+<h4 id="语法结构-1"><a href="#语法结构-1" class="headerlink" title="语法结构"></a>语法结构</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">do &#123;</span><br><span class="line">     // 循环体：先执行这里的代码</span><br><span class="line"> &#125; while (condition);</span><br></pre></td></tr></table></figure>
+
+<h4 id="组件说明-2"><a href="#组件说明-2" class="headerlink" title="组件说明"></a>组件说明</h4><ol>
+<li><strong>do { … }</strong>: 此部分包含你想要循环执行的代码块。无论条件是否满足，此代码块都将执行至少一次。</li>
+<li><strong>while (condition)</strong>: 此处的“condition”是一个布尔表达式。在执行了do代码块一次后，它将被评估。如果条件为真（非零值），则再次执行do代码块。这将继续，直到条件变为假（零值）。</li>
+</ol>
+<h4 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h4><p>下面是一个实例，其中我们使用do-while循环来打印1到5之间的所有整数：在这个示例中，输出将是：</p>
+<h4 id="解析-1"><a href="#解析-1" class="headerlink" title="解析"></a>解析</h4><ol>
+<li><strong>初始化变量</strong>: 在循环开始之前，我们首先初始化了一个变量i，它将用作循环计数器。</li>
+<li><strong>循环体</strong>: 循环体内有一个printf语句，用于打印当前i的值。</li>
+<li><strong>迭代步进</strong>: 在循环体内，我们增加了i的值，这样可以逐渐接近循环的终止条件，避免无限循环。</li>
+<li><strong>循环条件</strong>: 在do代码块执行后，通过while(i &lt;&#x3D; 5)来检查条件。只要条件为真，循环将继续。当i大于5时，循环将停止。</li>
+</ol>
+<h3 id="注意事项-1"><a href="#注意事项-1" class="headerlink" title="注意事项"></a>注意事项</h3><ol>
+<li>确保在循环体内有一个能够满足的终止条件，以避免无限循环。</li>
+<li>do-while循环是先执行循环体，然后才检查条件，这意味着循环体将至少执行一次。</li>
+<li>与while循环类似，你可以使用break和continue语句来控制循环的流程。</li>
+<li>你可以在do-while循环内嵌套其他控制流结构，以创建更复杂的逻辑和控制流。</li>
+</ol>
+<h3 id="3-2-3-for循环"><a href="#3-2-3-for循环" class="headerlink" title="3.2.3 for循环"></a>3.2.3 for循环</h3><h3 id="for-循环的说明"><a href="#for-循环的说明" class="headerlink" title="for 循环的说明"></a>for 循环的说明</h3><p>for循环是一个很强大的循环结构，允许你在一行中初始化变量，定义循环条件和增加迭代步进。以下是它的基本结构和解释：</p>
+<h4 id="语法结构-2"><a href="#语法结构-2" class="headerlink" title="语法结构"></a>语法结构</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for (条件1; 条件2; 条件3) &#123;</span><br><span class="line">     // 循环体：只要条件为真，就会重复执行这里的代码</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="组件说明-3"><a href="#组件说明-3" class="headerlink" title="组件说明"></a>组件说明</h4><ol>
+<li><strong>条件1</strong>: 在这个部分，你可以初始化循环控制变量。它在循环开始前仅执行一次。</li>
+<li><strong>条件2</strong>: 这是一个布尔表达式，用于每次循环迭代前检查条件。如果条件为真（非零值），则执行循环体。</li>
+<li><strong>条件3</strong>: 这里你可以更新循环控制变量的值。它在每次循环迭代后被执行。</li>
+<li><strong>循环体</strong>: 这是需要多次执行的代码段。它可以包含各种语句和控制流结构。</li>
+</ol>
+<h4 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">     <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++) &#123;</span><br><span class="line">         <span class="built_in">printf</span>(<span class="string">&quot;当前的i是：%d\n&quot;</span>, i);</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">当前的i是：1</span><br><span class="line"> 当前的i是：2</span><br><span class="line"> 当前的i是：3</span><br><span class="line"> 当前的i是：4</span><br><span class="line"> 当前的i是：5</span><br></pre></td></tr></table></figure>
+
+<h4 id="解析-2"><a href="#解析-2" class="headerlink" title="解析"></a>解析</h4><ol>
+<li><strong>初始化</strong>: 循环开始前，i被初始化为1。</li>
+<li><strong>条件检查</strong>: 在每次循环开始时，检查i是否小于或等于5。如果是，则进入循环体。</li>
+<li><strong>循环体</strong>: 循环体内有一个printf语句，用于打印当前i的值。</li>
+<li><strong>迭代</strong>: 在循环体的末尾，i的值增加1，然后返回第二步进行条件检查。</li>
+</ol>
+<h3 id="练习题目"><a href="#练习题目" class="headerlink" title="练习题目"></a>练习题目</h3><ol>
+<li><strong>逆序打印</strong>: 编写一个程序，使用for循环从10逆序打印到1。</li>
+<li><strong>阶乘计算</strong>: 编写一个程序，使用for循环计算给定数字的阶乘。</li>
+<li><strong>斐波那契序列</strong>: 编写一个程序，使用for循环生成一个长度为n的斐波那契序列。</li>
+<li><strong>奇数和偶数之和</strong>: 编写一个程序，使用for循环计算1到n之间所有奇数和偶数的和。</li>
+<li><strong>质数检查</strong>: 编写一个程序，使用for循环检查一个给定的数字是否是质数。</li>
+<li><strong>矩阵乘法</strong>: 编写一个程序，使用嵌套for循环进行两个矩阵的乘法。</li>
+</ol>
+<h3 id="阶乘的定义"><a href="#阶乘的定义" class="headerlink" title="阶乘的定义"></a>阶乘的定义</h3><p>阶乘是一种数学运算，通常表示为n!，定义为从1乘到n的所有正整数的乘积。数学上，它可以定义为：<br>n! &#x3D; n  <em>(n-1)</em>  (n-2)  <em>…</em>  1</p>
+<h3 id="程序步骤"><a href="#程序步骤" class="headerlink" title="程序步骤"></a>程序步骤</h3><ol>
+<li>从主函数中获取用户输入的数字，存储在变量n中。</li>
+<li>初始化一个变量，例如factorial，为1。因为1是乘法的单位元素。</li>
+<li>使用for循环从1迭代到n，在每次迭代中将当前迭代的数乘以factorial。</li>
+</ol>
+<h3 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h3><p>以下是一个简单的C程序，实现上述步骤：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">     <span class="type">int</span> n;</span><br><span class="line">     <span class="type">long</span> <span class="type">long</span> factorial = <span class="number">1</span>;  <span class="comment">// 使用长整型来防止溢出</span></span><br><span class="line"></span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;请输入一个整数: &quot;</span>);</span><br><span class="line">     <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span>(n &lt; <span class="number">0</span>) &#123;</span><br><span class="line">         <span class="built_in">printf</span>(<span class="string">&quot;负数没有阶乘!\n&quot;</span>);</span><br><span class="line">     &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">         <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">             factorial *= i;  <span class="comment">// 等价于 factorial = factorial * i;</span></span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">         <span class="built_in">printf</span>(<span class="string">&quot;%d的阶乘是: %lld\n&quot;</span>, n, factorial);</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="代码解析"><a href="#代码解析" class="headerlink" title="代码解析"></a>代码解析</h3><ol>
+<li><strong>用户输入</strong>: 首先，我们让用户输入一个整数n，我们要计算这个数的阶乘。</li>
+<li><strong>错误检查</strong>: 如果输入的数字是负数，我们打印一个错误消息，因为负数没有阶乘。</li>
+<li><strong>初始化阶乘变量</strong>: 我们初始化一个变量factorial为1。</li>
+<li><strong>for循环</strong>: 使用for循环从1迭代到n，并在每次迭代中将factorial乘以当前的迭代数。</li>
+<li><strong>输出结果</strong>: 在循环结束后，我们得到n的阶乘，并将其打印到控制台。</li>
+</ol>
+<p>这样你就得到了一个简单但有效的阶乘计算程序！</p>
+<h2 id="3-3-C语言中的转移语句-goto语句（禁用）、break语句、continue语句"><a href="#3-3-C语言中的转移语句-goto语句（禁用）、break语句、continue语句" class="headerlink" title="3.3 C语言中的转移语句: goto语句（禁用）、break语句、continue语句"></a>3.3 C语言中的转移语句: goto语句（禁用）、break语句、continue语句</h2><h3 id="break-跳出循环"><a href="#break-跳出循环" class="headerlink" title="break 跳出循环"></a>break 跳出循环</h3><h3 id="continue-跳出循环一次"><a href="#continue-跳出循环一次" class="headerlink" title="continue 跳出循环一次"></a>continue 跳出循环一次</h3><h1 id="第四章-数组和字符串"><a href="#第四章-数组和字符串" class="headerlink" title="第四章 数组和字符串"></a><strong>第四章 数组和字符串</strong></h1><p><strong>目标</strong></p>
+<ul>
+<li>1、C语言中数组的概念和使用</li>
+<li>2、C语言中的多维数组</li>
+<li>3、C语言中字符串的概念和使用</li>
+<li>4、C语言中字符串处理函数（复制、连接）</li>
+<li>5、C语言中字符串处理函数（比较、长度）</li>
+<li>6、C语言中字符串处理函数（转换）</li>
+</ul>
+<h2 id="1、C语言中数组的概念和使用"><a href="#1、C语言中数组的概念和使用" class="headerlink" title="1、C语言中数组的概念和使用"></a>1、C语言中数组的概念和使用</h2><p>在C语言中，数组是一种复合数据类型，可以存储固定大小的同类型元素的序列。数组可以是一维的（即线性数组），也可以是多维的（例如二维的网格数组或者三维的立方体数组等）。<br>数组的使用在C语言编程中非常常见，无论是存储一系列的数值，还是字符串（字符数组），甚至更复杂的数据结构，如结构体数组等。</p>
+<h3 id="1-1-定义和初始化数组"><a href="#1-1-定义和初始化数组" class="headerlink" title="1.1 定义和初始化数组"></a>1.1 定义和初始化数组</h3><p>在C语言中，我们可以定义一个数组，如下所示：<br>int arr[10]; &#x2F;&#x2F; 定义一个可以存放10个整数的数组<br>在定义数组的时候，可以对它进行初始化：<br>int arr[5] &#x3D; {1, 2, 3, 4, 5}; &#x2F;&#x2F; 定义并初始化一个数组<br>如果在初始化的时候没有给出数组的大小，编译器会根据初始化的元素数量自动确定：<br>int arr[] &#x3D; {1, 2, 3, 4, 5}; &#x2F;&#x2F; 定义并初始化一个数组，大小为5</p>
+<p>第一种 定义数组时 内部变量写完整<br>int arr[3] &#x3D; {1，2，3};<br>第二种 定时数组时 内部变量不完整<br>int arr[5] &#x3D; {1，2，3}; -&gt; {1，2，3 , 0 , 0 };<br>第三种 定义数组时 只填写一个0<br>int arr[10] &#x3D; {0}； -&gt; {0,0,0,0,0,0,0,0};<br>第四种 定义数组时 []内不填写<br>int arr[] &#x3D; {1，2，3}; -&gt; int arr[3] &#x3D; {1，2，3};</p>
+<h3 id="1-2-访问数组元素"><a href="#1-2-访问数组元素" class="headerlink" title="1.2 访问数组元素"></a>1.2 访问数组元素</h3><p>通过下标的方式访问 arr[n] 此时n就是该数组的下标索引</p>
+<p>可以通过索引来访问数组元素，索引从0开始，即第一个元素的索引为0，第二个元素的索引为1，以此类推。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> arr[<span class="number">5</span>] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, arr[<span class="number">0</span>]); <span class="comment">// 输出第一个元素，结果为1</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-数组遍历"><a href="#1-3-数组遍历" class="headerlink" title="1.3 数组遍历"></a>1.3 数组遍历</h3><p>一般情况下，可以通过循环来遍历数组中的所有元素。例如，如果要输出数组中的所有元素，可以使用如下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> arr[<span class="number">5</span>] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="type">int</span> i;</span><br><span class="line"><span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, arr[i]); <span class="comment">// 输出每个元素</span></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，访问数组时必须确保索引不超过数组的大小，否则会产生未定义行为。</p>
+<h2 id="2、C语言中的多维数组"><a href="#2、C语言中的多维数组" class="headerlink" title="2、C语言中的多维数组"></a>2、C语言中的多维数组</h2><p>在C语言中，除了一维数组外，还可以定义多维数组。最常见的就是二维数组，常常被用来表示表格或者矩阵。多维数组的定义和使用方式基本上和一维数组类似，但是在索引元素的时候需要指定更多的索引。</p>
+<p>在逻辑上，我们认为二维数组第一个下标是表示他的行，第二个下标是表示他的列<br>但是在实际存储上，他还是一个顺序存储</p>
+<h3 id="2-1-定义和初始化多维数组"><a href="#2-1-定义和初始化多维数组" class="headerlink" title="2.1 定义和初始化多维数组"></a>2.1 定义和初始化多维数组</h3><p>在 C 语言中，可以使用多种方式来定义多维数组。在下面的例子中，我将演示如何使用不同的方式来定义一个二维数组：<br><strong>标准定义方式</strong>：直接在声明时指定数组的大小。<br>int array[2][3]; &#x2F;&#x2F; 定义了一个 2 行 3 列的二维整数数组<br><strong>初始化时定义</strong>：在定义时直接初始化数组。<br>int array[2][3] &#x3D; { {1, 2, 3}, {4, 5, 6} }; &#x2F;&#x2F; 定义并初始化二维数组<br><strong>部分初始化定义</strong>：定义时只初始化部分元素，其余元素默认为0。<br>int array[2][3] &#x3D; { {1, 2}, {4} }; &#x2F;&#x2F; 未初始化的元素值为0<br><strong>省略行大小定义</strong>：在初始化时可以省略行的大小。<br>int array[][3] &#x3D; { {1, 2, 3}, {4, 5, 6} }; &#x2F;&#x2F; 行的大小通过初始化元素的个数决定<br>请注意，在 C 语言中，多维数组的行和列的大小必须是一个已知的常量，不能是变量。如果你需要一个行或列大小可以改变的数组，那么你可能需要使用到动态内存分配（比如使用 malloc 或 calloc 函数）或者使用一维数组的数组（数组的指针）来模拟多维数组。</p>
+<h3 id="二维数组赋值时，可以省略行但是不能省略列"><a href="#二维数组赋值时，可以省略行但是不能省略列" class="headerlink" title="二维数组赋值时，可以省略行但是不能省略列"></a>二维数组赋值时，可以省略行但是不能省略列</h3><p>1、二维数组看成是一维数组的集合</p>
+<p>2、编译时需要确定每个数组的空间</p>
+<p>3、可以根据数组下标的偏移量来找到数组元素</p>
+<p>以上三点说明可以省略行数但是不能省略列数。</p>
+<h3 id="2-2-访问多维数组元素"><a href="#2-2-访问多维数组元素" class="headerlink" title="2.2 访问多维数组元素"></a>2.2 访问多维数组元素</h3><p>访问多维数组元素时，需要为每一维指定索引：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> matrix[<span class="number">2</span>][<span class="number">3</span>] = &#123;</span><br><span class="line">    &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;,</span><br><span class="line">    &#123;<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, matrix[<span class="number">0</span>][<span class="number">2</span>]); <span class="comment">// 输出第一行第三列的元素，结果为3</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-多维数组的遍历"><a href="#2-3-多维数组的遍历" class="headerlink" title="2.3 多维数组的遍历"></a>2.3 多维数组的遍历</h3><p>遍历多维数组一般需要使用嵌套循环。例如，打印出二维数组中的所有元素：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> matrix[<span class="number">2</span>][<span class="number">3</span>] = &#123;</span><br><span class="line">    &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;,</span><br><span class="line">    &#123;<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="type">int</span> i, j;</span><br><span class="line"><span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">2</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; <span class="number">3</span>; j++) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, matrix[i][j]); <span class="comment">// 输出每个元素</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>); <span class="comment">// 每一行结束后换行</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上的代码将会输出：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="number">2</span> <span class="number">3</span></span><br><span class="line"><span class="number">4</span> <span class="number">5</span> <span class="number">6</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：和一维数组一样，访问多维数组时必须确保所有的索引都不超过数组的大小，否则会产生未定义行为。</p>
+<h2 id="3、C语言中字符串的概念和使用"><a href="#3、C语言中字符串的概念和使用" class="headerlink" title="3、C语言中字符串的概念和使用"></a>3、C语言中字符串的概念和使用</h2><p>在 C 语言中，字符串被视为字符数组的特殊情况。C 语言中没有专门的字符串类型，而是使用字符数组来表示和操作字符串。下面来具体说明一下。</p>
+<h3 id="3-1-字符串的概念"><a href="#3-1-字符串的概念" class="headerlink" title="3.1 字符串的概念"></a>3.1 字符串的概念</h3><p>在 C 语言中，字符串是由多个字符组成的一系列字符序列，以空字符**(‘\0’)<strong>作为结束标志。字符串通常被存储在</strong>字符数组**中，数组的最后一位存放这个空字符。例如，字符串 “Hello” 在 C 中被表示为字符数组 {‘H’, ‘e’, ‘l’, ‘l’, ‘o’, ‘\0’}。</p>
+<h3 id="字符串的使用"><a href="#字符串的使用" class="headerlink" title="字符串的使用"></a>字符串的使用</h3><p><strong>定义和初始化字符串</strong><br>定义和初始化字符串有多种方式。最常见的是直接使用字符串字面量进行初始化：<br>char str[] &#x3D; “Hello”;<br>上述代码定义了一个名为 str 的字符数组，并用字符串 “Hello” 对其进行初始化。数组的长度自动设置为6，其中包括5个字符和一个结尾的空字符。<br><strong>字符串的输入和输出</strong><br>可以使用 printf 和 scanf 函数来进行字符串的输出和输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">char str[50];</span><br><span class="line">printf(&quot;Enter a string: &quot;);</span><br><span class="line">scanf(&quot;%s&quot;, str);  // 输入字符串</span><br><span class="line">printf(&quot;You entered: %s&quot;, str);  // 输出字符串</span><br></pre></td></tr></table></figure>
+
+<p>注意，当使用 scanf 函数输入字符串时，它会在遇到空白字符（如空格、制表符或换行符）时停止读取。如果要读取一行（包含空格的字符串），需要使用 fgets 函数。<br><strong>字符串函数</strong><br>C 标准库 &lt;string.h&gt; 提供了一系列操作字符串的函数，如 strlen（获取字符串长度）、strcpy（复制字符串）、strcat（连接字符串）、strcmp（比较字符串）等。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;string.h&gt;</span><br><span class="line"></span><br><span class="line">char str1[10] = &quot;Hello&quot;;</span><br><span class="line">char str2[10];</span><br><span class="line">int len = strlen(str1);  // 获取字符串长度</span><br><span class="line">strcpy(str2, str1);  // 复制字符串</span><br><span class="line">strcat(str1, str2);  // 连接字符串</span><br><span class="line">int cmp = strcmp(str1, str2);  // 比较字符串</span><br></pre></td></tr></table></figure>
+
+<h2 id="4、C语言中字符串处理函数（复制、连接）"><a href="#4、C语言中字符串处理函数（复制、连接）" class="headerlink" title="4、C语言中字符串处理函数（复制、连接）"></a>4、C语言中字符串处理函数（复制、连接）</h2><h3 id="4-1strcpy"><a href="#4-1strcpy" class="headerlink" title="4.1strcpy"></a>4.1strcpy</h3><ul>
+<li><p><strong>头文件</strong>：#include &lt;string.h&gt;</p>
+</li>
+<li><p><strong>函数原型</strong>：char <em>strcpy(char</em> dest, const char *src);</p>
+</li>
+<li><p><strong>功能</strong>：该函数用于将字符串 src（包括 ‘\0’ 终止字符）复制到 dest 中。</p>
+</li>
+<li><p><strong>参数</strong>： </p>
+</li>
+<li><p>dest：目标字符串，即复制到的地方。</p>
+</li>
+<li><p>src：源字符串，即需要复制的字符串。</p>
+</li>
+<li><p><strong>返回值</strong>：函数返回 dest，即目标字符串。</p>
+</li>
+</ul>
+<p><strong>示例程序</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    char src[40];</span><br><span class="line">    char dest[100];</span><br><span class="line"></span><br><span class="line">    memset(dest, &#x27;\0&#x27;, sizeof(dest));</span><br><span class="line">    strcpy(src, &quot;This is example&quot;);</span><br><span class="line">    strcpy(dest, src);</span><br><span class="line"></span><br><span class="line">    printf(&quot;Final copied string : %s\n&quot;, dest);</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个示例程序中，src 字符串 “This is example” 被复制到 dest 字符串中。然后，打印 dest 字符串，输出 “Final copied string : This is example”。</p>
+<h3 id="4-2strcat-函数"><a href="#4-2strcat-函数" class="headerlink" title="4.2strcat 函数"></a>4.2strcat 函数</h3><ul>
+<li><p><strong>头文件</strong>：#include &lt;string.h&gt;</p>
+</li>
+<li><p><strong>函数原型</strong>：char <em>strcat(char</em> dest, const char *src);</p>
+</li>
+<li><p><strong>功能</strong>：该函数用于将 src 字符串（包括 ‘\0’ 终止字符）连接到 dest 的末尾。</p>
+</li>
+<li><p><strong>参数</strong>： </p>
+</li>
+<li><p>dest：目标字符串，即要被添加内容的字符串。</p>
+</li>
+<li><p>src：源字符串，即要添加的字符串。</p>
+</li>
+<li><p><strong>返回值</strong>：函数返回 dest，即目标字符串。</p>
+</li>
+</ul>
+<p><strong>例程</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    char dest[30] = &quot;Hello&quot;;</span><br><span class="line">    char src[] = &quot;, World!&quot;;</span><br><span class="line"></span><br><span class="line">    strcat(dest, src);</span><br><span class="line"></span><br><span class="line">    printf(&quot;源字符串： %s\n&quot;, src);</span><br><span class="line">    printf(&quot;目标字符串： %s\n&quot;, dest);</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例程中，源字符串 “, World!” 被连接到目标字符串 “Hello” 的末尾。然后，打印源字符串和目标字符串。输出结果将是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">源字符串： , World!</span><br><span class="line">目标字符串： Hello, World!</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-strlen"><a href="#3-strlen" class="headerlink" title="3. strlen"></a>3. strlen</h3><ul>
+<li><strong>头文件</strong>： #include &lt;string.h&gt;</li>
+<li><strong>函数原型</strong>： size_t strlen(const char *str);</li>
+<li><strong>功能</strong>： 此函数用于获取字符串的长度，也就是从字符串的开始到遇到第一个空字符(‘\0’)的字符数。注意，这个长度不包括空字符(‘\0’)本身。</li>
+<li><strong>参数</strong>：</li>
+<li>str：指向要获取长度的字符串的指针。</li>
+<li><strong>返回值</strong>： 此函数返回字符串的长度（不包括结束字符’\0’）。返回值的类型是 size_t，这是无符号整数类型，用于表示对象的大小。</li>
+</ul>
+<p>例程：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    char str[] = &quot;Hello, World!&quot;;</span><br><span class="line">    size_t length = strlen(str);</span><br><span class="line"></span><br><span class="line">    printf(&quot;The length of the string &#x27;%s&#x27; is: %zu\n&quot;, str, length);</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在此程序中，我们使用 strlen 函数获取字符串 “Hello, World!” 的长度，并将其打印出来。注意，%zu 是 size_t 类型的 printf 格式说明符。</p>
+<h3 id="4-strcmp"><a href="#4-strcmp" class="headerlink" title="4. strcmp"></a>4. strcmp</h3><ul>
+<li><p><strong>头文件</strong>： #include &lt;string.h&gt;</p>
+</li>
+<li><p><strong>函数原型</strong>： int strcmp(const char <em>str1, const char</em> str2);</p>
+</li>
+<li><p><strong>功能</strong>： 此函数用于比较两个字符串。比较是基于字符的ASCII值进行的。</p>
+</li>
+<li><p><strong>参数</strong>： </p>
+</li>
+<li><p>str1：指向第一个要比较的字符串的指针。</p>
+</li>
+<li><p>str2：指向第二个要比较的字符串的指针。</p>
+</li>
+<li><p><strong>返回值</strong>： </p>
+</li>
+<li><p>如果 str1 和 str2 相等，则返回0。</p>
+</li>
+<li><p>如果 str1 大于 str2，则返回大于0的数。</p>
+</li>
+<li><p>如果 str1 小于 str2，则返回小于0的数。</p>
+</li>
+</ul>
+<p><strong>例程</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    char str1[] = &quot;Hello, World!&quot;;</span><br><span class="line">    char str2[] = &quot;Hello, OpenAI!&quot;;</span><br><span class="line">    </span><br><span class="line">    int result = strcmp(str1, str2);</span><br><span class="line">    </span><br><span class="line">    if(result &gt; 0) &#123;</span><br><span class="line">        printf(&quot;&#x27;%s&#x27; is greater than &#x27;%s&#x27;\n&quot;, str1, str2);</span><br><span class="line">    &#125; else if(result &lt; 0) &#123;</span><br><span class="line">        printf(&quot;&#x27;%s&#x27; is less than &#x27;%s&#x27;\n&quot;, str1, str2);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        printf(&quot;&#x27;%s&#x27; is equal to &#x27;%s&#x27;\n&quot;, str1, str2);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在此程序中，我们使用 strcmp 函数比较两个字符串 “Hello, World!” 和 “Hello, OpenAI!” 并打印结果。</p>
+<h3 id="5-strchr-搜索"><a href="#5-strchr-搜索" class="headerlink" title="5. strchr 搜索"></a>5. strchr 搜索</h3><ul>
+<li><p>strchr函数</p>
+</li>
+<li><p><strong>头文件</strong>： #include &lt;string.h&gt;</p>
+</li>
+<li><p><strong>函数原型</strong>： char <em>strchr(const char</em> str, int c);</p>
+</li>
+<li><p><strong>功能</strong>： 此函数在字符串 str 中查找第一次出现字符 c 的位置。</p>
+</li>
+<li><p><strong>参数</strong>： </p>
+</li>
+<li><p>str：指向要被搜索的字符串的指针。</p>
+</li>
+<li><p>c：要搜索的字符。</p>
+</li>
+<li><p><strong>返回值</strong>： </p>
+</li>
+<li><p>如果字符 c 在字符串 str 中找到，则返回一个指向该位置的指针。</p>
+</li>
+<li><p>如果字符 c 在字符串 str 中没有找到，则返回 NULL。</p>
+</li>
+<li><p><strong>例程</strong>：</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    char str[] = &quot;Hello, World!&quot;;</span><br><span class="line">    char c = &#x27;o&#x27;;</span><br><span class="line">    </span><br><span class="line">    char *result = strchr(str, c);</span><br><span class="line">    </span><br><span class="line">    if(result != NULL) &#123;</span><br><span class="line">        printf(&quot;First occurrence of &#x27;%c&#x27; in &#x27;%s&#x27; is at position: %ld\n&quot;, c, str, result - str);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        printf(&quot;Character &#x27;%c&#x27; not found in &#x27;%s&#x27;\n&quot;, c, str);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在此程序中，我们使用 strchr 函数在字符串 “Hello, World!” 中查找字符 ‘o’ 的第一次出现的位置，并打印结果。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://www.linqiutianovo.xyz">LinQiuTian</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://www.linqiutianovo.xyz/2023/09/20/test/c%E5%92%8Cc++/C%E8%AF%AD%E8%A8%80(1-4%E7%AB%A0)/">https://www.linqiutianovo.xyz/2023/09/20/test/c%E5%92%8Cc++/C%E8%AF%AD%E8%A8%80(1-4%E7%AB%A0)/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://www.linqiutianovo.xyz" target="_blank">林秋天的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/C%E8%AF%AD%E8%A8%80/">C语言</a><a class="post-meta__tags" href="/tags/%E5%9F%BA%E7%A1%80/">基础</a></div><div class="post-share"><div class="social-share" data-image="/img/default-cover2.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2023/08/06/test/%E5%8D%9A%E5%AE%A2/2024-08-06-%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" title="第一篇文章"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default-cover3.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">第一篇文章</div></div><div class="info-2"><div class="info-item-1">测试测试</div></div></div></a><a class="pagination-related" href="/2023/09/20/test/c%E5%92%8Cc++/C%E8%AF%AD%E8%A8%80(5-8%E7%AB%A0)%E5%87%BD%E6%95%B0%E5%92%8C%E6%8C%87%E9%92%88%20%E7%BB%93%E6%9E%84%E4%BD%93%E5%92%8C%E5%85%B1%E7%94%A8%E4%BD%93%20%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%92%8C%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8%20%E9%AB%98%E7%BA%A7C%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/" title="C语言第5-8章内容"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default-cover1.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">C语言第5-8章内容</div></div><div class="info-2"><div class="info-item-1">第五章 函数和指针一、C语言中函数的定义和调用在C语言中，函数是一组可重复使用的代码，用于执行特定任务。函数的优势在于它可以随需求调用，减少代码的冗余性，并增强代码的可读性。函数的基本组成包括：返回（函数）类型 ， 函数名 ， 参数列表和函数体。  返回类型 ： 函数可以返回一个值。返回类型是函数返回值的数据类型。如果函数不反悔任何值，则其返回值为void。 函数名：这是表示函数的唯一名称，函数名和参数列表一起构成了函数的签名。、 参数列表：参数是传递给函数的值。参数列表包括参数的类型、类型、参数的数量，参数是可选的，也就是说，函数可以不包含参数 函数体：函数体包含了定义函数行为的一组语句。  1.1 函数的定义123456//  返回类型是 int ，函数名为add 参数列表是两个int类型的参数int add(int num1 , int num2) &#123;     int sum = num1 + num;     return sum;...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2023/09/20/test/c%E5%92%8Cc++/C%E8%AF%AD%E8%A8%80(5-8%E7%AB%A0)%E5%87%BD%E6%95%B0%E5%92%8C%E6%8C%87%E9%92%88%20%E7%BB%93%E6%9E%84%E4%BD%93%E5%92%8C%E5%85%B1%E7%94%A8%E4%BD%93%20%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%92%8C%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8%20%E9%AB%98%E7%BA%A7C%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/" title="C语言第5-8章内容"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/default-cover1.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-20</div><div class="info-item-2">C语言第5-8章内容</div></div><div class="info-2"><div class="info-item-1">第五章 函数和指针一、C语言中函数的定义和调用在C语言中，函数是一组可重复使用的代码，用于执行特定任务。函数的优势在于它可以随需求调用，减少代码的冗余性，并增强代码的可读性。函数的基本组成包括：返回（函数）类型 ， 函数名 ， 参数列表和函数体。  返回类型 ： 函数可以返回一个值。返回类型是函数返回值的数据类型。如果函数不反悔任何值，则其返回值为void。 函数名：这是表示函数的唯一名称，函数名和参数列表一起构成了函数的签名。、 参数列表：参数是传递给函数的值。参数列表包括参数的类型、类型、参数的数量，参数是可选的，也就是说，函数可以不包含参数 函数体：函数体包含了定义函数行为的一组语句。  1.1 函数的定义123456//  返回类型是 int ，函数名为add 参数列表是两个int类型的参数int add(int num1 , int num2) &#123;     int sum = num1 + num;     return sum;...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2024/08/07/KfPnTIM8WvotugL.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">LinQiuTian</div><div class="author-info-description">林秋天的博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">28</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/linqiutian"><i></i><span>🛴客官点一点...</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/linqiutian" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="/412581566@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><center>主域名：<br><a href="https://www.linqiutianovo.xyz"><b><font color="#5ea6e5">https://www.linqiutianovo.xyz/</font></b></a>&nbsp;|&nbsp;<a href="https://www.linqiutianovo.xyz/"><b><font color="#5ea6e5">https://www.linqiutianovo.xyz</font></b></a><br>备用域名：<br><a href="https://www.linqiutianovo.xyz"><b><font color="#5ea6e5">https://www.linqiutianovo.xyz</font></b></a><br><a href="https://www.linqiutianovo.xyz"><b><font color="#5ea6e5">aa.fomal.cc</font></b></a><br><a href="https://www.linqiutianovo.xyz/"><b><font color="#5ea6e5">https://www.linqiutianovo.xyz/</font></b></a><br><a href="mailto:412581566@fqq.com">📬：<b><font color="#a591e0">412581566@fqq.com</font></b></a></center></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84"><span class="toc-text">第一章 计算机内部结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84"><span class="toc-text">一、计算机内部结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%86%AF%C2%B7%E8%AF%BA%E4%BC%8A%E6%9B%BC%E6%9E%B6%E6%9E%84"><span class="toc-text">1.1 冯·诺伊曼架构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-1-%E5%86%AF%C2%B7%E8%AF%BA%E4%BC%8A%E6%9B%BC"><span class="toc-text">1.1.1 冯·诺伊曼</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%AF%E8%AF%BA%E4%BC%8A%E6%9B%BC%E6%9E%B6%E6%9E%84"><span class="toc-text">冯诺伊曼架构</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81C%E8%AF%AD%E8%A8%80%E7%9A%84%E8%B5%B7%E6%BA%90%E5%92%8C%E5%8F%91%E5%B1%95"><span class="toc-text">二、C语言的起源和发展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81C%E8%AF%AD%E8%A8%80%E7%9A%84%E7%89%B9%E7%82%B9%E5%92%8C%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-text">三、C语言的特点和优缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-C%E8%AF%AD%E8%A8%80%E7%9A%84%E7%89%B9%E7%82%B9%EF%BC%9A"><span class="toc-text">3.1 C语言的特点：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-C%E8%AF%AD%E8%A8%80%E7%9A%84%E4%BC%98%E7%82%B9%EF%BC%9A"><span class="toc-text">3.2 C语言的优点：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-C%E8%AF%AD%E8%A8%80%E7%9A%84%E7%BC%BA%E7%82%B9%EF%BC%9A"><span class="toc-text">3.3 C语言的缺点：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81C%E8%AF%AD%E8%A8%80%E7%9A%84%E5%BA%94%E7%94%A8%E9%A2%86%E5%9F%9F"><span class="toc-text">四、C语言的应用领域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%85%AB%E8%BF%9B%E5%88%B6%E3%80%81%E5%8D%81%E8%BF%9B%E5%88%B6%E3%80%81%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E6%95%B0%E5%92%8C%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BA%8C%E8%BF%9B%E5%88%B6"><span class="toc-text">五、八进制、十进制、十六进制数和计算机二进制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD-C%E8%AF%AD%E8%A8%80%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AAhello-world%E7%A8%8B%E5%BA%8F"><span class="toc-text">六 C语言的第一个hello world程序</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-C%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80"><span class="toc-text">第二章 C语言基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81C%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="toc-text">一、C语言程序的基本结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="toc-text">1.1 基本结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-gcc%E7%BC%96%E8%AF%91%E5%99%A8"><span class="toc-text">1.2 gcc编译器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-gcc%E7%BC%96%E8%AF%91%E6%B5%81%E7%A8%8B"><span class="toc-text">1.2.1 gcc编译流程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81C%E8%AF%AD%E8%A8%80%E5%85%B3%E9%94%AE%E5%AD%97%E5%92%8C%E6%A0%87%E8%AF%86%E7%AC%A6"><span class="toc-text">二、C语言关键字和标识符</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-text">2.1关键字</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2%E6%A0%87%E8%AF%86%E7%AC%A6"><span class="toc-text">2.2标识符</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81C%E8%AF%AD%E8%A8%80%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%8F%98%E9%87%8F%E7%9A%84%E4%BB%A5%E5%8F%8A%E5%AD%98%E5%82%A8%E7%B1%BB%E5%9E%8B"><span class="toc-text">三、C语言的数据类型和变量的以及存储类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%95%B0%E6%8D%AE%E7%9A%84%E8%A1%A8%E7%A4%BA"><span class="toc-text">3.1 计算机数据的表示</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-1-%E8%BF%9B%E5%88%B6"><span class="toc-text">3.1.1 进制</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-1-1-%E6%95%B0%E5%80%BC%E6%95%B0%E6%8D%AE"><span class="toc-text">3.1.1.1 数值数据</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-1-1-%E9%9D%9E%E6%95%B0%E5%80%BC%E6%95%B0%E6%8D%AE"><span class="toc-text">3.1.1.1 非数值数据</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-2-%E6%BA%90%E7%A0%81%E3%80%81%E5%8F%8D%E7%A0%81%E3%80%81%E8%A1%A5%E7%A0%81"><span class="toc-text">3.1.2 源码、反码、补码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">3.2 数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-text">数据类型的作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-1-%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%EF%BC%9A%E5%AE%83%E4%BB%AC%E6%98%AF%E7%AE%97%E6%9C%AF%E7%B1%BB%E5%9E%8B%EF%BC%8C%E5%8C%85%E6%8B%AC%E4%B8%A4%E7%A7%8D%E7%B1%BB%E5%9E%8B%EF%BC%9A%E6%95%B4%E6%95%B0%E7%B1%BB%E5%9E%8B%E5%92%8C%E6%B5%AE%E7%82%B9%E7%B1%BB%E5%9E%8B%E3%80%82"><span class="toc-text">3.2.1 基本类型：它们是算术类型，包括两种类型：整数类型和浮点类型。</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E5%87%BD%E6%95%B0"><span class="toc-text">四、C语言中的标准输入输出函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E7%BC%93%E5%86%B2%E5%8C%BA"><span class="toc-text">4.2 缓冲区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E8%BE%93%E5%85%A5%E5%87%BD%E6%95%B0%EF%BC%9A"><span class="toc-text">4.2 输入函数：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E8%BE%93%E5%87%BA%E5%87%BD%E6%95%B0%EF%BC%9A"><span class="toc-text">4.3 输出函数：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#scanf-printf-%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA"><span class="toc-text">scanf printf 格式化输入\输出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#putchar-getchar-%E5%8D%95%E5%AD%97%E7%AC%A6%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA"><span class="toc-text">putchar getchar 单字符输入\输出</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-5-3-printf%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="toc-text">4.5.3 printf描述符</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-5-4-scanf%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="toc-text">4.5.4 scanf描述符</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-6-%E5%AD%97%E7%AC%A6%E4%B8%B2I-O%EF%BC%9Aputs-%E5%92%8Cgets"><span class="toc-text">4.6 字符串I&#x2F;O：puts()和gets()</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-6-1-puts"><span class="toc-text">4.6.1 puts</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-6-1-gets"><span class="toc-text">4.6.1 gets</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E5%B8%B8%E9%87%8F"><span class="toc-text">五、C语言中的常量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">六、C语言中的运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">6.1 算术运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">6.2 赋值运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">6.3 关系运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">6.4 逻辑运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-5-%E4%BD%8D%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">6.5 位运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-6-%E6%9D%A1%E4%BB%B6%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">6.6 条件运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-7-%E8%87%AA%E5%A2%9E%E8%87%AA%E5%87%8F%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">6.7 自增自减运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-8-%E9%80%97%E5%8F%B7%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">6.8 逗号运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-9-%E6%8C%87%E9%92%88%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">6.9 指针运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-10-sizeof%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">6.10 sizeof运算符</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5%E5%92%8C%E5%BE%AA%E7%8E%AF%E7%BB%93%E6%9E%84"><span class="toc-text">第三章 流程控制语句和循环结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E5%88%86%E6%94%AF%E8%AF%AD%E5%8F%A5-if-else%E8%AF%AD%E5%8F%A5%E3%80%81switch%E8%AF%AD%E5%8F%A5"><span class="toc-text">3.1 C语言中的分支语句: if-else语句、switch语句</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-1-if-else%E8%AF%AD%E5%8F%A5"><span class="toc-text">3.1.1 if-else语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%B3%95%E7%A4%BA%E4%BE%8B"><span class="toc-text">用法示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-2-switch%E8%AF%AD%E5%8F%A5"><span class="toc-text">3.1.2 switch语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E8%AF%B4%E6%98%8E"><span class="toc-text">组件说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5-while%E5%BE%AA%E7%8E%AF%E3%80%81do-while%E5%BE%AA%E7%8E%AF%E3%80%81for%E5%BE%AA%E7%8E%AF"><span class="toc-text">3.2 C语言中的循环语句: while循环、do-while循环、for循环</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-1-while%E5%BE%AA%E7%8E%AF"><span class="toc-text">3.2.1 while循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E7%BB%93%E6%9E%84"><span class="toc-text">语法结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E8%AF%B4%E6%98%8E-1"><span class="toc-text">组件说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="toc-text">示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90"><span class="toc-text">解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-2-do-while%E5%BE%AA%E7%8E%AF"><span class="toc-text">3.2.2 do-while循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#do-while-%E5%BE%AA%E7%8E%AF%E7%9A%84%E8%AF%B4%E6%98%8E"><span class="toc-text">do-while 循环的说明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E7%BB%93%E6%9E%84-1"><span class="toc-text">语法结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E8%AF%B4%E6%98%8E-2"><span class="toc-text">组件说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B"><span class="toc-text">实例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90-1"><span class="toc-text">解析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-1"><span class="toc-text">注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-3-for%E5%BE%AA%E7%8E%AF"><span class="toc-text">3.2.3 for循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#for-%E5%BE%AA%E7%8E%AF%E7%9A%84%E8%AF%B4%E6%98%8E"><span class="toc-text">for 循环的说明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E7%BB%93%E6%9E%84-2"><span class="toc-text">语法结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E8%AF%B4%E6%98%8E-3"><span class="toc-text">组件说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="toc-text">示例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BE%93%E5%87%BA"><span class="toc-text">输出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90-2"><span class="toc-text">解析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0%E9%A2%98%E7%9B%AE"><span class="toc-text">练习题目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B6%E4%B9%98%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-text">阶乘的定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E6%AD%A5%E9%AA%A4"><span class="toc-text">程序步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B"><span class="toc-text">代码示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90"><span class="toc-text">代码解析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E8%BD%AC%E7%A7%BB%E8%AF%AD%E5%8F%A5-goto%E8%AF%AD%E5%8F%A5%EF%BC%88%E7%A6%81%E7%94%A8%EF%BC%89%E3%80%81break%E8%AF%AD%E5%8F%A5%E3%80%81continue%E8%AF%AD%E5%8F%A5"><span class="toc-text">3.3 C语言中的转移语句: goto语句（禁用）、break语句、continue语句</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#break-%E8%B7%B3%E5%87%BA%E5%BE%AA%E7%8E%AF"><span class="toc-text">break 跳出循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#continue-%E8%B7%B3%E5%87%BA%E5%BE%AA%E7%8E%AF%E4%B8%80%E6%AC%A1"><span class="toc-text">continue 跳出循环一次</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%95%B0%E7%BB%84%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-text">第四章 数组和字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81C%E8%AF%AD%E8%A8%80%E4%B8%AD%E6%95%B0%E7%BB%84%E7%9A%84%E6%A6%82%E5%BF%B5%E5%92%8C%E4%BD%BF%E7%94%A8"><span class="toc-text">1、C语言中数组的概念和使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%AE%9A%E4%B9%89%E5%92%8C%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E7%BB%84"><span class="toc-text">1.1 定义和初始化数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E8%AE%BF%E9%97%AE%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0"><span class="toc-text">1.2 访问数组元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E6%95%B0%E7%BB%84%E9%81%8D%E5%8E%86"><span class="toc-text">1.3 数组遍历</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E5%A4%9A%E7%BB%B4%E6%95%B0%E7%BB%84"><span class="toc-text">2、C语言中的多维数组</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%AE%9A%E4%B9%89%E5%92%8C%E5%88%9D%E5%A7%8B%E5%8C%96%E5%A4%9A%E7%BB%B4%E6%95%B0%E7%BB%84"><span class="toc-text">2.1 定义和初始化多维数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E8%B5%8B%E5%80%BC%E6%97%B6%EF%BC%8C%E5%8F%AF%E4%BB%A5%E7%9C%81%E7%95%A5%E8%A1%8C%E4%BD%86%E6%98%AF%E4%B8%8D%E8%83%BD%E7%9C%81%E7%95%A5%E5%88%97"><span class="toc-text">二维数组赋值时，可以省略行但是不能省略列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E8%AE%BF%E9%97%AE%E5%A4%9A%E7%BB%B4%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0"><span class="toc-text">2.2 访问多维数组元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%A4%9A%E7%BB%B4%E6%95%B0%E7%BB%84%E7%9A%84%E9%81%8D%E5%8E%86"><span class="toc-text">2.3 多维数组的遍历</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81C%E8%AF%AD%E8%A8%80%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%A6%82%E5%BF%B5%E5%92%8C%E4%BD%BF%E7%94%A8"><span class="toc-text">3、C语言中字符串的概念和使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">3.1 字符串的概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">字符串的使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81C%E8%AF%AD%E8%A8%80%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0%EF%BC%88%E5%A4%8D%E5%88%B6%E3%80%81%E8%BF%9E%E6%8E%A5%EF%BC%89"><span class="toc-text">4、C语言中字符串处理函数（复制、连接）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1strcpy"><span class="toc-text">4.1strcpy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2strcat-%E5%87%BD%E6%95%B0"><span class="toc-text">4.2strcat 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-strlen"><span class="toc-text">3. strlen</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-strcmp"><span class="toc-text">4. strcmp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-strchr-%E6%90%9C%E7%B4%A2"><span class="toc-text">5. strchr 搜索</span></a></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2024 - 2025 By LinQiuTian</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.4.0-b1"></script><script src="/js/main.js?v=5.4.0-b1"></script><script src="/js/tw_cn.js?v=5.4.0-b1"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"></div><div class="aplayer" data-id="12551163241" data-server="netease" data-type="playlist"  data-fixed="true" data-theme="#3F51B5"></div><canvas id="universe"></canvas><script defer src="/js/universe.js"></script><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/dist/fireworks.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search articles..." type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.4.0-b1"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    if(parent_div_git) {
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = '/';
+  var qweather_key = '637b20351e874329896d0920eb741c8e';
+  var gaud_map_key = '4a866722dcf666eb29a2326ae458eaf1';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '113.34532,23.15624';
+  var clock_default_rectangle_enable = 'true';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v6.2.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v4.3.1" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://vercel.com/" style="margin-inline:5px" data-title="本站采用多线部署，主线路托管于Vercel" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Hosted-Vercel-brightgreen?style=flat&amp;logo=Vercel" alt=""/></a><a class="github-badge" target="_blank" href="https://dashboard.4everland.org/" style="margin-inline:5px" data-title="本站采用多线部署，备用线路托管于4EVERLAND" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Hosted-4EVERLAND-22DDDD?style=flat&amp;logo=IPFS" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '2');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body></html>
