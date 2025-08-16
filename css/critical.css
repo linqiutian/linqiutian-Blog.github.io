@@ -1,0 +1,74 @@
+/* �ؼ�CSS - ���������������������� */
+
+/* �������� */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+}
+
+/* ������������ʽ */
+#nav {
+  position: relative;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+}
+
+/* ��Ҫ�������� */
+#main {
+  min-height: 60vh;
+}
+
+/* �����������ʽ */
+#aside-content {
+  position: relative;
+}
+
+/* ���¿�Ƭ������ʽ */
+.recent-post-item {
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ���ض��� */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.loading::after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #6C7A89;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ��ɫģʽ�������� */
+[data-theme="dark"] body {
+  background: #1a1a1a;
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] #nav {
+  background: rgba(26, 26, 26, 0.9);
+}
+
+[data-theme="dark"] .recent-post-item {
+  background: #2d2d2d;
+  color: #e0e0e0;
+}
