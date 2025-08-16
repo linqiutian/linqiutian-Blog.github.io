@@ -1,0 +1,171 @@
+/* ========== ��̬���ӱ���Ч�� ========== */
+
+/* ���ӱ������� */
+#particles-js {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: linear-gradient(135deg, 
+    rgba(108, 122, 137, 0.05) 0%, 
+    rgba(95, 184, 178, 0.05) 50%, 
+    rgba(217, 158, 106, 0.05) 100%);
+}
+
+/* ����Ԫ�ض��� */
+.floating-elements {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.floating-element {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(45deg, 
+    rgba(108, 122, 137, 0.1), 
+    rgba(95, 184, 178, 0.1));
+  animation: float 20s infinite linear;
+}
+
+.floating-element:nth-child(1) {
+  width: 80px;
+  height: 80px;
+  left: 10%;
+  animation-delay: 0s;
+  animation-duration: 25s;
+}
+
+.floating-element:nth-child(2) {
+  width: 60px;
+  height: 60px;
+  left: 20%;
+  animation-delay: 2s;
+  animation-duration: 30s;
+}
+
+.floating-element:nth-child(3) {
+  width: 100px;
+  height: 100px;
+  left: 35%;
+  animation-delay: 4s;
+  animation-duration: 20s;
+}
+
+.floating-element:nth-child(4) {
+  width: 40px;
+  height: 40px;
+  left: 50%;
+  animation-delay: 6s;
+  animation-duration: 35s;
+}
+
+.floating-element:nth-child(5) {
+  width: 70px;
+  height: 70px;
+  left: 65%;
+  animation-delay: 8s;
+  animation-duration: 28s;
+}
+
+.floating-element:nth-child(6) {
+  width: 90px;
+  height: 90px;
+  left: 80%;
+  animation-delay: 10s;
+  animation-duration: 22s;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* �ǿ�Ч�� */
+.stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #5FB8B2;
+  border-radius: 50%;
+  animation: twinkle 3s infinite;
+}
+
+.star:nth-child(odd) {
+  animation-delay: 1s;
+  background: #6C7A89;
+}
+
+.star:nth-child(3n) {
+  animation-delay: 2s;
+  background: #D99E6A;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ��ɫģʽ���� */
+[data-theme="dark"] #particles-js {
+  background: linear-gradient(135deg, 
+    rgba(108, 122, 137, 0.1) 0%, 
+    rgba(95, 184, 178, 0.1) 50%, 
+    rgba(217, 158, 106, 0.1) 100%);
+}
+
+[data-theme="dark"] .floating-element {
+  background: linear-gradient(45deg, 
+    rgba(108, 122, 137, 0.2), 
+    rgba(95, 184, 178, 0.2));
+}
+
+[data-theme="dark"] .star {
+  opacity: 0.8;
+}
+
+/* �ƶ����Ż� */
+@media (max-width: 768px) {
+  .floating-element {
+    display: none;
+  }
+  
+  .star {
+    animation-duration: 2s;
+  }
+}
