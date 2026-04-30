@@ -1,0 +1,848 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
+.mac-os-11 { --title-bar-height: 28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, h5 { white-space: pre-wrap; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+thead, tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+svg { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; border-color: transparent !important; padding-top: 0px !important; padding-bottom: 0px !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+  #write > p:nth-child(1) { margin-top: 0px; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
+  figure { overflow-x: visible; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.reversefootnote { font-family: ui-monospace, sans-serif; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background: inherit; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex: 2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) {
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) {
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; overflow-wrap: anywhere; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.42857rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ""; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left: 28px solid transparent; border-right: 28px solid transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right: 8px solid transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
+.md-inline-math-container mjx-container { zoom: 0.95; }
+mjx-container { break-inside: avoid; }
+.md-alert.md-alert-note { border-left-color: rgb(9, 105, 218); }
+.md-alert.md-alert-important { border-left-color: rgb(130, 80, 223); }
+.md-alert.md-alert-warning { border-left-color: rgb(154, 103, 0); }
+.md-alert.md-alert-tip { border-left-color: rgb(31, 136, 61); }
+.md-alert.md-alert-caution { border-left-color: rgb(207, 34, 46); }
+.md-alert { padding: 0px 1em; margin-bottom: 16px; color: inherit; border-left: 0.25em solid rgb(0, 0, 0); }
+.md-alert-text-note { color: rgb(9, 105, 218); }
+.md-alert-text-important { color: rgb(130, 80, 223); }
+.md-alert-text-warning { color: rgb(154, 103, 0); }
+.md-alert-text-tip { color: rgb(31, 136, 61); }
+.md-alert-text-caution { color: rgb(207, 34, 46); }
+.md-alert-text { font-size: 0.9rem; font-weight: 700; }
+.md-alert-text svg { fill: currentcolor; position: relative; top: 0.125em; margin-right: 1ch; overflow: visible; }
+.md-alert-text-container::after { content: attr(data-text); text-transform: capitalize; pointer-events: none; margin-right: 1ch; }
+
+
+:root {
+    --side-bar-bg-color: #fafafa;
+    --control-text-color: #777;
+}
+
+@include-when-export url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+
+/* open-sans-regular - latin-ext_latin */
+  /* open-sans-italic - latin-ext_latin */
+    /* open-sans-700 - latin-ext_latin */
+    /* open-sans-700italic - latin-ext_latin */
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, 'Segoe UI Emoji', sans-serif;
+    color: rgb(51, 51, 51);
+    line-height: 1.6;
+}
+
+#write {
+    max-width: 860px;
+  	margin: 0 auto;
+  	padding: 30px;
+    padding-bottom: 100px;
+}
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
+}
+
+@media only screen and (min-width: 1800px) {
+	#write {
+		max-width: 1200px;
+	}
+}
+
+#write > ul:first-child,
+#write > ol:first-child{
+    margin-top: 30px;
+}
+
+a {
+    color: #4183C4;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+    text-decoration: none;
+}
+h1 tt,
+h1 code {
+    font-size: inherit;
+}
+h2 tt,
+h2 code {
+    font-size: inherit;
+}
+h3 tt,
+h3 code {
+    font-size: inherit;
+}
+h4 tt,
+h4 code {
+    font-size: inherit;
+}
+h5 tt,
+h5 code {
+    font-size: inherit;
+}
+h6 tt,
+h6 code {
+    font-size: inherit;
+}
+h1 {
+    font-size: 2.25em;
+    line-height: 1.2;
+    border-bottom: 1px solid #eee;
+}
+h2 {
+    font-size: 1.75em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
+
+h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+}
+h4 {
+    font-size: 1.25em;
+}
+h5 {
+    font-size: 1em;
+}
+h6 {
+   font-size: 1em;
+    color: #777;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table{
+    margin: 0.8em 0;
+}
+li>ol,
+li>ul {
+    margin: 0 0;
+}
+hr {
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+li p.first {
+    display: inline-block;
+}
+ul,
+ol {
+    padding-left: 30px;
+}
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
+}
+blockquote {
+    border-left: 4px solid #dfe2e5;
+    padding: 0 15px;
+    color: #777777;
+}
+blockquote blockquote {
+    padding-right: 0;
+}
+table {
+    padding: 0;
+    word-break: initial;
+}
+table tr {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+table tr:nth-child(2n),
+thead {
+    background-color: #f8f8f8;
+}
+table th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    margin: 0;
+    padding: 6px 13px;
+}
+table td {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 6px 13px;
+}
+table th:first-child,
+table td:first-child {
+    margin-top: 0;
+}
+table th:last-child,
+table td:last-child {
+    margin-bottom: 0;
+}
+
+.CodeMirror-lines {
+    padding-left: 4px;
+}
+
+.code-tooltip {
+    box-shadow: 0 1px 1px 0 rgba(0,28,36,.3);
+    border-top: 1px solid #eef2f2;
+}
+
+.md-fences,
+code,
+tt {
+    border: 1px solid #e7eaed;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    padding: 0;
+    padding: 2px 4px 0px 4px;
+    font-size: 0.9em;
+}
+
+code {
+    background-color: #f3f4f4;
+    padding: 0 2px 0 2px;
+}
+
+.md-fences {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+
+
+.md-task-list-item > input {
+  margin-left: -1.3em;
+}
+
+@media print {
+    html {
+        font-size: 13px;
+    }
+    pre {
+        page-break-inside: avoid;
+        word-wrap: break-word;
+    }
+}
+
+.md-fences {
+	background-color: #f8f8f8;
+}
+#write pre.md-meta-block {
+	padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border: 0;
+    border-radius: 3px;
+    color: #777777;
+    margin-top: 0 !important;
+}
+
+.mathjax-block>.code-tooltip {
+	bottom: .375rem;
+}
+
+.md-mathjax-midline {
+    background: #fafafa;
+}
+
+#write>h3.md-focus:before{
+	left: -1.5625rem;
+	top: .375rem;
+}
+#write>h4.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h5.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h6.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+.md-image>.md-meta {
+    /*border: 1px solid #ddd;*/
+    border-radius: 3px;
+    padding: 2px 0px 0px 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
+
+.md-tag {
+    color: #a7a7a7;
+    opacity: 1;
+}
+
+.md-toc { 
+    margin-top:20px;
+    padding-bottom:20px;
+}
+
+.sidebar-tabs {
+    border-bottom: none;
+}
+
+#typora-quick-open {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+#typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/** focus mode */
+.on-focus-mode blockquote {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+header, .context-menu, .megamenu-content, footer{
+    font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state{
+    visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+    background-color: #fafafa;
+    background-color: var(--side-bar-bg-color);
+}
+
+.mac-os #write{
+    caret-color: AccentColor;
+}
+
+.md-lang {
+    color: #b4654d;
+}
+
+/*.html-for-mac {
+    --item-hover-bg-color: #E6F0FE;
+}*/
+
+#md-notification .btn {
+    border: 0;
+}
+
+.dropdown-menu .divider {
+    border-color: #e5e5e5;
+    opacity: 0.4;
+}
+
+.ty-preferences .window-content {
+    background-color: #fafafa;
+}
+
+.ty-preferences .nav-group-item.active {
+    color: white;
+    background: #999;
+}
+
+.menu-item-container a.menu-style-btn {
+    background-color: #f5f8fa;
+    background-image: linear-gradient( 180deg , hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0)); 
+}
+
+
+
+</style><title>嵌入式软件调试</title>
+</head>
+<body class='typora-export os-windows'><div class='typora-export-content'>
+<div id='write'  class=''><h1 id='嵌入式软件调试理论基础'><span>嵌入式软件调试理论基础</span></h1><h2 id='-什么是软件调试'><span>• 什么是软件调试？</span></h2><p><span>• 英文software debug，又译软件侦错</span></p><p><span>• 软件调试过程，就是发现软件失效，定位软件错误并将其修复的过程</span></p><p><img src="./../../images/image-20250602155046456-1748851517687-1.png" referrerpolicy="no-referrer" alt="image-20250602155046456"></p><h3 id='软件调试的重要性'><span>软件调试的重要性  </span></h3><p><span>• 据统计：软件调试、 debug时间一般占软件开发周期的50%以上，是软件开发中耗时最多的一项活动</span></p><p><span>• 很多项目延期，往往就栽在不能定位的bug上。</span></p><p><span>• 随着软件、系统越来越复杂，软件调试技术需要与软件工程、开发技术同步升级</span></p><p><span>• 软件调试理论和知识尚未系统化，很多开发者对其基本原理知之甚少，不能根据实际情况融会贯通地去使用各种调试技巧，对于复杂问题、BUG往往一筹莫展、无能为力  </span></p><h3 id='软件调试的特点'><span>软件调试的特点</span></h3><p><span>• 是一项具有挑战性、很强技巧性的工作</span>
+<span>• 复杂度高、难度大，必须通过现象，大量的分析，才能逐步接</span>
+<span>近真相，犹如福尔摩斯探案，抓住蛛丝马迹，层层推理。</span>
+<span>• 需要知识面广：设计到硬件、软件、操作系统、编译器等。</span>
+<span>• 有些bug极难复现，定位困难。</span>
+<span>• 是一项不受欢迎的工作</span>
+<span>• 对心理影响：</span>
+<span>– 打击人的自信、消磨工作热情、考验人的耐心和抗压能力、</span>
+<span>怀疑人生、怀疑自己是不是这块料…</span>
+<span>• 对生理影响：</span>
+<span>– 脾气暴躁、上火、口腔溃疡、失眠…</span></p><h3 id='嵌入式软件调试特点'><span>嵌入式软件调试特点  </span></h3><p><span>• 调试环境和运行环境不在一个平台上，增</span>
+<span>加了调试的难度</span>
+<span>• 嵌入式设备往往没有输出、打印终端，遇</span>
+<span>到问题，只能看日志</span>
+<span>• 考虑问题还要考虑硬件问题、时序问题，</span>
+<span>需要软硬件结合去思考问题，增加了调试</span>
+<span>的难度</span></p><h3 id='软件调试一些参考经验'><span>软件调试一些参考经验  </span></h3><p><span>• 寻找类似的bug，一些常见的出错场景</span>
+<span>• 使用版本管理工具查看最近代码的变化</span>
+<span>• 打印有时候会失效：比如在打印之前程序已经crash</span>
+<span>• 尽可能深入准确理解系统、不适当的改动可能使事情更糟</span>
+<span>• 体力不支时、没思路时可以稍事休息，保持充沛精力</span>
+<span>• 对于多模块系统，多沟通、多交流，而不是相互推诿</span></p><p>&nbsp;</p><h3 id='常用的嵌入式软件调试工具'><span>常用的嵌入式软件调试工具  </span></h3><p><span>• 软件</span>
+<span>	</span><span>• IAR、 ADS/AXD、 Keil、 MDK、 RVDS、 Eclipse、 H-JTAG、 Trace32</span>
+<span>	</span><span>• GCC、 GDB、 KGDB、 JDB、</span>
+<span>	</span><span>• 性能分析工具、内存分析工具</span>
+<span>• 硬件</span>
+<span>	</span><span>• 万用表、示波器、逻辑分析仪、仿真器</span>
+<span>	</span><span>• Jlink、 JTAG</span></p><h2 id='-常用的软件调试技术'><span>• 常用的软件调试技术</span></h2><h3 id='软件调试技术分类'><span>软件调试技术分类  </span></h3><p><span>• 按目标代码的执行方式</span>
+<span>	</span><span>• 脚本调试、托管调试、本地调试、混合调试</span>
+<span>• 按目标代码的执行模式</span>
+<span>	</span><span>• 用户态调试、内核态调试</span>
+<span>• 按软件所处的阶段</span>
+<span>	</span><span>• 开发期调试、产品期调试</span>
+<span>• 按调试器和调试目标的相对位置</span>
+<span>	</span><span>• 本地调试、远程调试</span></p><h3 id='打印'><span>打印</span></h3><p><span>• 输出调试信息</span>
+<span>	</span><span>• 打印函数栈、变量值</span>
+<span>	</span><span>• 日志、文件转储</span></p><p><span>• 应用场合</span>
+<span>	</span><span>• 错误简单，直接打印比使用调试器方便</span>
+<span>	</span><span>• 难以使用调试器的环境、或者使用调试器无法重现</span></p><h3 id='调试器'><span>调试器</span></h3><p><span>• 断点</span>
+<span>• 单步执行</span>
+<span>• 事件追踪</span>
+<span>• 栈回溯</span>
+<span>• 反汇编</span>
+<span>• 观察和修改寄存器、内存数据</span>
+<span>• 控制被调试的进程或线程</span></p><p>&nbsp;</p><h3 id='使用调试器有哪些优点'><span>使用调试器有哪些优点</span></h3><p><span>• 不需要预知错误在哪里</span></p><p><span>• 支持在线检查错误，不需要改代码、重新编译</span></p><p><span>• 可以看到运行时的各种数据：变量值、寄存器、内存数据…</span></p><p><span>• 单步</span></p><p>&nbsp;</p><h3 id='调试器调试一般步骤'><span>调试器调试一般步骤</span></h3><p><span>• 定位出现错误的场景</span>
+<span>• 分析错误、粗略定位可能出错的代码</span>
+<span>• 设置初始断点</span>
+<span>• 开始调试程序或者attach一个已经运行的</span>
+<span>程序进程</span>
+<span>• 在断点上观察数据各种数据：变量、寄存</span>
+<span>器、调用栈、反汇编， dump有用的数据</span>
+<span>• 单步执行、更新断点</span>
+<span>• 结束调试器</span></p><h2 id='-常见的错误类型'><span>• 常见的错误类型</span></h2><h3 id='编译型错误'><span> 编译型错误</span></h3><p><strong><span>• 语法规则检查</span></strong>
+<span>	</span><span>• C语言的基本语法、关键字、运算符、表达式</span>
+<strong><span>• 中英文符号</span></strong>
+<span>	</span><span>• 全角、半角的问题</span>
+<strong><span>• 函数问题</span></strong>
+<span>	</span><span>• 函数声明与函数定义不匹配：函数参数、返回类型</span>
+<span>	</span><span>• 误认为形参改变会影响实参的值</span>
+<span>	</span><span>• 函数的实参和形参类型不一致</span>
+<strong><span>• 函数未声明</span></strong>
+<span>	</span><span>• 有时候一个warning也是引起软件失效的诱因</span></p><h3 id='运行时错误'><span> 运行时错误</span></h3><p><strong><span>• 对异常未做处理</span></strong>
+<span>	</span><span>• 打开的文件未找到</span>
+<span>	</span><span>• 磁盘空间不足</span>
+<span>	</span><span>• 内存不足</span>
+<span>	</span><span>• 网络异常</span>
+<span>	</span><span>• Scanf输入格式、忘记地址符</span>
+<strong><span>• 堆栈溢出</span></strong>
+<strong><span>• 空指针的引用</span></strong>
+<strong><span>• 未初始化局部变量</span></strong>
+<strong><span>• 数组问题</span></strong>
+<span>	</span><span>• 数组越界， C语言并不会对数组做边界检查</span>
+<span>	</span><span>• 数组下标</span>
+<span>	</span><span>• 混淆数组名与指针的区别、数组作为参数的无用</span></p><h3 id='逻辑错误'><span> 逻辑错误</span></h3><p><strong><span>• 运算符</span></strong>
+<span>	</span><span>• =和==、 &amp;和&amp;&amp;、 |和||混用</span>
+<span>	</span><span>• 运算符的优先级和结合性</span>
+<strong><span>• 循环条件设置问题</span></strong>
+<span>	</span><span>• 未注意int、 char类型的数值范围，导致死循环</span>
+<span>	</span><span>• 循环边界控制</span>
+<strong><span>• 链表的头尾判断、空链表处理</span></strong>
+<strong><span>• 业务逻辑错误</span></strong>
+<strong><span>• 死锁</span></strong>
+<strong><span>• 不良的编程习惯和代码风格</span></strong>
+<span>	</span><span>• 不该加分号的地方加了分号或者少加分号</span>
+<span>	</span><span>• 花括号忘记使用，导致错误的逻辑分支</span></p><h3 id='内存错误'><span> 内存错误  </span></h3><p><strong><span>• 内存溢出</span></strong></p><p><strong><span>• 内存泄露</span></strong></p><p><strong><span>• 内存踩踏</span></strong></p><h2 id='-debug文件和release文件的区别'><span>• Debug文件和release文件的区别</span></h2><p><strong><span>目标文件的链接过程</span></strong><span>  </span></p><p><img src="./../../images/image-20250602171053466.png" referrerpolicy="no-referrer" alt="image-20250602171053466"></p><p><strong><span>可执行文件的运行</span></strong><span>  </span></p><p>&nbsp;</p><p><img src="./../../images/image-20250602171121938.png" alt="image-20250602171121938" style="zoom: 80%;" /><img src="./../../images/image-20250602171127068.png" referrerpolicy="no-referrer" alt="image-20250602171127068"></p><p>&nbsp;</p><p>&nbsp;</p><h3 id='-调试符号'><strong><span>• 调试符号</span></strong></h3><p><span> </span><strong><span>什么是调试符号</span></strong></p><p><img src="./../../images/image-20250602172035917.png" alt="image-20250602172035917" style="zoom:67%;" />
+<span>	</span><span>• 二进制代码与源程序联系的桥梁</span>
+<span>	</span><span>• 很多调试必须依赖调试符号才能工作</span>
+<span>	</span><span>• 如:源代码级调试、 栈回溯、按名称显示变量等</span>
+<strong><span>• 生成过程</span></strong>
+<span>	</span><span>• 在编译过程中，编译器从源文件收集调试信息供开发者调试使用</span>
+<span>	</span><span>• 这些信息以表格形式记录在符号表中，是对源程序的概括</span>
+<span>	</span><span>• 包括变量、类型、函数、标号和源代码行等。</span>
+<strong><span>• 存储方式</span></strong>
+<span>	</span><span>• 由编译器收集和提炼后，再由链接器或者专门工具保存到调试符</span>
+<span>号文件中。</span></p><p><span>	</span><span>• 调试符号可存储在单独的文件，也可与目标文件共享一个文件</span></p><h3 id='-调试信息的存储格式'><strong><span>• 调试信息的存储格式</span></strong></h3><p><strong><span>• COFF格式</span></strong>
+<span>	</span><span>• 二进制格式，用来存储可执行映像文件、目标文件、库文件</span>
+<strong><span>• CodeView格式</span></strong>
+<span>	</span><span>• 与MSC编译器一起使用的调试器</span>
+<span>	</span><span>• CV格式的调试信息可以与映像文件保存在一起，也可单独存放</span>
+<strong><span>• PDB格式</span></strong>
+<span>	</span><span>• PDB格式的调试信息需单独存储在一个文件中</span>
+<span>	</span><span>• 如VC++6.0中的.pdb文件</span>
+<strong><span>• DWARF格式</span></strong>
+<span>	</span><span>• 公开的调试信息格式规范，主要用在Unix、 Linux发行系统中</span>
+<span>	</span><span>• GCC和GDB都支持这种格式</span></p><h3 id='-目标文件中的调试信息'><strong><span>• 目标文件中的调试信息</span></strong></h3><p><img src="./../../images/image-20250602172333724.png" alt="image-20250602172333724" style="zoom: 67%;" /></p><p>&nbsp;</p><p><strong><span>• 目标文件</span></strong>
+<span>	</span><span>• 编译器用来存放目标代码的文件</span>
+<span>	</span><span>• VC使用COFF格式来存储目标文件</span>
+<strong><span>• 目标文件格式</span></strong>
+<span>	</span><span>• 文件头结构</span>
+<span>	</span><span>• 节头部数据结构：</span>
+<span>	</span><span>• 三种数据： 原始数据、 重定位信息、 行</span>
+<span>号信息</span>
+<span>	</span><span>• 节数据之后是调试符号表和字符串表</span>
+<strong><span>• 重定位信息和行号信息</span></strong>
+<span>	</span><span>• 重定位信息：链接和加载映像文件时应</span>
+<span>如何修改节数据、重定位的地址和方法</span>
+<span>	</span><span>• 行号信息： 用来描述源代码行和目标代</span>
+<span>码的对应关系</span></p><h3 id='-使用gcc编译debug目标文件'><strong><span>• 使用GCC编译debug目标文件</span></strong></h3><p><img src="./../../images/image-20250602172457464.png" referrerpolicy="no-referrer" alt="image-20250602172457464"></p><p>&nbsp;</p><p>&nbsp;</p><h2 id='-断点和单步是怎么实现的'><span>• 断点和单步是怎么实现的?</span></h2><h3 id='-cpu对调试的支持'><strong><span>• CPU对调试的支持</span></strong></h3><p><strong><span>• CPU指令和指令集</span></strong>
+<span>	</span><span>• 为某一类CPU所支持的指令集被简称为指令集,根据指令集特征，</span>
+<span>CPU可划分为两大阵营： RISC和CISC</span>
+<span>	</span><span>• RISC：通过减少指令集数量和简化指令格式来提高和优化CPU执行</span>
+<span>指令效率。例如： ARM、 MIPS、 Alpha、 SPARC、 PowerPC</span>
+<span>	</span><span>• CISC： X86系列处理器</span></p><p><strong><span>• CPU对断点调试的支持</span></strong>
+<span>	</span><span>• 支持断点调试指令： INT 3指令</span>
+<span>	</span><span>• 标志寄存器： EFLAGS寄存器中的TF标志位</span>
+<span>	</span><span>• 1： CPU执行完一条指令都会产生调试异常， CPU转到</span>
+<span>ISR中去，在该ISR中可以很多调试操作</span>
+<span>	</span><span>• 该标志是实现单步调试的基础</span>
+<span>	</span><span>• 调试寄存器： DR0~DR7</span>
+<span>	</span><span>• JTAG支持：单独靠软件无法调试的裸板、系统bringup调试</span></p><h3 id='-操作系统对调试的支持'><strong><span>• 操作系统对调试的支持</span></strong></h3><p><strong><span>• 在内核层面提供支持</span></strong>
+<span>	</span><span>• 提供支持远程调试协议的通信模块</span>
+<span>	</span><span>• 提供断点设置函数</span>
+<span>	</span><span>• 提供软陷异常处理：调试功能</span>
+<strong><span>• 对用户态调试器的支持</span></strong>
+<span>	</span><span>• 创建调试目标的系统函数</span>
+<span>	</span><span>• 在调试循环中处理调试事件的系统函数</span>
+<span>	</span><span>• 查看和修改调试目标的系统函数，这些系统函数用于调试事件</span>
+<span>的处理过程中</span>
+<span>	</span><span>• 用户态调试器将这些系统函数与其它函数结合起来，从而提供</span>
+<span>强大的功能</span></p><h3 id='-在调试器中加入断点'><strong><span>• 在调试器中加入断点</span></strong></h3><p><img src="./../../images/image-20250602173346493.png" referrerpolicy="no-referrer" alt="image-20250602173346493"><span>.</span></p><h3 id='-单步'><strong><span>• 单步</span></strong></h3><p><img src="./../../images/image-20250602173432501.png" referrerpolicy="no-referrer" alt="image-20250602173432501"></p><h3 id='-获取变量值'><strong><span>• 获取变量值</span></strong></h3><p><span> </span><strong><span>进程中可以以地址来标识变量、函数，但不知</span></strong>
+<strong><span>道每个地址的含义、地址对应的名称</span></strong>
+<strong><span>• 调试器使用符号表从地址获得变量名</span></strong>
+<strong><span>• 调试信息的内容</span></strong>
+<span>	</span><span>• 地址对应的变量名、函数名</span>
+<span>	</span><span>• 指令对应的源文件及其行号</span>
+<span>	</span><span>• 数据结构的信息等</span>
+<strong><span>• 调试信息的保存</span></strong>
+<span>	</span><span>• Debug版本程序：添加到目标文件中</span>
+<span>	</span><span>• Release版本：单独的符号文件</span>
+<span>		</span><span>• DBG文件</span>
+<span>		</span><span>• PDB文件</span>
+<span>		</span><span>• MAP文件</span></p><h3 id='-读写寄存器'><strong><span>• 读写寄存器</span></strong></h3><p><strong><span>• CPU对调试的支持</span></strong>
+<span>	</span><span>• CPU自身提供的机制</span>
+<strong><span>• ARM结构CPU寄存器</span></strong>
+<span>	</span><span>• JTAG扫描链电路+ARM 寄存器</span></p><p><img src="./../../images/image-20250602173611273.png" referrerpolicy="no-referrer" alt="image-20250602173611273"></p><p><img src="./../../images/image-20250602173614370.png" referrerpolicy="no-referrer" alt="image-20250602173614370"></p><h2 id='-仿真器调试原理'><span>• 仿真器调试原理</span></h2><h3 id='-嵌入式常用调试手段'><span>• 嵌入式常用调试手段</span></h3><p><strong><span>• 软件模拟器</span></strong>
+<span>	</span><span>• 在PC上模拟目标CPU并执行用户目标代码。如ARM仿真器： ARM</span>
+<span>armulator，可以模拟运行ARM指令系统</span>
+<strong><span>• 目标Monitor</span></strong>
+<span>	</span><span>• 将目标代码下载到用户目标板的存储器重，并增加一个monitor软</span>
+<span>件，用来监听用户目标代码的执行。用户通过串口等调试端口，</span>
+<span>通过PC进行调试。如ARM基于调试代理angel的调试</span>
+<span>	</span><span>• 缺点：耗费MCU、 CPU资源、目标系统必须是一个完整的系统、</span>
+<span>无法在ROM区设置断点、对于存储受限的单片机等并不适用</span>
+<strong><span>• 仿真器</span></strong>
+<span>	</span><span>• 一般会有一个仿真头、 代替目标系统中的MCU、 CPU， 并仿真其</span>
+<span>运行，可以连接目标板，甚至不连接都可以。</span>
+<span>	</span><span>• 仿真器运行起来跟实际的目标处理器一样，增加了调试功能、支</span>
+<span>持在线调试</span></p><h3 id='-为什么要使用仿真器调试'><span>• 为什么要使用仿真器调试</span></h3><p><strong><span>• 在前期硬件验证上必须使用仿真器(目标系</span></strong>
+<strong><span>统硬件不完整也可以运行)</span></strong>
+<strong><span>• 硬件实际性能测试(电路、电容、电感等)</span></strong>
+<strong><span>• 额外的优点</span></strong>
+<span>	</span><span>• Monitor要占用额外的存储和通信端口，仿真器不需要目标系</span>
+<span>统或CPU资源</span>
+<span>	</span><span>• 硬件断点：调试ROM或者NOR 存储模式的目标系统毫无压力</span>
+<span>	</span><span>• 跟踪功能：能够记录所有的取指操作</span>
+<span>	</span><span>• 条件触发</span>
+<span>	</span><span>• 实时显示存储器、内存和I/O内容</span>
+<span>	</span><span>• 硬件性能分析</span></p><h3 id='trace32仿真器介绍'><span>Trace32仿真器介绍  </span></h3><p><span>• 德国Lauterbach公司研发</span></p><p><span>• 通用性：更换仿真头子可以调试不同芯片  </span></p><p><img src="./../../images/image-20250602174115438.png" referrerpolicy="no-referrer" alt="image-20250602174115438"></p><p><img src="./../../images/image-20250602174118600.png" referrerpolicy="no-referrer" alt="image-20250602174118600"></p><h3 id='-仿真器调试的缺点'><span>• 仿真器调试的缺点</span></h3><p><strong><span>仿真器的缺点</span></strong><span>  </span></p><p><strong><span>• 贵</span></strong>
+<span>	</span><span>• 仿真器有自己的目标CPU、 RAM甚至ROM以及软件</span>
+<strong><span>• 通用性差</span></strong>
+<span>	</span><span>• 随着CPU不断发布、升级，需要同步升级。</span>
+<strong><span>• 硬件仿真效果跟实际处理器还是有差异</span></strong>
+<span>	</span><span>• 仿真器中的CPU跟目标系统中的CPU电气特性不同</span>
+<span>	</span><span>• 不能反映实际时序</span></p><p>&nbsp;</p><h2 id='-jtag和jlink调试原理及区别'><span>• JTAG和JLINK调试原理及区别</span></h2><h3 id='-jtag调试原理'><span>• JTAG调试原理</span></h3><p><strong><span>• 测试接口标准化</span></strong>
+<span>	</span><span>• 在芯片内部定义一个标准的测试访问接口(TAP ),通过专用的</span>
+<span>JTAG测试工具对芯片内部节点进行测试和调试</span>
+<strong><span>• JTAG(Joint Test Action Group)</span></strong>
+<span>	</span><span>• 一种国际标准测试协议，主要用于芯片内部测试</span>
+<span>	</span><span>• 目前大多数芯片都支持JTAG协议： ARM、 DSP、 FPGA等</span>
+<strong><span>• JTAG接口</span></strong>
+<span>	</span><span>• TMS：测试模式选择</span>
+<span>	</span><span>• TCK：测试时钟输入</span>
+<span>	</span><span>• TDI： 测试数据输入，数据通过TDI引脚输入JTAG接口</span>
+<span>	</span><span>• TDO：测试数据输出，数据通过TDO引脚从JTAG接口输出</span></p><h3 id='-jtag接口'><span>• JTAG接口</span></h3><p><img src="./../../images/image-20250602174440435.png" alt="image-20250602174440435" style="zoom: 80%;" /></p><p><img src="./../../images/image-20250602174445412.png" alt="image-20250602174445412" style="zoom:80%;" /></p><p>&nbsp;</p><p><img src="./../../images/image-20250602174447903.png" alt="image-20250602174447903" style="zoom:80%;" /></p><p><strong><span>JTAG实物图</span></strong><span>  </span></p><p><img src="./../../images/image-20250602174604503.png" referrerpolicy="no-referrer" alt="image-20250602174604503"></p><p><img src="./../../images/image-20250602174607821.png" referrerpolicy="no-referrer" alt="image-20250602174607821"></p><p><img src="./../../images/image-20250602174610282.png" referrerpolicy="no-referrer" alt="image-20250602174610282"></p><p><img src="./../../images/image-20250602174713582.png" referrerpolicy="no-referrer" alt="image-20250602174713582"></p><p>&nbsp;</p><p>&nbsp;</p><h3 id='-边界扫描电路'><span>• 边界扫描电路</span></h3><p><img src="./../../images/image-20250602174740245.png" referrerpolicy="no-referrer" alt="image-20250602174740245"></p><p><img src="./../../images/image-20250602174743608.png" referrerpolicy="no-referrer" alt="image-20250602174743608"></p><p><img src="./../../images/image-20250602174825904.png" referrerpolicy="no-referrer" alt="image-20250602174825904"></p><p>&nbsp;</p><h3 id='-测试访问口tap'><span>• 测试访问口TAP</span></h3><p><strong><span>• TAP</span></strong>
+<span>	</span><span>• Test Access Port</span>
+<span>	</span><span>• 是一个通用端口，通过该端口可以访问数据寄存器和指令寄存</span>
+<span>器</span>
+<span>	</span><span>• 通过TAP控制器来对整个TAP端口的控制</span>
+<strong><span>• 总结</span></strong>
+<span>	</span><span>• PC机对目标板的调试就是通过TAP接口完成对数据寄存器DR和</span>
+<span>指令寄存器IR的访问。</span></p><h3 id='-jlink调试原理'><span>• Jlink调试原理</span></h3><p><strong><span>• RDI调试接口</span></strong>
+<span>	</span><span>• ARM公司提出的调试接口标准，实现跨平台的硬件调试</span>
+<span>	</span><span>• 各大调试工具Keil、 ADS、 IAR等都使用RDI公共调试接口</span>
+<strong><span>• RDI命令到JTAG协议的转换</span></strong>
+<span>– 软件实现</span>
+<span>	</span><span>• 在PC写一个程序，将ADS/Keil的RDI命令解析成JTAG协议，然后</span>
+<span>通过物理转换接口(仅仅是电气物理层上的转换，像RS232)，发</span>
+<span>送到目标板。如H-JTAG工具</span>
+<span>– 硬件实现</span>
+<span>	</span><span>• 做一个电路板，直接接收来自Keil、 ADS等软件的调试命令，硬</span>
+<span>件实现RDI到JTAG协议的转换，与目标板通信。如Jlink类似工具</span>
+<span>• 相对于软件转换，硬件速度快，而且不需要装jtag解析软件</span></p><p><span>Jlink工具实物图</span></p><p><img src="./../../images/image-20250602175114137.png" referrerpolicy="no-referrer" alt="image-20250602175114137"></p><h1 id='printf函数打印高阶技巧'><span>printf函数打印高阶技巧</span></h1><p>&nbsp;</p><h2 id='-输出重定向'><span>• 输出重定向</span></h2><h3 id='-流的概念'><span>• 流的概念</span></h3><p><strong><span>• 程序输入或输出的一个连续的字节序列</span></strong>
+<span>	</span><span>• 设备(鼠标、键盘、打印机、屏幕…)的输入输出使用流来处理</span>
+<strong><span>• 在C语言中，所有流均以文件的形式出现</span></strong>
+<span>	</span><span>• 统一了各种硬件操作接口带来的差异</span>
+<strong><span>• C语言中提供的5中标准流</span></strong></p><figure class='table-figure'><table><thead><tr><th><span>名称 </span></th><th><span>描述 </span></th><th><span>文件描述符 </span></th><th><span>例子</span></th></tr></thead><tbody><tr><td><span>stdin </span></td><td><span>标准输入 </span></td><td><span>0 </span></td><td><span>键盘、鼠标</span></td></tr><tr><td><span>stdout </span></td><td><span>标准输出 </span></td><td><span>1 </span></td><td><span>屏幕、 LCD</span></td></tr><tr><td><span>stderr </span></td><td><span>标准错误 </span></td><td><span>2 </span></td><td><span>屏幕、 LCD</span></td></tr><tr><td><span>stdprn </span></td><td><span>标准打印机 </span></td><td><span>LPT1端口</span></td><td>&nbsp;</td></tr><tr><td><span>stdaux </span></td><td><span>标准串行设备 </span></td><td><span>COM1端口</span></td><td>&nbsp;</td></tr></tbody></table></figure><h3 id='-利用shell的io进行输出重定向'><span>• 利用shell的I/O进行输出重定向</span></h3><p><strong><span>• 在Linux下，文本流和二进制流是相同的</span></strong>
+<span>	</span><span>• 文本流是由文本行组成的序列，以’\n’结尾(或有回车符换行符</span>
+<span>代替)，二进制流由未经处理的字节组成</span></p><p><strong><span>• 流与文件的连接</span></strong>
+<span>	</span><span>• 打开一个流，该流将与一个文件连接起来，关闭流则断开连接</span>
+<span>	</span><span>• 指向该打开文件的指针记录了控制该流的信息</span>
+<span>	</span><span>• 程序执行时， 默认会打开stdin、 stdout和stderr三个文件</span>
+<strong><span>• 重定向符</span></strong>
+<span>	</span><span>• 输出重定向： &gt;、 &gt;&gt;、 &gt;!</span>
+<span>	</span><span>• 输入重定向： &lt;</span></p><ul><li><p><strong><code>&gt;</code></strong><span>：将输出写入文件，覆盖原有内容。</span></p></li><li><p><strong><code>&gt;&gt;</code></strong><span>：将输出追加到文件，不覆盖原有内容。</span></p></li><li><p><strong><code>&lt;</code></strong><span>：将文件内容作为程序的输入。</span></p></li><li><p><strong><code>&gt;!</code></strong><span>：在某些shell中用于强制覆盖文件（但现代shell通常不需要）。</span></p></li></ul><p><strong><span>• 标准错误重定向</span></strong>
+<span>	</span><span>• 2&gt;：标准错误重定向到一个文件，并覆盖原来的文件(b-shell)</span>
+<span>	</span><span>• 2&gt;&gt;：标准错误重定向到一个文件(追加)。 1&gt;默认为&gt;</span>
+<span>	</span><span>• 2&gt;&amp;1：将标准错误重定向到标准输出</span>
+<span>	</span><span>• &gt;&amp;：将一个输出重定向到另一个句柄的输入中</span>
+<strong><span>• 为什么要进行重定向</span></strong>
+<span>	</span><span>• 将屏幕输出的重要信息保存下来</span>
+<span>	</span><span>• 有时候不希望打印干扰屏幕</span>
+<span>	</span><span>• 正确和错误的信息需要分别输出时</span></p><h3 id='-使用freopen重定向输入输出流'><span>• 使用freopen重定向输入输出流  </span></h3><p><strong><span>• 输出重定向</span></strong></p><p><img src="./../../images/image-20250602182244839.png" referrerpolicy="no-referrer" alt="image-20250602182244839"></p><p><strong><span>• 错误重定向</span></strong></p><p><img src="./../../images/image-20250602182421018.png" referrerpolicy="no-referrer" alt="image-20250602182421018"></p><h2 id='-打印文件名函数名行号'><span>• 打印文件名、函数名、行号</span></h2><h2 id='-打印缓冲问题'><span>• 打印缓冲问题</span></h2><h2 id='-打印开关控制'><span>• 打印开关控制</span></h2><h2 id='-打印等级控制'><span>• 打印等级控制</span></h2><p>&nbsp;</p></div></div>
+</body>
+</html>
